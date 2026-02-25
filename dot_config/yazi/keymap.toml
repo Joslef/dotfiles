@@ -1,0 +1,11 @@
+[mgr]
+prepend_keymap = [
+  { on = "<S-l>", run = "tab_switch 1 --relative", desc = "Switch to next tab" },
+  { on = "<S-h>", run = "tab_switch -1 --relative", desc = "Switch to previous tab" },
+  { on = "<C-w>", run = "tab_close", desc = "Close tab" },
+]
+
+[[manager.prepend_keymap]]
+on   = "e"
+run  = "plugin extract"
+desc = "Extract archive"

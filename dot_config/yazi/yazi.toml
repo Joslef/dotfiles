@@ -1,0 +1,56 @@
+[opener]
+edit = [
+    { run = 'nvim "$@"', block = true, desc = "Neovim" },
+]
+
+open = [
+    { run = 'xdg-open "$@"', desc = "Open" },
+]
+
+[open]
+# Use prepend_rules to add your rules BEFORE the defaults
+prepend_rules = [
+    # JavaScript files by MIME type (most reliable)
+    { mime = "application/javascript", use = "edit" },
+    { mime = "text/javascript", use = "edit" },
+    
+    # Python files
+    { mime = "text/x-python", use = "edit" },
+    { mime = "application/x-python-code", use = "edit" },
+    
+    # Shell scripts
+    { mime = "application/x-shellscript", use = "edit" },
+    
+    # All text files
+    { mime = "text/*", use = "edit" },
+    
+    # Specific extensions using url (not name)
+    { url = "*.js", use = "edit" },
+    { url = "*.jsx", use = "edit" },
+    { url = "*.ts", use = "edit" },
+    { url = "*.tsx", use = "edit" },
+    { url = "*.py", use = "edit" },
+    { url = "*.sh", use = "edit" },
+    { url = "*.fish", use = "edit" },
+    { url = "*.bash", use = "edit" },
+    { url = "*.zsh", use = "edit" },
+    { url = "*.md", use = "edit" },
+    { url = "*.txt", use = "edit" },
+    { url = "*.toml", use = "edit" },
+    { url = "*.json", use = "edit" },
+    { url = "*.yaml", use = "edit" },
+    { url = "*.yml", use = "edit" },
+    { url = "*.html", use = "edit" },
+    { url = "*.css", use = "edit" },
+    { url = "*.scss", use = "edit" },
+    { url = "*.rs", use = "edit" },
+    { url = "*.go", use = "edit" },
+    { url = "*.c", use = "edit" },
+    { url = "*.cpp", use = "edit" },
+    { url = "*.h", use = "edit" },
+    { url = "*.java", use = "edit" },
+    { url = "*.kt", use = "edit" },
+    { url = "*.rb", use = "edit" },
+    { url = "*.php", use = "edit" },
+    { url = "*.lua", use = "edit" },
+]

@@ -3,6 +3,8 @@
 .config/hypr
 .config/waybar
 .config/rofi
+.config/nwg-displays
+.config/cachyos
 {{ end }}
 
 # macOS only

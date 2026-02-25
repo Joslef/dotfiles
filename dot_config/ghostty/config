@@ -1,0 +1,33 @@
+title="hello!"
+click-repeat-interval = 500
+auto-update-channel = stable
+theme = Catppuccin Mocha
+font-size = 20
+font-family = "FiraCode Nerd Font Mono"
+keybind = opt+cmd+shift+k=new_split:up
+keybind = opt+cmd+shift+j=new_split:down
+keybind = opt+cmd+shift+h=new_split:left
+keybind = opt+cmd+shift+l=new_split:right
+keybind = opt+cmd+h=goto_split:left
+keybind = opt+cmd+j=goto_split:down
+keybind = opt+cmd+k=goto_split:up
+keybind = opt+cmd+l=goto_split:right
+keybind = opt+cmd+w=close_surface
+keybind = opt+cmd+.=resize_split:right,100
+keybind = opt+cmd+,=resize_split:left,100
+keybind = cmd+k=toggle_command_palette
+keybind = opt+cmd++=increase_font_size:1
+keybind = opt+cmd+-=decrease_font_size:1
+keybind = opt+cmd+0=reset_font_size
+keybind = global:ctrl+cmd+#=toggle_quick_terminal
+keybind = opt+cmd+d=scroll_page_lines:10
+keybind = opt+cmd+u=scroll_page_lines:-10
+keybind = alt+j=unbind
+keybind = alt+k=unbind
+keybind = ctrl+n=new_window
+keybind = ctrl+w=close_window
+macos-option-as-alt = left
+cursor-color = #FF27DD
+cursor-style-blink = false
+shell-integration-features = no-cursor
+macos-titlebar-style = hidden

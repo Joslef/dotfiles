@@ -1,11 +1,11 @@
-  # Linux only
-  {{ if ne .chezmoi.os "linux" }}
-  dot_config/hypr
-  dot_config/waybar
-  dot_config/rofi
-  {{ end }}
+# Linux only
+{{ if ne .chezmoi.os "linux" }}
+.config/hypr
+.config/waybar
+.config/rofi
+{{ end }}
 
-  # macOS only
-  {{ if ne .chezmoi.os "darwin" }}
-  # dot_config/karabiner # just an example for a macOS specific config
-  {{ end }}
+# macOS only
+{{ if ne .chezmoi.os "darwin" }}
+# .config/karabiner # just an example for a macOS specific config
+{{ end }}

@@ -9,5 +9,5 @@
 
 # macOS only
 {{ if ne .chezmoi.os "darwin" }}
-# .config/karabiner # just an example for a macOS specific config
+.config/fish
 {{ end }}

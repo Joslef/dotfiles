@@ -1,0 +1,11 @@
+@theme "/usr/share/rofi/themes/material.rasi"
+
+configuration {
+    /* DPI scaling - affects everything */
+    dpi: 168;  /* 96 * 1.5 = 144 for 1.5x scale */
+    
+    /* Or use window scaling */
+    window {
+        width: 50%;  /* percentage of screen */
+    }
+}

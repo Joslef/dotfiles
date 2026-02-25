@@ -2,6 +2,7 @@
   {{ if ne .chezmoi.os "linux" }}
   dot_config/hypr
   dot_config/waybar
+  dot_config/rofi
   {{ end }}
 
   # macOS only

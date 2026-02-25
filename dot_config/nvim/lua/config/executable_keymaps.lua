@@ -56,4 +56,5 @@ wk.add({
     desc = "Dashboard",
     icon = "",
   },
+  { "<leader>K", desc = "Keywordprg", icon = "󱗖" },
 })

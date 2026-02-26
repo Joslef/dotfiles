@@ -6,6 +6,7 @@ local wk = require("which-key")
 
 wk.add({
   { "<leader>C", group = "Claude Code", icon = "🤖" },
+  { "<leader>K", desc = "Keywordprg", icon = "📖" },
   { "<leader>o", group = "OpenCode" },
   {
     "<leader>oa",

@@ -62,7 +62,7 @@ if status is-interactive
         --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
         --color=selected-bg:#45475a \
         --multi --layout=reverse --border=rounded --padding=1 \
-        --prompt=' > ' --pointer=' ▶ ' --marker=' '"
+        --prompt=' > ' --pointer='▶ ' --marker=' '"
     fzf_configure_bindings --directory=\cd --processes=\cp --git_status=\cg --history=\ch
 
     # zoxide

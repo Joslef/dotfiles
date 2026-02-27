@@ -14,17 +14,23 @@
     "memory",
     "disk",
     "disk#hdd2",
-    "temperature"
+    "temperature",
+    "custom/updates",
+    "custom/weather",
+    "mpris"
   ],
   "modules-center": [
     "hyprland/workspaces"
   ],
   "modules-right": [
+    "hyprland/window",
     "wlr/taskbar",
     "idle_inhibitor",
     "pulseaudio/slider",
     "pulseaudio",
+    "bluetooth",
     "network",
+    "network#speed",
     "hyprland/language"
   ],
   /* === Modules Left === */
@@ -69,6 +75,37 @@
     "format-icons": [
       ""
     ]
+  },
+  "mpris": {
+    "format": "{player_icon} {title} - {artist}",
+    "format-paused": "󰏤 {title} - {artist}",
+    "format-stopped": "󰓛",
+    "player-icons": {
+      "default": "󰐊",
+      "spotify": "󰓇",
+      "firefox": "󰈹"
+    },
+    "max-length": 35,
+    "tooltip": false
+  },
+  "custom/weather": {
+    "format": "{}",
+    "exec": "~/.config/waybar/weather.sh",
+    "return-type": "json",
+    "interval": 1800,
+    "tooltip": true
+  },
+  "custom/updates": {
+    "exec": "~/.config/waybar/updates.sh",
+    "return-type": "json",
+    "interval": 3600,
+    "tooltip": true
+  },
+  /* === Modules Right === */
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 50,
+    "tooltip": false
   },
   /* === Modules Center === */
   "hyprland/workspaces": {
@@ -119,14 +156,30 @@
       ]
     }
   },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱 {device_alias}",
+    "format-disabled": "󰂲",
+    "tooltip-format": "{status}",
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "blueman-manager",
+    "max-length": 20
+  },
   "network": {
-    "format": "{ifname}",
-    "format-ethernet": "{ifname} 󰈀",
+    "format": "{ipaddr}",
+    "format-ethernet": "{ipaddr} 󰈀",
     "format-disconnected": " ",
     "tooltip-format": " {ifname} via {gwaddr}",
     "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
+  },
+  "network#speed": {
+    "format": "{bandwidthDownBytes} 󰇚 {bandwidthUpBytes} 󰕒",
+    "format-disconnected": "",
+    "interval": 2,
+    "tooltip": false
   },
   "hyprland/language": {
     "format": "{} ",

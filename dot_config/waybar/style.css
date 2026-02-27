@@ -21,9 +21,13 @@ window#waybar.hidden {
 #memory,
 #disk,
 #temperature,
+#custom-updates,
+#mpris,
+#custom-weather,
 #idle_inhibitor,
 #pulseaudio,
 #pulseaudio-slider,
+#bluetooth,
 #network,
 #language {
   color: #161320;
@@ -37,6 +41,7 @@ window#waybar.hidden {
 /* Separation to the left */
 #custom-archicon,
 #cpu,
+#custom-weather,
 #idle_inhibitor {
   margin-left: 5px;
   border-top-left-radius: 10px;
@@ -45,7 +50,8 @@ window#waybar.hidden {
 
 /* Separation to the rigth */
 #clock,
-#temperature,
+#custom-updates,
+#mpris,
 #language {
   margin-right: 5px;
   border-top-right-radius: 10px;
@@ -82,6 +88,19 @@ window#waybar.hidden {
   background: #F8BD96;
 }
 
+#custom-updates {
+  background: #E879F9;
+}
+
+#mpris {
+  background: #F5E0DC;
+  min-width: 120px;
+}
+
+#custom-weather {
+  background: #94E2D5;
+}
+
 /* Modules center */
 #workspaces {
   background: rgba(0, 0, 0, 0.5);
@@ -113,6 +132,14 @@ window#waybar.hidden {
 #workspaces button.active:hover {}
 
 /* Modules right */
+#window {
+  color: #CDD6F4;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 #taskbar {
   background: transparent;
   border-radius: 10px;
@@ -155,9 +182,19 @@ window#waybar.hidden {
 #pulseaudio-slider slider {}
 
 
+#bluetooth {
+  background: #89B4FA;
+  min-width: 40px;
+}
+
 #network {
   background: #CBA6F7;
   padding-right: 13px;
+}
+
+#network.speed {
+  min-width: 155px;
+  background: #CBA6F7;
 }
 
 #language {

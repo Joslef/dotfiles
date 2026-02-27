@@ -42,6 +42,7 @@ window#waybar.hidden {
 #custom-archicon,
 #cpu,
 #custom-weather,
+#mpris,
 #idle_inhibitor {
   margin-left: 5px;
   border-top-left-radius: 10px;
@@ -52,6 +53,7 @@ window#waybar.hidden {
 #clock,
 #custom-updates,
 #mpris,
+#custom-weather,
 #language {
   margin-right: 5px;
   border-top-right-radius: 10px;

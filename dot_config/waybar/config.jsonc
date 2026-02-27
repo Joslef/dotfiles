@@ -77,15 +77,18 @@
     ]
   },
   "mpris": {
-    "format": "{player_icon} {title} - {artist}",
-    "format-paused": "󰏤 {title} - {artist}",
-    "format-stopped": "󰓛",
+    "format": "{player_icon}   {dynamic}",
+    "format-paused": "󰏤   {dynamic}",
+    "format-stopped": "",
+    "dynamic-order": ["artist", "title"],
+    "dynamic-separator": " - ",
     "player-icons": {
       "default": "󰐊",
-      "spotify": "󰓇",
-      "firefox": "󰈹"
+      "spotify_player": "󰓇",
+      "firefox": "󰈹",
+      "mpv": "󰐻"
     },
-    "max-length": 35,
+    "max-length": 60,
     "tooltip": false
   },
   "custom/weather": {

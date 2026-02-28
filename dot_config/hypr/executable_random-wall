@@ -1,0 +1,4 @@
+#!/bin/bash
+WALL=$(find ~/Pictures/Wallpaper -type f \( -name "*.jpg" -o -name "*.png" \) | shuf -n1)
+hyprctl hyprpaper preload "$WALL"
+hyprctl hyprpaper wallpaper ",$WALL"

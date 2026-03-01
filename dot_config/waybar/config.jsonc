@@ -185,9 +185,9 @@
     "tooltip": false
   },
   "hyprland/language": {
-    "format": "{} ",
+    "format": "{}",
     "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
-    "format-es": "ESP",
-    "format-en": "ENG"
+    "format-en": "US ",
+    "format-de": "DE "
   }
 }

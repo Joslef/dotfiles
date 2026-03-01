@@ -76,22 +76,27 @@ window#waybar.hidden {
 
 #cpu {
   background: #96CDFB;
+  min-width: 45px;
 }
 
 #memory {
   background: #DDB6F2;
+  min-width: 45px;
 }
 
 #disk {
   background: #F5C2E7;
+  min-width: 45px;
 }
 
 #temperature {
   background: #F8BD96;
+  min-width: 45px;
 }
 
 #custom-updates {
   background: #E879F9;
+  min-width: 45px;
 }
 
 #mpris {

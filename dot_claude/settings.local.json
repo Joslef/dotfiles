@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(passwd:*)",
+      "Bash(ls:*)",
+      "Bash(file-history count:*)",
+      "Bash(which ccusage:*)",
+      "Bash(head:*)",
+      "Bash(find:*)",
+      "Bash(playerctl:*)",
+      "Bash(waybar:*)",
+      "WebSearch",
+      "WebFetch(domain:man.archlinux.org)",
+      "Bash(node:*)",
+      "Bash(python3:*)",
+      "Bash(pacman:*)",
+      "Bash(chmod +x:*)",
+      "Bash(hyprctl reload:*)"
+    ]
+  }
+}

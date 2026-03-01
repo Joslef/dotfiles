@@ -145,13 +145,13 @@
   },
   "pulseaudio/slider": {
     "format": "{volume}%",
-    "format-muted": " MUTE",
+    "format-muted": "󰝟 MUTE",
     "step": 5,
     "tooltip": false
   },
   "pulseaudio": {
     "format": "{volume}% {icon}",
-    "format-muted": " {format_source}",
+    "format-muted": "{volume}% 󰝟",
     "format-icons": {
       "default": [
         "",

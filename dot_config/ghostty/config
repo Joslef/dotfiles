@@ -24,7 +24,7 @@ keybind = opt+cmd+d=scroll_page_lines:10
 keybind = opt+cmd+u=scroll_page_lines:-10
 keybind = alt+j=unbind
 keybind = alt+k=unbind
-keybind = ctrl+n=new_window
+keybind = opt+cmd+n=new_window
 keybind = ctrl+w=close_window
 macos-option-as-alt = left
 cursor-color = #FF27DD

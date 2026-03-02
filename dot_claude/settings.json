@@ -4,7 +4,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/joerg/.claude/claude_statusbar"
+    "command": "bash $HOME/.claude/claude_statusbar"
   },
   "skipDangerousModePermissionPrompt": true
 }

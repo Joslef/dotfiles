@@ -102,7 +102,7 @@
   "custom/updates": {
     "exec": "~/.config/waybar/updates.sh",
     "return-type": "json",
-    "interval": 3600,
+    "interval": 300,
     "tooltip": true
   },
   /* === Modules Right === */
@@ -187,7 +187,8 @@
   },
   "hyprland/language": {
     "format": "{}",
-    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
+    "keyboard-name": "royuan-akko-multi-modes-keyboard-b",
+    "on-click": "hyprctl switchxkblayout all next",
     "format-en": "US ",
     "format-de": "DE "
   }

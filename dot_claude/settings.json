@@ -1,6 +1,10 @@
 {
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
   "statusLine": {
     "type": "command",
     "command": "bash /Users/joerg/.claude/claude_statusbar"
-  }
+  },
+  "skipDangerousModePermissionPrompt": true
 }

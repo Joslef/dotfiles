@@ -8,7 +8,7 @@ total_in=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 total_out=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 session_id=$(echo "$input" | jq -r '.session_id // empty')
 
-TOKEN_DIR="/home/joerg/.claude/tokens"
+TOKEN_DIR="/Users/joerg/.claude/tokens"
 
 # Accumulate token usage into daily files (statusline has the data; Stop hook does not)
 if [ -n "$session_id" ] && [ "$total_in" != "0" ]; then
@@ -104,7 +104,7 @@ week_in=0
 week_out=0
 dow=$(date +%u)  # 1=Mon … 7=Sun
 for i in $(seq 0 $(( dow - 1 ))); do
-    d=$(date -d "$i days ago" +%Y-%m-%d 2>/dev/null)
+    d=$(date -v-${i}d +%Y-%m-%d 2>/dev/null || date -d "$i days ago" +%Y-%m-%d 2>/dev/null)
     f="${TOKEN_DIR}/${d}.txt"
     if [ -f "$f" ]; then
         d_in=$(awk  'NR==1{print $1}' "$f" 2>/dev/null || echo 0)

@@ -2,6 +2,16 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+Snacks.toggle({
+  name = "Autocomplete",
+  get = function()
+    return vim.b.completion ~= false
+  end,
+  set = function(state)
+    vim.b.completion = state
+  end,
+}):map("<leader>uo")
+
 local wk = require("which-key")
 
 wk.add({

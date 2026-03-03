@@ -68,4 +68,26 @@ wk.add({
     desc = "Dashboard",
     icon = "",
   },
+  {
+    "gj",
+    function()
+      vim.fn.search("^#\\+\\s", "W")
+    end,
+    desc = "Jump to next markdown heading",
+    icon = "",
+    cond = function()
+      return vim.bo.filetype == "markdown"
+    end,
+  },
+  {
+    "gk",
+    function()
+      vim.fn.search("^#\\+\\s", "bW")
+    end,
+    desc = "Jump to previous markdown heading",
+    icon = "",
+    cond = function()
+      return vim.bo.filetype == "markdown"
+    end,
+  },
 })

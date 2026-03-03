@@ -6,5 +6,6 @@
     "type": "command",
     "command": "bash $HOME/.claude/claude_statusbar"
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "model": "opus"
 }

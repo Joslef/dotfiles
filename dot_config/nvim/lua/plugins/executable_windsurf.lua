@@ -20,8 +20,8 @@ return {
         key_bindings = {
           -- 3. Use the built-in Lua keybindings instead of the .vim functions
           accept = "<Tab>",
-          next = "<C-.>",
-          prev = "<C-,>",
+          next = "<C-n>",
+          prev = "<C-p>",
           clear = "<C-x>",
           accept_word = "<C-o>",
           accept_line = "<C-l>",

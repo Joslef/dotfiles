@@ -91,3 +91,19 @@ wk.add({
     end,
   },
 })
+
+-- Resize side panels with <C-.> (minimize) and <C-,> (maximize)
+-- Direction-aware: works correctly regardless of which split you're in
+vim.keymap.set("n", "<C-.>", function()
+  local winnr = vim.fn.winnr()
+  local rightmost = vim.fn.winnr("l") == winnr
+  local delta = rightmost and -5 or 5
+  vim.cmd("vertical resize " .. (delta > 0 and "+" or "") .. delta)
+end, { desc = "Minimize panel width" })
+
+vim.keymap.set("n", "<C-,>", function()
+  local winnr = vim.fn.winnr()
+  local rightmost = vim.fn.winnr("l") == winnr
+  local delta = rightmost and 5 or -5
+  vim.cmd("vertical resize " .. (delta > 0 and "+" or "") .. delta)
+end, { desc = "Maximize panel width" })

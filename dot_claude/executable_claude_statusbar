@@ -1,5 +1,5 @@
 #!/bin/bash
-# Line 1: Model | tokens used/total | % used <fullused> | % remain <fullremain> | thinking: on/off
+# Line 1: Model | tokens used/total | % used <fullused> | % remain <fullremain>
 # Line 2: current: <progressbar> % | weekly: <progressbar> % | extra: <progressbar> $used/$limit
 # Line 3: resets <time> | resets <datetime> | resets <date>
 
@@ -93,15 +93,7 @@ pct_remain=$(( 100 - pct_used ))
 used_comma=$(format_commas $current)
 remain_comma=$(format_commas $(( size - current )))
 
-# Check thinking status
-thinking_on=false
-settings_path="$HOME/.claude/settings.json"
-if [ -f "$settings_path" ]; then
-    thinking_val=$(jq -r '.alwaysThinkingEnabled // false' "$settings_path" 2>/dev/null)
-    [ "$thinking_val" = "true" ] && thinking_on=true
-fi
-
-# ===== LINE 1: Model | tokens | % used | % remain | thinking =====
+# ===== LINE 1: Model | tokens | % used | % remain =====
 line1=""
 line1+="${blue}${model_name}${reset}"
 line1+=" ${dim}|${reset} "
@@ -110,13 +102,6 @@ line1+=" ${dim}|${reset} "
 line1+="${green}${pct_used}% used ${orange}${used_comma}${reset}"
 line1+=" ${dim}|${reset} "
 line1+="${cyan}${pct_remain}% remain ${blue}${remain_comma}${reset}"
-line1+=" ${dim}|${reset} "
-line1+="thinking: "
-if $thinking_on; then
-    line1+="${orange}On${reset}"
-else
-    line1+="${dim}Off${reset}"
-fi
 
 # ===== Cross-platform OAuth token resolution (from statusline.sh) =====
 # Tries credential sources in order: env var → macOS Keychain → Linux creds file → GNOME Keyring

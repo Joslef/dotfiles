@@ -1,0 +1,3 @@
+config:
+  # Disable rules that delete links during auto-fix
+  MD053: false  # link and image reference definitions should be needed

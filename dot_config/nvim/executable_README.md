@@ -1,103 +1,170 @@
 # 🚀 My LazyVim Setup
 
-A minimal yet powerful LazyVim environment,
-enhanced with carefully selected plugins
-
-<br>
+A minimal yet powerful LazyVim environment, enhanced with carefully selected plugins for AI-assisted coding, navigation, and a polished UI.
 
 ## ✨ Features
 
-### 🎨 Beautiful Theme
+### 🎨 Theme
 
-- **[Catppuccin](https://github.com/catppuccin/nvim)** - A soothing pastel color scheme with multiple flavors (Latte, Frappé, Macchiato, Mocha)
+- **[Catppuccin](https://github.com/catppuccin/nvim)** — soothing pastel color scheme, set as the default colorscheme
 
 ### 📁 File Management
 
-- **[Yazi](https://github.com/mikavilpas/yazi.nvim)** - Blazing fast terminal file manager integrated into Neovim with floating window support
+- **[Yazi](https://github.com/mikavilpas/yazi.nvim)** — blazing fast terminal file manager integrated into Neovim via a floating window
 
 ### 🤖 AI-Powered Coding
 
-- **[Windsurf](https://github.com/Exafunction/windsurf.nvim)** - Native Windsurf plugin for intelligent code completion and assistance
-- **[OpenCode](https://github.com/NickvanDyke/opencode.nvim)** - AI assistant integration for code reviews, explanations, and editor-aware research
+- **[Codeium](https://github.com/Exafunction/codeium.nvim)** — AI inline completion with virtual text; status indicator shown in the statusline via lualine
+- **[claude-code.nvim](https://github.com/carlos-rodrigo/claude-code.nvim)** — Claude Code terminal integration with session management, auto-save, and vsplit support
+- **[claudecode.nvim](https://github.com/coder/claudecode.nvim)** — official Coder Claude Code plugin with diff accept/deny, model selection, and file-tree add support
+- **[OpenCode](https://github.com/NickvanDyke/opencode.nvim)** — AI assistant integration for code reviews, explanations, and editor-aware research
+
+### 🔍 Code Navigation
+
+- **[Aerial](https://github.com/stevearc/aerial.nvim)** — code outline / symbol tree panel, pinned to the left at a minimum width of 50 columns (LazyVim extra)
 
 ### 🔧 Git Integration
 
-- **[LazyGit](https://github.com/kdheepak/lazygit.nvim)** - Powerful git UI accessible directly from Neovim in a floating window
+- **[LazyGit](https://github.com/kdheepak/lazygit.nvim)** — full-featured Git UI accessible from Neovim in a floating window
 
-<br>
+### 📝 Formatting
 
-## 🎯 Quick Start
+- **[conform.nvim](https://github.com/stevearc/conform.nvim)** — formatting overrides: markdownlint-cli2 always uses the global `~/.markdownlint-cli2.yaml` config; TOML files are formatted with `taplo`
+- **[taplo](https://taplo.tamasfe.dev/)** LSP configured with config-file detection disabled so it works without a `taplo.toml`
 
-#### Prerequisites
+### 🗂️ LazyVim Extras Enabled
 
-- Neovim >= 0.11.2
-- Git >= 2.19.0
-- A Nerd Font (for icons)
-
-#### Installation
-
-- Backup your existing Neovim config
-
-<pre lang="bash">
-mv ~/.config/nvim{,.bak}
-</pre>
-
-- Clone LazyVim starter
-
-<pre lang="bash">
-git clone https://github.com/LazyVim/starter ~/.config/nvim
-</pre>
-
-- Remove the git folder
-
-<pre lang="bash">
-rm -rf ~/.config/nvim/.git
-</pre>
-
-- Clone the configuration
-
-<pre lang="bash">
-git clone https://github.com/Joslef/nvim.git ~/.config/nvim
-</pre>
-
-- Open Neovim, all plugins will be installed automatically
-
-<pre lang="bash">
-nvim
-</pre>
-
-<br>
+- `lazyvim.plugins.extras.editor.aerial` — code outline panel
+- `lazyvim.plugins.extras.lang.json` — JSON language support
+- `lazyvim.plugins.extras.lang.markdown` — Markdown language support
+- `lazyvim.plugins.extras.lang.toml` — TOML language support
 
 ## ⌨️ Custom Keymaps
 
-This configuration includes tweaked keymaps (more to come!)
+### General
 
 | Keymap | Action |
 |--------|--------|
-| \<leader-h> | Go back to Dashboard |
+| `<leader>h` | Open Dashboard |
+| `<leader>uo` | Toggle buffer-local autocomplete |
+| `<C-.>` | Shrink current panel width (direction-aware) |
+| `<C-,>` | Expand current panel width (direction-aware) |
 
-<br>
+### File Management
+
+| Keymap | Action |
+|--------|--------|
+| `<leader>-` | Open Yazi at the current file |
+
+### Git
+
+| Keymap | Action |
+|--------|--------|
+| `<leader>lg` | Open LazyGit |
+
+### Claude Code (`<leader>C`)
+
+| Keymap | Action |
+|--------|--------|
+| `<leader>Cc` | Toggle Claude / Toggle Claude (claudecode.nvim) |
+| `<leader>Cf` | Focus Claude panel |
+| `<leader>Cr` | Resume last Claude session |
+| `<leader>Cn` | Continue / new Claude session |
+| `<leader>Cm` | Select Claude model |
+| `<leader>Cb` | Browse sessions / Add buffer to Claude |
+| `<leader>Cs` | Send visual selection to Claude |
+| `<leader>Cv` | Open Claude in vertical split |
+| `<leader>CS` | Save current Claude session |
+| `<leader>Cu` | Update current Claude session |
+| `<leader>Cw` | New Claude session with selection (visual) |
+| `<leader>Ca` | Accept diff proposed by Claude |
+| `<leader>Cd` | Deny diff proposed by Claude |
+| `<C-q>` | Exit terminal insert mode in Claude buffer |
+
+### OpenCode (`<leader>o`)
+
+| Keymap | Action |
+|--------|--------|
+| `<leader>oa` | Ask OpenCode about this (auto-submit) |
+| `<leader>os` | Select a prompt template |
+| `<leader>o+` | Add current context to OpenCode |
+| `<leader>ot` | Toggle embedded OpenCode panel |
+| `<leader>oc` | Select an OpenCode command |
+| `<leader>oA` | Cycle the selected OpenCode agent |
+
+### Markdown (active in `.md` files only)
+
+| Keymap | Action |
+|--------|--------|
+| `gj` | Jump to next heading |
+| `gk` | Jump to previous heading |
+
+### Codeium (insert mode)
+
+| Keymap | Action |
+|--------|--------|
+| `<Tab>` | Accept full suggestion |
+| `<C-o>` | Accept next word |
+| `<C-l>` | Accept next line |
+| `<C-n>` | Next suggestion |
+| `<C-p>` | Previous suggestion |
+| `<C-x>` | Clear suggestion |
+
+## 🚀 Installation
+
+Install Homebrew-managed tools:
+
+```bash
+brew install neovim yazi lazygit taplo markdownlint-cli2 opencode
+```
+
+Install the `claude` CLI (not available via Homebrew):
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Create `~/.markdownlint-cli2.yaml` — the conform.nvim config hardcodes this path; without it, Markdown formatting silently fails.
+
+Back up any existing Neovim config, clone this repo, then open Neovim — all plugins install automatically:
+
+```bash
+mv ~/.config/nvim{,.bak}
+git clone https://github.com/Joslef/nvim.git ~/.config/nvim
+nvim
+```
 
 ## 📦 Dependencies
 
-All plugins are managed through [LazyVim's plugin manager](https://github.com/folke/lazy.nvim)
+All plugins are managed through [lazy.nvim](https://github.com/folke/lazy.nvim).
 
-- [Catppuccin/nvim](https://github.com/catppuccin/nvim) - Color scheme
-- [mikavilpas/yazi.nvim](https://github.com/mikavilpas/yazi.nvim) - File manager
-- [Exafunction/windsurf.nvim](https://github.com/Exafunction/windsurf.nvim) - AI completion
-- [NickvanDyke/opencode.nvim](https://github.com/NickvanDyke/opencode.nvim) - AI assistant
-- [kdheepak/lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) - Git UI
+- [catppuccin/nvim](https://github.com/catppuccin/nvim) — color scheme
+- [mikavilpas/yazi.nvim](https://github.com/mikavilpas/yazi.nvim) — file manager
+- [Exafunction/codeium.nvim](https://github.com/Exafunction/codeium.nvim) — AI inline completion
+- [carlos-rodrigo/claude-code.nvim](https://github.com/carlos-rodrigo/claude-code.nvim) — Claude terminal integration
+- [coder/claudecode.nvim](https://github.com/coder/claudecode.nvim) — Claude Code official plugin
+- [NickvanDyke/opencode.nvim](https://github.com/NickvanDyke/opencode.nvim) — AI assistant
+- [stevearc/aerial.nvim](https://github.com/stevearc/aerial.nvim) — code outline panel
+- [kdheepak/lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) — Git UI
+- [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim) — formatting overrides
 
-<br>
+## 🖥️ Requirements
+
+- Neovim >= 0.10.0
+- Git >= 2.19.0
+- A [Nerd Font](https://www.nerdfonts.com/) (for icons)
+- `yazi` — for the file manager integration (`brew install yazi`)
+- `lazygit` — for the Git UI (`brew install lazygit`)
+- `taplo` — for TOML formatting (`brew install taplo`; also auto-installed by Mason via the LazyVim TOML extra)
+- `markdownlint-cli2` — for Markdown formatting (`brew install markdownlint-cli2`; also auto-installed by Mason via the LazyVim Markdown extra); requires `~/.markdownlint-cli2.yaml` to exist
+- `claude` CLI — required by `claude-code.nvim` and `claudecode.nvim`; install via `npm install -g @anthropic-ai/claude-code` (not available on Homebrew)
+- `opencode` — required by `opencode.nvim` (`brew install opencode`)
 
 ## 📚 Resources
 
 - [LazyVim Documentation](https://www.lazyvim.org/)
 - [Neovim Documentation](https://neovim.io/doc/user/)
+- [Catppuccin Project](https://catppuccin.com/)
 - [Yazi Documentation](https://yazi-rs.github.io/docs/installation)
 - [LazyGit Introduction Video](https://www.youtube.com/watch?v=CPLdltN7wgE)
-- [Catppuccin Project](https://catppuccin.com/)
-
-<br>
-
-**Happy coding! 🎉**
+- [Codeium for Neovim](https://codeium.com/vim_tutorial)

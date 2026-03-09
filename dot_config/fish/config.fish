@@ -36,7 +36,6 @@ if status is-interactive
     alias synphaer="mpv http://api.somafm.com/synphaera.pls"
     alias ls="eza --long --icons --header --sort=created --group-directories-first"
     alias lsa="eza --long --icons --all --header --sort=created --group-directories-first"
-    alias uptodate="brew update; brew outdated; brew upgrade; brew cleanup; mas upgrade"
     alias vim="nvim"
     alias v="nvim"
     alias c="claude"

@@ -61,6 +61,27 @@
 - Menu toggle removed — spaces always visible
 - Lead padding before first workspace: 20px
 
+## Aerospace Window Rules
+| App | Workspace | Rule |
+|-----|-----------|------|
+| Raycast | (any) | floating + resize script |
+| Ghostty | 1 | auto-move |
+| Finder | 2 | auto-move |
+| Zen Browser | 4 | auto-move |
+| Notion | 5 | auto-move |
+| Spotify | 7 (Sidecar) / current | conditional — only moves when Sidecar connected |
+
+### Raycast AI Chat Window — Known Limitations
+- Raycast has its own internal window management that overrides external size/position changes
+- `NSWindow Frame ai-chat-window` in `com.raycast.macos` defaults controls the saved frame, but Raycast overwrites it on every window close/hide
+- AppleScript `set size` works momentarily but Raycast resets it after a few focus changes
+- macOS Sequoia edge tiling is disabled (`EnableTilingByEdgeDrag = 0`) but Raycast still snaps to edges on its own
+- Window snaps to available space minus menu bar (e.g. 1280x1359 instead of 1280x1440)
+- `on-window-detected` with `layout floating` works — window IS floating in aerospace, but Raycast controls the size internally
+- **Conclusion**: Fighting Raycast's window manager is fragile. Accept its default behavior or file a Raycast feature request for AI Chat window size settings.
+- Neither yabai nor Hammerspoon are installed; those would be needed for true always-on-top and forced sizing
+- Current setup: `float-raycast-ai.sh` runs on focus change, resizes to 1280x1440, but Raycast may override
+
 ## File Structure
 - `bar.lua` — bar config + display management
 - `items/init.lua` — loads: apple, spaces, front_apps, message, widgets

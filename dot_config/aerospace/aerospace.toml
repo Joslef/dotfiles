@@ -12,7 +12,16 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = ['exec-and-forget borders']
+after-startup-command = [
+  'exec-and-forget borders',
+  'exec-and-forget sketchybar'
+]
+
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -43,7 +52,12 @@ key-mapping.preset = 'qwerty'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = ['move-mouse window-lazy-center']
+on-focus-changed = [
+  'move-mouse window-lazy-center',
+  'exec-and-forget sketchybar --trigger front_app_switched',
+  'exec-and-forget sketchybar --trigger update_windows',
+  'exec-and-forget ~/.config/aerospace/float-raycast-ai.sh'
+]
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -65,7 +79,7 @@ on-focus-changed = ['move-mouse window-lazy-center']
 
 [[on-window-detected]]
 if.app-id = 'com.raycast.macos'
-run = 'layout floating'
+run = ['layout floating', 'exec-and-forget ~/.config/aerospace/float-raycast-ai.sh']
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
@@ -85,14 +99,14 @@ run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
-run = 'move-node-to-workspace 7'
+run = ['exec-and-forget aerospace list-monitors | grep -q Sidecar && aerospace move-node-to-workspace 7']
 
 [gaps]
 inner.horizontal = 10
 inner.vertical = 10
 outer.left = 10
 outer.bottom = 10
-outer.top = 10
+outer.top = [{ monitor."Sidecar" = 10 }, 48]
 outer.right = 10
 
 # 'main' binding mode declaration
@@ -151,9 +165,9 @@ alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
+alt-7 = ['workspace 7', 'exec-and-forget aerospace list-windows --workspace 7 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}']
+alt-8 = ['workspace 8', 'exec-and-forget aerospace list-windows --workspace 8 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}']
+alt-9 = ['workspace 9', 'exec-and-forget aerospace list-windows --workspace 9 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']

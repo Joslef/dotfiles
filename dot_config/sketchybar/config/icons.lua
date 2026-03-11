@@ -211,6 +211,7 @@ local apps <const> = {
   ["Quantumult X"] = ":quantumult_x:",
   ["qutebrowser"] = ":qute_browser:",
   ["Raindrop.io"] = ":raindrop_io:",
+  ["Raycast"] = ":raycast:",
   ["Reeder"] = ":reeder5:",
   ["Reminders"] = ":reminders:",
   ["提醒事项"] = ":reminders:",

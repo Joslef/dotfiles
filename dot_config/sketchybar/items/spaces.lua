@@ -37,24 +37,34 @@ local function updateExternalWorkspaces()
   end)
 end
 
--- Update workspace icons based on what apps are running in each workspace
-local function updateWorkspaceIcons()
-  for _, wsName in ipairs(allWorkspaces) do
-    local spaceName = constants.items.SPACES .. "." .. wsName
-    local item = spaces[spaceName]
-    if item then
-      sbar.exec(
-        "aerospace list-windows --workspace " .. wsName .. " --format %{app-name} 2>/dev/null",
-        function(result)
-          result = result:gsub("[\n\r]+$", "")
-          local firstApp = result:match("([^\n]+)")
-
-          if firstApp and firstApp ~= "" then
+-- Query all workspaces once, then set both icon and color for each in one pass
+local function refreshWorkspaces()
+  sbar.exec("aerospace list-workspaces --focused", function(focusedOut)
+    local focusedWorkspaceName = focusedOut:match("[^\r\n]+")
+    sbar.exec("aerospace list-windows --all --format '%{workspace}|%{app-name}' 2>/dev/null", function(out)
+      -- Parse all windows into a table: wsApps[wsName] = firstAppName
+      local wsApps = {}
+      for line in out:gmatch("[^\n]+") do
+        local ws, app = line:match("([^|]+)|(.+)")
+        if ws and app and not wsApps[ws] then
+          wsApps[ws] = app
+        end
+      end
+      -- Update all workspace items in one pass
+      for _, wsName in ipairs(allWorkspaces) do
+        local spaceName = constants.items.SPACES .. "." .. wsName
+        local item = spaces[spaceName]
+        if item then
+          local firstApp = wsApps[wsName]
+          local isSelected = wsName == focusedWorkspaceName
+          -- Set icon and color together
+          if firstApp then
             local appIcon = settings.icons.apps[firstApp] or settings.icons.apps["default"]
             item:set({
               icon = {
                 string = appIcon,
                 font = settings.fonts.icons(),
+                color = isSelected and settings.colors.orange or settings.colors.white,
               },
             })
           else
@@ -67,66 +77,14 @@ local function updateWorkspaceIcons()
                   style = settings.fonts.styles.regular,
                   size = settings.dimens.text.icon,
                 },
+                color = isSelected and settings.colors.orange or settings.colors.grey,
               },
             })
           end
         end
-      )
-    end
-  end
-end
-
-local function selectCurrentWorkspace(focusedWorkspaceName)
-  for sid, item in pairs(spaces) do
-    if item ~= nil then
-      local isSelected = sid == constants.items.SPACES .. "." .. focusedWorkspaceName
-      item:set({
-        icon = { color = isSelected and settings.colors.orange or settings.colors.white },
-        background = { color = settings.colors.transparent },
-      })
-    end
-  end
-
-  sbar.trigger(constants.events.UPDATE_WINDOWS)
-end
-
--- After updating icons, re-apply the highlight color and dim empty workspaces
-local function refreshWorkspaces()
-  updateWorkspaceIcons()
-  -- Small delay to let icon updates complete, then re-apply colors
-  sbar.delay(1, function()
-    sbar.exec(constants.aerospace.GET_CURRENT_WORKSPACE, function(focusedWorkspaceOutput)
-      local focusedWorkspaceName = focusedWorkspaceOutput:match("[^\r\n]+")
-      -- Check which workspaces have apps to determine dimming
-      for _, wsName in ipairs(allWorkspaces) do
-        local spaceName = constants.items.SPACES .. "." .. wsName
-        local item = spaces[spaceName]
-        if item then
-          sbar.exec(
-            "aerospace list-windows --workspace " .. wsName .. " --format %{app-name} 2>/dev/null",
-            function(result)
-              result = result:gsub("[\n\r]+$", "")
-              local hasApp = result:match("([^\n]+)") ~= nil
-              local isSelected = wsName == focusedWorkspaceName
-              local color
-              if isSelected then
-                color = settings.colors.orange
-              elseif hasApp then
-                color = settings.colors.white
-              else
-                color = settings.colors.grey
-              end
-              item:set({ icon = { color = color } })
-            end
-          )
-        end
       end
     end)
   end)
-end
-
-local function findAndSelectCurrentWorkspace()
-  refreshWorkspaces()
 end
 
 local firstItem = true
@@ -135,7 +93,7 @@ local function addWorkspaceItem(workspaceName)
   local spaceName = constants.items.SPACES .. "." .. workspaceName
 
   if firstItem then
-    sbar.add("item", spaceName .. ".leadpad", { width = 10 })
+    sbar.add("item", spaceName .. ".leadpad", { width = 20 })
     firstItem = false
   end
 
@@ -174,7 +132,7 @@ local function createWorkspaces()
       addWorkspaceItem(workspaceName)
     end
 
-    findAndSelectCurrentWorkspace()
+    refreshWorkspaces()
     updateExternalWorkspaces()
   end)
 end
@@ -195,6 +153,7 @@ end)
 
 currentWorkspaceWatcher:subscribe(constants.events.AEROSPACE_WORKSPACE_CHANGED, function(env)
   refreshWorkspaces()
+  sbar.trigger(constants.events.UPDATE_WINDOWS)
 end)
 
 createWorkspaces()

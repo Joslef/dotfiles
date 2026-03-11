@@ -1,24 +1,23 @@
 local settings = require("config.settings")
 
-local weatherIcons = {
-  ["Clear"] = "☀️",
-  ["Sunny"] = "☀️",
-  ["Partly cloudy"] = "⛅",
-  ["Cloudy"] = "☁️",
-  ["Overcast"] = "☁️",
-  ["Mist"] = "🌫️",
-  ["Fog"] = "🌫️",
-  ["Patchy rain possible"] = "🌦️",
-  ["Light rain"] = "🌧️",
-  ["Moderate rain"] = "🌧️",
-  ["Heavy rain"] = "🌧️",
-  ["Light drizzle"] = "🌦️",
-  ["Patchy light rain"] = "🌦️",
-  ["Light snow"] = "🌨️",
-  ["Moderate snow"] = "🌨️",
-  ["Heavy snow"] = "❄️",
-  ["Thunderstorm"] = "⛈️",
-  ["Patchy snow possible"] = "🌨️",
+-- Pattern-based weather icon matching (checked in order, first match wins)
+local weatherPatterns = {
+  { "thunder", "⛈️" },
+  { "snow", "🌨️" },
+  { "blizzard", "❄️" },
+  { "ice", "🌨️" },
+  { "sleet", "🌨️" },
+  { "freezing", "🌨️" },
+  { "heavy.*rain", "🌧️" },
+  { "moderate.*rain", "🌧️" },
+  { "rain", "🌦️" },
+  { "drizzle", "🌦️" },
+  { "mist", "🌫️" },
+  { "fog", "🌫️" },
+  { "overcast", "☁️" },
+  { "cloudy", "⛅" },
+  { "clear", "☀️" },
+  { "sunny", "☀️" },
 }
 
 sbar.add("item", "widgets.weather.gap", { position = "right", width = 5 })
@@ -32,16 +31,12 @@ local weather = sbar.add("item", "widgets.weather", {
   },
   label = {
     string = "…",
-    font = {
-      family = settings.fonts.text,
-      style = settings.fonts.styles.regular,
-      size = 12.0,
-    },
+    font = settings.fonts.label(),
   },
 })
 
 weather:subscribe({ "routine", "forced" }, function()
-  sbar.exec("curl -s 'wttr.in/?format=%t|%C' 2>/dev/null", function(result)
+  sbar.exec("curl -s --max-time 10 'wttr.in/Munich,Bayern?format=%t|%C' 2>/dev/null", function(result)
     if not result or result == "" or result:find("Unknown") then return end
 
     local temp, condition = result:match("([^|]+)|?(.*)")
@@ -50,7 +45,14 @@ weather:subscribe({ "routine", "forced" }, function()
     temp = temp:gsub("[\n\r]", ""):gsub("^%s+", ""):gsub("%s+$", "")
     condition = condition and condition:gsub("[\n\r]", ""):gsub("^%s+", ""):gsub("%s+$", "") or ""
 
-    local icon = weatherIcons[condition] or "🌡️"
+    local icon = "🌡️"
+    local condLower = condition:lower()
+    for _, entry in ipairs(weatherPatterns) do
+      if condLower:find(entry[1]) then
+        icon = entry[2]
+        break
+      end
+    end
 
     weather:set({
       icon = { string = icon },

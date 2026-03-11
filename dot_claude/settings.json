@@ -2,9 +2,14 @@
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/claude_statusbar"
   },
-  "skipDangerousModePermissionPrompt": true
+  "effortLevel": "medium",
+  "skipDangerousModePermissionPrompt": true,
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  }
 }

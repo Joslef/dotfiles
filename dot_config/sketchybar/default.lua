@@ -62,5 +62,4 @@ sbar.default({
       drawing = false,
     },
   },
-  scroll_texts = true,
 })

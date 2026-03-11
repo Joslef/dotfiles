@@ -15,7 +15,8 @@
       "Bash(python3:*)",
       "Bash(pacman:*)",
       "Bash(chmod +x:*)",
-      "Bash(hyprctl reload:*)"
+      "Bash(hyprctl reload:*)",
+      "Bash(brew install:*)"
     ]
   }
 }

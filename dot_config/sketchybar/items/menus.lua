@@ -46,7 +46,7 @@ local function updateMenus()
   sbar.exec("$CONFIG_DIR/bridge/menus/bin/menus -l", function(menus)
     local index = 1
     for menu in string.gmatch(menus, '[^\r\n]+') do
-      if index < maxItems then
+      if index <= maxItems then
         menuItems[index]:set(
           {
             width = "dynamic",
@@ -61,7 +61,6 @@ local function updateMenus()
     end
   end)
 
-  sbar.set(constants.items.MENU .. ".padding", { drawing = isShowingMenu })
 end
 
 frontAppWatcher:subscribe(constants.events.FRONT_APP_SWITCHED, updateMenus)

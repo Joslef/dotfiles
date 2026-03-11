@@ -6,7 +6,7 @@ sbar.begin_config()
 sbar.hotload(true)
 
 require("constants")
-require("config")
+require("config.settings")
 require("bar")
 require("default")
 require("items")

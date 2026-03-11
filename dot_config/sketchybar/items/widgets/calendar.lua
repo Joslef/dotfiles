@@ -2,7 +2,7 @@ local constants = require("constants")
 
 local calendar = sbar.add("item", constants.items.CALENDAR, {
   position = "right",
-  update_freq = 1,
+  update_freq = 30,
   icon = { padding_left = 0, padding_right = 0 }
 })
 

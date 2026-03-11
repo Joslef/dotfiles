@@ -22,14 +22,9 @@ local npTitle = sbar.add("item", "widgets.now_playing.title", {
   drawing = false,
   icon = { drawing = false },
   label = {
-    font = {
-      family = settings.fonts.text,
-      style = settings.fonts.styles.regular,
-      size = 12.0,
-    },
-    color = settings.colors.dirty_white,
+    font = settings.fonts.label(),
+    color = settings.colors.white,
     max_chars = 60,
-    scroll_texts = false,
     padding_left = 0,
     padding_right = 0,
   },
@@ -40,7 +35,8 @@ local npIcon = sbar.add("item", "widgets.now_playing.icon", {
   icon = { drawing = false },
   label = { drawing = false },
   drawing = false,
-  update_freq = 3,
+  update_freq = 10,
+  updates = "on",
 })
 
 local function showNowPlaying(display)

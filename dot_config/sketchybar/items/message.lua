@@ -38,11 +38,8 @@ local function showMessage(content, hold)
   message:set({ popup = { drawing = true } })
   messagePopup:set({ label = { string = content } })
 
-  if hold == false then
-    sbar.delay(5, function()
-      if hold then return end
-      hideMessage()
-    end)
+  if not hold then
+    sbar.delay(5, hideMessage)
   end
 end
 

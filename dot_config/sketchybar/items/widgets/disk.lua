@@ -2,7 +2,7 @@ local settings = require("config.settings")
 
 local disk = sbar.add("item", "widgets.disk", {
   position = "right",
-  update_freq = 120,
+  update_freq = 600,
   icon = {
     string = "󰋊",
     color = settings.colors.blue,
@@ -11,16 +11,12 @@ local disk = sbar.add("item", "widgets.disk", {
   },
   label = {
     string = "??%",
-    font = {
-      family = settings.fonts.numbers,
-      style = settings.fonts.styles.regular,
-      size = 12.0,
-    },
+    font = settings.fonts.label(),
   },
 })
 
 disk:subscribe({ "routine", "forced" }, function()
-  sbar.exec("df -h / | awk 'NR==2{printf \"%s\", $5}'", function(result)
+  sbar.exec("diskutil info / | awk -F': +' '/Container Total Space/{total=$2} /Container Free Space/{free=$2} END{gsub(/ .*/,\"\",total); gsub(/ .*/,\"\",free); printf \"%.0f%%\", 100*(total-free)/total}'", function(result)
     local val = tonumber(result:match("(%d+)")) or 0
     local color = settings.colors.white
     if val > 90 then

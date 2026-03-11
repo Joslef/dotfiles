@@ -1,6 +1,7 @@
 require("items.widgets.calendar")
 require("items.widgets.volume")
 require("items.widgets.cpu")
+require("items.widgets.brew")
 require("items.widgets.disk")
 require("items.widgets.next_event")
 require("items.widgets.weather")

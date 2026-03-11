@@ -73,22 +73,13 @@ local function updateWindows(windows)
               color = settings.colors.grey,
               padding_left = 8,
               padding_right = 10,
-              font = {
-                family = settings.fonts.text,
-                style = settings.fonts.styles.regular,
-                size = 14.0,
-              },
+              font = settings.fonts.label(14.0),
             },
             label = {
               string = title,
-              color = settings.colors.dirty_white,
+              color = settings.colors.white,
               max_chars = 80,
-              scroll_texts = false,
-              font = {
-                family = settings.fonts.text,
-                style = settings.fonts.styles.regular,
-                size = 12.0,
-              },
+              font = settings.fonts.label(),
             },
           })
         end

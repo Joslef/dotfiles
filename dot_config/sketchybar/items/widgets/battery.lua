@@ -3,7 +3,7 @@ local settings = require("config.settings")
 
 local isCharging = false
 
-local battery = sbar.add("item", constants.items.battery, {
+local battery = sbar.add("item", constants.items.BATTERY, {
   position = "right",
   update_freq = 60,
 })
@@ -47,7 +47,7 @@ battery:subscribe({ "routine", "power_source_change", "system_woke" }, function(
       elseif found and charge > 40 then
         icon = settings.icons.text.battery._50
       elseif found and charge > 30 then
-        icon = settings.icons.text.battery._50
+        icon = settings.icons.text.battery._25
         color = settings.colors.yellow
       elseif found and charge > 20 then
         icon = settings.icons.text.battery._25

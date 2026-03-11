@@ -10,34 +10,27 @@ local event = sbar.add("item", "widgets.next_event", {
   },
   label = {
     string = "",
-    font = {
-      family = settings.fonts.text,
-      style = settings.fonts.styles.regular,
-      size = 12.0,
-    },
+    font = settings.fonts.label(),
     max_chars = 50,
-    scroll_texts = false,
   },
 })
 
 event:subscribe({ "routine", "forced" }, function()
-  sbar.exec(
-    "cat /tmp/sketchybar_next_event 2>/dev/null",
-    function(result)
-      result = result:gsub("[\n\r]", ""):gsub("^%s+", ""):gsub("%s+$", "")
-      if result == "" then
-        event:set({
-          label = { string = "No events" },
-          icon = { color = settings.colors.grey },
-        })
-      else
-        event:set({
-          label = { string = result, color = settings.colors.white },
-          icon = { color = settings.colors.magenta },
-        })
-      end
-    end
-  )
+  local f = io.open("/tmp/sketchybar_next_event", "r")
+  local result = f and f:read("*a") or ""
+  if f then f:close() end
+  result = result:gsub("[\n\r]", ""):gsub("^%s+", ""):gsub("%s+$", "")
+  if result == "" then
+    event:set({
+      label = { string = "No events" },
+      icon = { color = settings.colors.grey },
+    })
+  else
+    event:set({
+      label = { string = result, color = settings.colors.white },
+      icon = { color = settings.colors.magenta },
+    })
+  end
 end)
 
 event:subscribe("mouse.clicked", function()

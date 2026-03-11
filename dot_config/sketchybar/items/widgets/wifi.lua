@@ -244,7 +244,7 @@ end
 
 local function copyLabelToClipboard(env)
   local label = sbar.query(env.NAME).label.value
-  sbar.exec("echo \"" .. label .. "\" | pbcopy")
+  sbar.exec("printf '%s' " .. string.format("%q", label) .. " | pbcopy")
   sbar.set(env.NAME, { label = { string = settings.icons.text.clipboard, align = "center" } })
   sbar.delay(1, function()
     sbar.set(env.NAME, { label = { string = label, align = "right" } })

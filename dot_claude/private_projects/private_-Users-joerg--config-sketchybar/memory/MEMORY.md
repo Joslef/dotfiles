@@ -46,6 +46,8 @@
 | Disk | 600s | shell command |
 | Weather | 900s | `curl wttr.in` |
 | Brew | 3600s | reads `/tmp/sketchybar_brew_count` file |
+| Todoist | 300s | reads `/tmp/sketchybar_todoist_count` file |
+| Network | 2s | `network_load` bridge binary (event-driven) |
 | Volume | event-driven | no polling |
 
 ## Performance Notes
@@ -53,6 +55,10 @@
 - `sbar.exec` is async, doesn't block event loop
 - File reads (brew, next_event) are cheaper than spawning subprocesses
 - Weather uses pattern-based icon matching (case-insensitive keyword search) instead of exact string lookup
+- Todoist widget uses launchd job + cache file (same pattern as brew) — excludes "Einkaufsliste" and "Familienliste" projects
+- Todoist API: v2 is deprecated, must use v1 (`/api/v1/tasks`), response has `results` array + `next_cursor` pagination
+- Token stored at `~/.config/secrets/todoist_token` (outside sketchybar dir to avoid chezmoi/git sync)
+- Soundcore Liberty 4 NC does NOT expose battery via macOS Bluetooth API — no BatteryPercent in ioreg or system_profiler
 
 ## Bar Appearance
 - Background: `0x40cccccc` (light grey, 25% opacity) with `blur_radius = 30`

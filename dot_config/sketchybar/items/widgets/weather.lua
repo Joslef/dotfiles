@@ -11,13 +11,17 @@ local weatherPatterns = {
   { "heavy.*rain", "🌧️" },
   { "moderate.*rain", "🌧️" },
   { "rain", "🌦️" },
+  { "shower", "🌦️" },
   { "drizzle", "🌦️" },
   { "mist", "🌫️" },
   { "fog", "🌫️" },
+  { "haze", "🌫️" },
   { "overcast", "☁️" },
   { "cloudy", "⛅" },
   { "clear", "☀️" },
   { "sunny", "☀️" },
+  { "fair", "☀️" },
+  { "vicinity", "🌦️" },
 }
 
 sbar.add("item", "widgets.weather.gap", { position = "right", width = 5 })

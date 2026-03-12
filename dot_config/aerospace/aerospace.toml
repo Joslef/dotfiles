@@ -158,6 +158,10 @@ alt-n = 'exec-and-forget ~/.config/aerospace/new-instance.sh'
 alt-comma = 'resize smart +50'
 alt-period = 'resize smart -50'
 
+# Cycle through workspaces 1-9
+alt-o = "exec-and-forget /bin/sh -c 'c=$(aerospace list-workspaces --focused); aerospace workspace $(( (c - 2 + 9) % 9 + 1 ))'"
+alt-p = "exec-and-forget /bin/sh -c 'c=$(aerospace list-workspaces --focused); aerospace workspace $((c % 9 + 1))'"
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'

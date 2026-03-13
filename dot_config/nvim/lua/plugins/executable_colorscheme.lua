@@ -11,7 +11,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin", -- Must match the theme's internal name
+      colorscheme = "catppuccin-mocha", -- renamed upstream: "catppuccin" -> "catppuccin-nvim" / flavour variants
     },
   },
 }

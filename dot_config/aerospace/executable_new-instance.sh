@@ -4,7 +4,7 @@ app=$(osascript -e 'tell application "System Events" to get name of first applic
 
 case "$app" in
     "ghostty")
-        osascript -e 'tell application "Ghostty" to activate' -e 'tell application "System Events" to tell process "Ghostty" to keystroke "n" using command down' ;;
+        osascript -e 'tell application "System Events" to tell process "Ghostty" to click menu item "New Window" of menu "File" of menu bar 1' ;;
     "Finder"|"finder")
         osascript -e 'tell application "Finder" to activate' -e 'tell application "System Events" to tell process "Finder" to keystroke "n" using command down' ;;
     "Twilight"|"zen")

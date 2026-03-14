@@ -14,13 +14,13 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
   'exec-and-forget borders',
-  'exec-and-forget sketchybar'
+  'exec-and-forget sketchybar',
 ]
 
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+  'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # Start AeroSpace at login
@@ -56,7 +56,7 @@ on-focus-changed = [
   'move-mouse window-lazy-center',
   'exec-and-forget sketchybar --trigger front_app_switched',
   'exec-and-forget sketchybar --trigger update_windows',
-  'exec-and-forget ~/.config/aerospace/float-raycast-ai.sh'
+  'exec-and-forget ~/.config/aerospace/float-raycast-ai.sh',
 ]
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
@@ -79,7 +79,10 @@ on-focus-changed = [
 
 [[on-window-detected]]
 if.app-id = 'com.raycast.macos'
-run = ['layout floating', 'exec-and-forget ~/.config/aerospace/float-raycast-ai.sh']
+run = [
+  'layout floating',
+  'exec-and-forget ~/.config/aerospace/float-raycast-ai.sh',
+]
 
 
 [[on-window-detected]]
@@ -96,7 +99,9 @@ run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
-run = ['exec-and-forget aerospace list-monitors | grep -q Sidecar && aerospace move-node-to-workspace 7']
+run = [
+  'exec-and-forget aerospace list-monitors | grep -q Sidecar && aerospace move-node-to-workspace 7',
+]
 
 [gaps]
 inner.horizontal = 10
@@ -167,9 +172,18 @@ alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 alt-6 = 'workspace 6'
-alt-7 = ['workspace 7', 'exec-and-forget aerospace list-windows --workspace 7 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}']
-alt-8 = ['workspace 8', 'exec-and-forget aerospace list-windows --workspace 8 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}']
-alt-9 = ['workspace 9', 'exec-and-forget aerospace list-windows --workspace 9 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}']
+alt-7 = [
+  'workspace 7',
+  'exec-and-forget aerospace list-windows --workspace 7 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}',
+]
+alt-8 = [
+  'workspace 8',
+  'exec-and-forget aerospace list-windows --workspace 8 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}',
+]
+alt-9 = [
+  'workspace 9',
+  'exec-and-forget aerospace list-windows --workspace 9 --format %{window-id} | head -1 | xargs -I{} aerospace focus --window-id {}',
+]
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
@@ -184,8 +198,9 @@ alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus-monitor
-alt-tab = 'focus-monitor --wrap-around prev'
-alt-shift-tab = 'focus-monitor --wrap-around next'
+# alt-tab = 'focus-monitor --wrap-around prev'
+# alt-shift-tab = 'focus-monitor --wrap-around next'
+alt-tab = 'workspace-back-and-forth'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-s = 'mode service'

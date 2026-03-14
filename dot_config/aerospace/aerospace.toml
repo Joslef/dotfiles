@@ -131,6 +131,7 @@ outer.right = 10
 # alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
+alt-b = 'exec-and-forget sketchybar --bar hidden=toggle'
 alt-q = 'close'
 alt-enter = 'fullscreen'
 alt-t = 'layout tiles horizontal vertical'

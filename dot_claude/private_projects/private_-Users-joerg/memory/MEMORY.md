@@ -10,3 +10,4 @@
 
 ## Workflow
 - [Chezmoi sync rule](feedback_chezmoi_sync.md) — always sync dotfile changes with chezmoi; ask before adding new files
+- [Agent usage transparency](feedback_agent_usage.md) — when skipping a requested agent, inform upfront

@@ -1,0 +1,5 @@
+.claude/agents/code-reviewer.md
+.claude/agents/documentation-writer.md
+.claude/agents/refactor-agent.md
+.claude/agents/root-cause-debugger.md
+.claude/agents/test-writer.md

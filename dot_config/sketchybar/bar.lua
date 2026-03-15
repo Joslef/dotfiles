@@ -32,7 +32,7 @@ local function updateBarDisplay()
 end
 
 local barDisplayWatcher = sbar.add("item", { drawing = false, updates = true })
-barDisplayWatcher:subscribe("display_change", function(_)
+barDisplayWatcher:subscribe({ "display_change", "system_woke" }, function(_)
 	updateBarDisplay()
 end)
 

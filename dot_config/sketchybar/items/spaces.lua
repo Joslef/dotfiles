@@ -24,7 +24,15 @@ local allWorkspaces = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 
 local function updateExternalWorkspaces()
   sbar.exec("aerospace list-monitors", function(monitorsOutput)
+    if not monitorsOutput or monitorsOutput == "" then return end
     local hasSidecar = monitorsOutput:find("Sidecar") ~= nil
+
+    -- Count non-Sidecar monitors to detect single-display mode
+    local monitorCount = 0
+    for _ in monitorsOutput:gmatch("[^\r\n]+") do monitorCount = monitorCount + 1 end
+    if hasSidecar then monitorCount = monitorCount - 1 end
+    local singleDisplay = monitorCount <= 1
+
     for sid, item in pairs(spaces) do
       local spaceNum = sid:match("([^.]+)$")
       if externalOnly[spaceNum] then
@@ -32,8 +40,19 @@ local function updateExternalWorkspaces()
         sbar.set(sid .. ".padding", { drawing = hasSidecar })
       end
     end
+
+    -- Hide separator after workspace 6 when Sidecar is not connected
     local sep6 = constants.items.SPACES .. ".6.padding"
     sbar.set(sep6, { drawing = hasSidecar })
+
+    -- When only one display is connected, use uniform padding (no group gaps)
+    -- When multiple displays are connected, restore group separator gaps
+    local sep3 = constants.items.SPACES .. ".3.padding"
+    if singleDisplay then
+      sbar.set(sep3, { width = 5 })
+    else
+      sbar.set(sep3, { width = 28 })
+    end
   end)
 end
 
@@ -127,14 +146,12 @@ local function addWorkspaceItem(workspaceName)
 end
 
 local function createWorkspaces()
-  sbar.exec(constants.aerospace.LIST_ALL_WORKSPACES, function(workspacesOutput)
-    for workspaceName in workspacesOutput:gmatch("[^\r\n]+") do
-      addWorkspaceItem(workspaceName)
-    end
+  for _, workspaceName in ipairs(allWorkspaces) do
+    addWorkspaceItem(workspaceName)
+  end
 
-    refreshWorkspaces()
-    updateExternalWorkspaces()
-  end)
+  refreshWorkspaces()
+  updateExternalWorkspaces()
 end
 
 local displayWatcher = sbar.add("item", {
@@ -142,7 +159,8 @@ local displayWatcher = sbar.add("item", {
   updates = true,
 })
 
-displayWatcher:subscribe("display_change", function(env)
+displayWatcher:subscribe({ "display_change", "system_woke" }, function(env)
+  refreshWorkspaces()
   updateExternalWorkspaces()
 end)
 

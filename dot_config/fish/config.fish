@@ -1,3 +1,6 @@
+# Fix TMPDIR if inherited incorrectly from session
+set -gx TMPDIR (command getconf DARWIN_USER_TEMP_DIR)
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 

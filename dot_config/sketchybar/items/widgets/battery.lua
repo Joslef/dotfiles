@@ -3,6 +3,17 @@ local settings = require("config.settings")
 
 local isCharging = false
 
+-- Detect if a battery is present; hide widget entirely on desktop Macs
+local hasBattery = false
+local handle = io.popen("pmset -g batt 2>/dev/null")
+if handle then
+  local result = handle:read("*a")
+  handle:close()
+  hasBattery = result:find("InternalBattery") ~= nil
+end
+
+if not hasBattery then return end
+
 local battery = sbar.add("item", constants.items.BATTERY, {
   position = "right",
   update_freq = 60,

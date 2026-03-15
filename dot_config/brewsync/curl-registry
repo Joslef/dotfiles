@@ -1,0 +1,6 @@
+# Custom package registry for brewsync
+# Format: name|detection_command|install_command
+# Add entries here for packages not available via standard brew/mas
+aerospace|test -d /Applications/AeroSpace.app|brew install --cask nikitabobko/tap/aerospace
+trezor-suite|test -d '/Applications/Trezor Suite.app'|brew install --cask trezor-suite
+borders|command -v borders|brew install FelixKratz/formulae/borders

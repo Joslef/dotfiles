@@ -41,7 +41,7 @@ local weather = sbar.add("item", "widgets.weather", {
 
 weather:subscribe({ "routine", "forced" }, function()
   sbar.exec("curl -s --max-time 10 'wttr.in/Munich,Bayern?format=%t|%C' 2>/dev/null", function(result)
-    if not result or result == "" or result:find("Unknown") then return end
+    if not result or result == "" or result:find("Unknown") or result:find("already being processed") or result:find("<!DOCTYPE") then return end
 
     local temp, condition = result:match("([^|]+)|?(.*)")
     if not temp then return end

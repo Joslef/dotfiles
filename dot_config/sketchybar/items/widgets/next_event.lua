@@ -31,12 +31,10 @@ local function update_display(result)
 end
 
 event:subscribe({ "routine", "forced" }, function()
-  sbar.exec(
-    "/opt/homebrew/bin/icalBuddy -n -li 1 -nc -nrd -eed -ea -df '' -tf '%H:%M' -iep 'datetime,title' -po 'datetime,title' -b '' -ps '/ /' eventsToday 2>/dev/null",
-    function(result)
-      update_display(result or "")
-    end
-  )
+  local f = io.open("/tmp/sketchybar_next_event", "r")
+  local result = f and f:read("*a") or ""
+  if f then f:close() end
+  update_display(result)
 end)
 
 event:subscribe("mouse.clicked", function()

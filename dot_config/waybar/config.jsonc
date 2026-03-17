@@ -28,7 +28,7 @@
     "idle_inhibitor",
     "pulseaudio/slider",
     "pulseaudio",
-    "bluetooth",
+    "group/bluetooth-group",
     "network",
     "network#speed",
     "hyprland/language"
@@ -41,7 +41,7 @@
   },
   "clock": {
     "timezone": "Europe/Berlin",
-    "format": "{:%I:%M  %d/%m}",
+    "format": "{:%H:%M  %d/%m}",
     "tooltip-format": "{calendar}",
     "calendar": {
       "mode": "month"
@@ -142,7 +142,9 @@
     "format-icons": {
       "activated": "",
       "deactivated": ""
-    }
+    },
+    "tooltip-format-activated": "Idle inhibitor active — screen will not deactivate",
+    "tooltip-format-deactivated": "Idle inhibitor inactive — screen will deactivate"
   },
   "pulseaudio/slider": {
     "format": "{volume}%",
@@ -160,9 +162,27 @@
       ]
     }
   },
+  "group/bluetooth-group": {
+    "orientation": "horizontal",
+    "modules": ["bluetooth", "custom/headset-battery-icon", "custom/headset-battery"]
+  },
+  "custom/headset-battery-icon": {
+    "exec": "upower -e | grep -q headset && echo '󰋋' || echo ''",
+    "format": "{}",
+    "interval": 60,
+    "tooltip": false,
+    "return-type": ""
+  },
+  "custom/headset-battery": {
+    "exec": "upower -e | grep headset | head -1 | xargs -I{} upower -i {} 2>/dev/null | grep percentage | awk '{print $2}'",
+    "format": "{}",
+    "interval": 60,
+    "tooltip": false,
+    "return-type": ""
+  },
   "bluetooth": {
     "format": "󰂯",
-    "format-connected": "󰂱 {device_alias}",
+    "format-connected": "󰂱  {device_alias}",
     "format-disabled": "󰂲",
     "tooltip-format": "{status}",
     "tooltip-format-connected": "{device_enumerate}",

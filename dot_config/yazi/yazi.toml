@@ -3,6 +3,10 @@ edit = [
     { run = 'nvim "$@"', block = true, desc = "Neovim" },
 ]
 
+image = [
+    { run = 'imv "$@"', desc = "imv" },
+]
+
 open = [
     { run = 'xdg-open "$@"', desc = "Open" },
 ]
@@ -10,6 +14,9 @@ open = [
 [open]
 # Use prepend_rules to add your rules BEFORE the defaults
 prepend_rules = [
+    # Images
+    { mime = "image/*", use = "image" },
+
     # JavaScript files by MIME type (most reliable)
     { mime = "application/javascript", use = "edit" },
     { mime = "text/javascript", use = "edit" },

@@ -2,6 +2,10 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- Remove LazyVim default terminal bindings (using toggleterm instead)
+vim.keymap.del("n", "<C-/>")
+vim.keymap.del("t", "<C-/>")
+
 Snacks.toggle({
   name = "Autocomplete",
   get = function()
@@ -92,18 +96,28 @@ wk.add({
   },
 })
 
--- Resize side panels with <C-.> (minimize) and <C-,> (maximize)
--- Direction-aware: works correctly regardless of which split you're in
-vim.keymap.set("n", "<C-.>", function()
+-- Resize splits with <C-.> (shrink) and <C-,> (grow)
+-- Detects vertical vs horizontal split and adjusts accordingly
+local function smart_resize(shrink)
   local winnr = vim.fn.winnr()
-  local rightmost = vim.fn.winnr("l") == winnr
-  local delta = rightmost and -5 or 5
-  vim.cmd("vertical resize " .. (delta > 0 and "+" or "") .. delta)
-end, { desc = "Minimize panel width" })
+  local has_left = vim.fn.winnr("h") ~= winnr
+  local has_right = vim.fn.winnr("l") ~= winnr
+  local has_above = vim.fn.winnr("k") ~= winnr
+  local has_below = vim.fn.winnr("j") ~= winnr
+  local in_hsplit = (has_above or has_below) and not (has_left or has_right)
 
-vim.keymap.set("n", "<C-,>", function()
-  local winnr = vim.fn.winnr()
-  local rightmost = vim.fn.winnr("l") == winnr
-  local delta = rightmost and 5 or -5
-  vim.cmd("vertical resize " .. (delta > 0 and "+" or "") .. delta)
-end, { desc = "Maximize panel width" })
+  if in_hsplit then
+    local bottommost = vim.fn.winnr("j") == winnr
+    local delta = bottommost and -5 or 5
+    if shrink then delta = -delta end
+    vim.cmd("resize " .. (delta > 0 and "+" or "") .. delta)
+  else
+    local rightmost = vim.fn.winnr("l") == winnr
+    local delta = rightmost and -5 or 5
+    if not shrink then delta = -delta end
+    vim.cmd("vertical resize " .. (delta > 0 and "+" or "") .. delta)
+  end
+end
+
+vim.keymap.set("n", "<C-.>", function() smart_resize(true) end, { desc = "Shrink panel" })
+vim.keymap.set("n", "<C-,>", function() smart_resize(false) end, { desc = "Grow panel" })

@@ -239,9 +239,14 @@ window#waybar.hidden {
   padding-right: 13px;
 }
 
-#network.speed {
+#custom-netspeed {
   min-width: 155px;
   background: #CBA6F7;
+  color: #161320;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #language {

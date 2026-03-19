@@ -30,7 +30,7 @@
     "pulseaudio",
     "group/bluetooth-group",
     "network",
-    "network#speed",
+    "custom/netspeed",
     "hyprland/language"
   ],
   /* === Modules Left === */
@@ -262,9 +262,9 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
   },
-  "network#speed": {
-    "format": "{bandwidthDownBytes} 󰇚 {bandwidthUpBytes} 󰕒",
-    "format-disconnected": "",
+  "custom/netspeed": {
+    "exec": "~/.config/waybar/netspeed.py",
+    "return-type": "json",
     "interval": 2,
     "tooltip": false
   },

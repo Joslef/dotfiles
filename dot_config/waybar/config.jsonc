@@ -139,8 +139,8 @@
       "brave-browser": "",
       "Bitwarden": "",
       "bitwarden": "",
-      "dolphin": "",
-      "org.kde.dolphin": "",
+      "dolphin": "󱃫",
+      "org.kde.dolphin": "󱃫",
       "thunar": "",
       "nautilus": "",
       "code": "",
@@ -155,9 +155,9 @@
       "imv-dir": "",
       "discord": "",
       "Discord": "",
-      "TelegramDesktop": "",
-      "telegram-desktop": "",
-      "org.telegram.desktop": "",
+      "TelegramDesktop": "",
+      "telegram-desktop": "",
+      "org.telegram.desktop": "",
       "teams-for-linux": "󰊻",
       "spotify": "",
       "spotify_player": "",
@@ -166,7 +166,7 @@
       "vlc": "",
       "steam": "",
       "Steam": "",
-      "pavucontrol": "",
+      "pavucontrol": "󰓃",
       "gimp": "",
       "inkscape": "",
       "obs": "",
@@ -179,7 +179,7 @@
       "blueman-manager": "",
       "blueman-adapters": "",
       "rofi": "",
-      "nwg-displays": ""
+      "nwg-displays": "󰹑"
     },
     "persistent-workspaces": {
       "*": 2

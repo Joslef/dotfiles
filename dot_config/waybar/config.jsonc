@@ -179,7 +179,10 @@
       "blueman-manager": "",
       "blueman-adapters": "",
       "rofi": "",
-      "nwg-displays": "󰹑"
+      "nwg-displays": "󰹑",
+      "piper": "󰍽",
+      "solaar": "󰍽",
+      "org.gnome.DiskUtility": "󰋊"
     },
     "persistent-workspaces": {
       "*": 2

@@ -182,7 +182,9 @@
       "nwg-displays": "󰹑",
       "piper": "󰍽",
       "solaar": "󰍽",
-      "org.gnome.DiskUtility": "󰋊"
+      "org.gnome.DiskUtility": "󰋊",
+      "audacity": "",
+      "Audacity": ""
     },
     "persistent-workspaces": {
       "*": 2

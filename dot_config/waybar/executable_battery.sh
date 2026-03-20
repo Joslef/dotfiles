@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BAT=$(ls /sys/class/power_supply/ 2>/dev/null | grep -m1 "^BAT")
+BAT=$(ls /sys/class/power_supply/ 2>/dev/null | grep -m1 "^BAT\|^CMB")
 
 if [ -z "$BAT" ]; then
     exit 0

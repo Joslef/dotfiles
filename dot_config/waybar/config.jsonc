@@ -31,6 +31,7 @@
     "group/bluetooth-group",
     "network",
     "custom/netspeed",
+    "custom/battery",
     "hyprland/language"
   ],
   /* === Modules Left === */
@@ -272,6 +273,11 @@
     "return-type": "json",
     "interval": 2,
     "tooltip": false
+  },
+  "custom/battery": {
+    "exec": "~/.config/waybar/battery.sh",
+    "return-type": "json",
+    "interval": 30
   },
   "hyprland/language": {
     "format": "{}",

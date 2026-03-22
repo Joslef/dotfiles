@@ -124,18 +124,6 @@ Item {
                             border.width: 2
                             border.color: hoveredWhileDragging ? hoveredBorderColor : "transparent"
 
-                            StyledText {
-                                anchors.centerIn: parent
-                                text: workspaceValue
-                                font {
-                                    pixelSize: root.workspaceNumberSize * root.scale
-                                    weight: Font.DemiBold
-                                    family: Appearance.font.family.expressive
-                                }
-                                color: ColorUtils.transparentize(Appearance.colors.colOnLayer1, 0.8)
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                            }
 
                             MouseArea {
                                 id: workspaceArea
@@ -303,6 +291,35 @@ Item {
                             alternativeVisibleCondition: dragArea.containsMouse && !window.Drag.active
                             text: `${windowData?.title ?? "Unknown"}\n[${windowData?.class ?? "unknown"}] ${windowData?.xwayland ? "[XWayland] " : ""}`
                         }
+                    }
+                }
+            }
+
+            Repeater { // Workspace number labels
+                model: root.workspacesShown
+                Rectangle { // Pill background
+                    property int wsIndex: index
+                    property int wsValue: root.workspaceGroup * root.workspacesShown + wsIndex + 1
+                    property int colIndex: wsIndex % Config.options.overview.columns
+                    property int rowIndex: Math.floor(wsIndex / Config.options.overview.columns)
+                    x: (root.workspaceImplicitWidth + workspaceSpacing) * colIndex + 6
+                    y: (root.workspaceImplicitHeight + workspaceSpacing) * rowIndex + 6
+                    z: root.windowDraggingZ
+                    width: pillText.implicitWidth + 8
+                    height: pillText.implicitHeight
+                    radius: 8
+                    color: ColorUtils.transparentize(Appearance.colors.colLayer0, 0.3)
+
+                    StyledText {
+                        id: pillText
+                        anchors.centerIn: parent
+                        text: parent.wsValue
+                        font {
+                            pixelSize: 40
+                            weight: Font.DemiBold
+                            family: Appearance.font.family.expressive
+                        }
+                        color: Appearance.colors.colOnLayer1
                     }
                 }
             }

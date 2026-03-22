@@ -1,5 +1,7 @@
 {
     "overview": {
-        "scale": 0.16
+        "scale": 0.3,
+        "rows": 3,
+        "columns": 3
     }
 }

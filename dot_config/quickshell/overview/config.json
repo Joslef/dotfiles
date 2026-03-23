@@ -3,5 +3,9 @@
         "scale": 0.3,
         "rows": 3,
         "columns": 3
+    },
+    "windowPreview": {
+        "iconToWindowRatio": 0.18,
+        "iconToWindowRatioCompact": 0.32
     }
 }

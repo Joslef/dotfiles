@@ -76,30 +76,26 @@ Item { // Window
             border.width: GlobalStates.selectedWindowAddress === (root.windowData?.address ?? "") ? 2 : 1
         }
 
-        ColumnLayout {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.right: parent.right
-            spacing: Appearance.font.pixelSize.smaller * 0.5
+    }
 
-            Image {
-                id: windowIcon
-                property var iconSize: {
-                    return Math.min(targetWindowWidth, targetWindowHeight) * (root.compactMode ? root.iconToWindowRatioCompact : root.iconToWindowRatio) / (root.monitorData?.scale ?? 1);
-                }
-                Layout.alignment: Qt.AlignHCenter
-                source: root.iconPath
-                width: iconSize
-                height: iconSize
-                sourceSize: Qt.size(iconSize, iconSize)
+    Image {
+        id: windowIcon
+        property var iconSize: {
+            return Math.min(targetWindowWidth, targetWindowHeight) * (root.compactMode ? root.iconToWindowRatioCompact : root.iconToWindowRatio) / (root.monitorData?.scale ?? 1) * 0.6;
+        }
+        anchors.bottom: root.bottom
+        anchors.right: root.right
+        anchors.margins: Appearance.font.pixelSize.smaller * 0.5
+        source: root.iconPath
+        width: iconSize
+        height: iconSize
+        sourceSize: Qt.size(iconSize, iconSize)
 
-                Behavior on width {
-                    animation: Appearance.animation.elementMoveEnter.numberAnimation.createObject(this)
-                }
-                Behavior on height {
-                    animation: Appearance.animation.elementMoveEnter.numberAnimation.createObject(this)
-                }
-            }
+        Behavior on width {
+            animation: Appearance.animation.elementMoveEnter.numberAnimation.createObject(this)
+        }
+        Behavior on height {
+            animation: Appearance.animation.elementMoveEnter.numberAnimation.createObject(this)
         }
     }
 

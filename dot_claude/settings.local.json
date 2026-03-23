@@ -16,7 +16,13 @@
       "Bash(pacman:*)",
       "Bash(chmod +x:*)",
       "Bash(hyprctl reload:*)",
-      "Bash(brew install:*)"
+      "Bash(brew install:*)",
+      "Bash(systemctl --user daemon-reload)",
+      "Bash(killall solaar:*)",
+      "Bash(systemctl --user restart solaar)",
+      "Bash(systemctl --user status solaar)",
+      "Bash(journalctl:*)"
     ]
-  }
+  },
+  "outputStyle": "default"
 }

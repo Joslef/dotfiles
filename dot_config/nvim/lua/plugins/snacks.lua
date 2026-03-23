@@ -55,43 +55,42 @@ return {
 					return {
 						header = require("modules.dashboard").header,
 						padding = 1,
-						pane = 1,
 					}
 				end,
 				{
-					pane = 1,
 					section = "terminal",
 					cmd = { "sh", "-c", "curl -s 'https://wttr.in/?0FQ' | sed 's/^/               /' || echo -n" },
 					height = 6,
 				},
-				{ pane = 1, section = "startup" },
-				{ pane = 1, padding = 1 },
-				{ pane = 2, section = "keys", padding = 1 },
+				{ section = "startup" },
+				{ padding = 1 },
+				{ section = "keys", padding = 1 },
 				{
-					pane = 2,
 					icon = " ",
 					title = "RECENT FILES",
 					section = "recent_files",
 					indent = 2,
 					padding = 1,
 				},
-				{ pane = 2, icon = "󰙅 ", title = "PROJECTS", section = "projects", indent = 2, padding = 1 },
+				{ icon = "󰙅 ", title = "PROJECTS", section = "projects", indent = 2, padding = 1 },
+				function()
+					if Snacks.git.get_root() == nil then
+						return nil
+					end
+					local branch = vim.fn.trim(vim.fn.systemlist({ "sh", "-c", "git branch --show-current 2>/dev/null" })[1] or "")
+					return {
+						{ title = "GIT STATUS [" .. branch .. "]", icon = " " },
+						{
+							section = "terminal",
+							cmd = { "sh", "-c", "git --no-pager diff --stat -B -M -C; git status --short --renames" },
+							height = 5,
+							padding = 1,
+							ttl = 5 * 60,
+							indent = 2,
+						},
+					}
+				end,
 				{
-					pane = 2,
-					icon = " ",
-					title = "GIT STATUS [" .. vim.fn.trim(vim.fn.systemlist({"sh", "-c", "git branch --show-current 2>/dev/null"})[1] or "") .. "]",
-					section = "terminal",
-					enabled = function()
-						return Snacks.git.get_root() ~= nil
-					end,
-					cmd = { "sh", "-c", "git --no-pager diff --stat -B -M -C; git status --short --renames; git status --short | grep -q . || echo \"  nothing to commit, working tree clean ✅\"" },
-					height = 5,
-					padding = 1,
-					ttl = 5 * 60,
-					indent = 2,
-				},
-				{
-					pane = 2,
 					section = "terminal",
 					enabled = function()
 						return Snacks.git.get_root() == nil

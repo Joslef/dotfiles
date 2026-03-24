@@ -7,6 +7,7 @@
     haptic-play, sidetone, equalizer, adc_power_management]
   _battery: 4096
   _modelId: B02340820000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
   _serial: A0FF6234
   _unitId: A0FF6234
   _wpid: '4082'
@@ -29,6 +30,7 @@
     mr-key-led, gesture2-gestures, gesture2-divert, gesture2-params, haptic-level, haptic-play, sidetone, equalizer, adc_power_management]
   _battery: 4096
   _modelId: B35B408A0000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
   _serial: 8221B0A2
   _unitId: 8221B0A2
   _wpid: 408A

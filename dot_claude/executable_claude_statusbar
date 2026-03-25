@@ -242,22 +242,25 @@ format_reset_time() {
     epoch=$(iso_to_epoch "$iso_str")
     [ -z "$epoch" ] && return
 
-    # Format based on style (try BSD date first, then GNU date)
-    # BSD date uses %p (uppercase AM/PM), so convert to lowercase
+    # Format based on style. Capture BSD date output first; if empty, fall back to GNU date.
+    # Cannot use || with pipelines since the pipeline always exits 0 even when date fails.
+    # LC_ALL=C forces English month names and AM/PM output.
+    local result=""
     case "$style" in
         time)
-            date -j -r "$epoch" +"%l:%M%p" 2>/dev/null | sed 's/^ //' | tr '[:upper:]' '[:lower:]' || \
-            date -d "@$epoch" +"%l:%M%P" 2>/dev/null | sed 's/^ //'
+            result=$(LC_ALL=C date -j -r "$epoch" +"%l:%M %p" 2>/dev/null | sed 's/^ //')
+            [ -z "$result" ] && result=$(LC_ALL=C date -d "@$epoch" +"%l:%M %p" 2>/dev/null | sed 's/^ //')
             ;;
         datetime)
-            date -j -r "$epoch" +"%b %-d, %l:%M%p" 2>/dev/null | sed 's/  / /g; s/^ //' | tr '[:upper:]' '[:lower:]' || \
-            date -d "@$epoch" +"%b %-d, %l:%M%P" 2>/dev/null | sed 's/  / /g; s/^ //'
+            result=$(LC_ALL=C date -j -r "$epoch" +"%b %-d, %l:%M %p" 2>/dev/null | sed 's/  / /g; s/^ //')
+            [ -z "$result" ] && result=$(LC_ALL=C date -d "@$epoch" +"%b %-d, %l:%M %p" 2>/dev/null | sed 's/  / /g; s/^ //')
             ;;
         *)
-            date -j -r "$epoch" +"%b %-d" 2>/dev/null | tr '[:upper:]' '[:lower:]' || \
-            date -d "@$epoch" +"%b %-d" 2>/dev/null
+            result=$(LC_ALL=C date -j -r "$epoch" +"%b %-d" 2>/dev/null)
+            [ -z "$result" ] && result=$(LC_ALL=C date -d "@$epoch" +"%b %-d" 2>/dev/null)
             ;;
     esac
+    printf "%s" "$result"
 }
 
 # Pad column to fixed width (ignoring ANSI codes)

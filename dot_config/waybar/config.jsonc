@@ -28,8 +28,7 @@
     "idle_inhibitor",
     "pulseaudio/slider",
     "pulseaudio",
-    "group/bluetooth-group",
-    "network",
+    "custom/bluetooth",
     "custom/netspeed",
     "custom/battery",
     "hyprland/language"
@@ -42,7 +41,7 @@
   },
   "clock": {
     "timezone": "Europe/Berlin",
-    "format": "{:%H:%M  %d/%m}",
+    "format": "{:%H:%M  %d.%m}",
     "tooltip-format": "{calendar}",
     "calendar": {
       "mode": "month"
@@ -232,33 +231,11 @@
       ]
     }
   },
-  "group/bluetooth-group": {
-    "orientation": "horizontal",
-    "modules": ["bluetooth", "custom/headset-battery-icon", "custom/headset-battery"]
-  },
-  "custom/headset-battery-icon": {
-    "exec": "upower -e | grep -q headset && echo '󰋋' || echo ''",
-    "format": "{}",
+  "custom/bluetooth": {
+    "exec": "~/.config/waybar/bluetooth.sh",
+    "return-type": "json",
     "interval": 60,
-    "tooltip": false,
-    "return-type": ""
-  },
-  "custom/headset-battery": {
-    "exec": "upower -e | grep headset | head -1 | xargs -I{} upower -i {} 2>/dev/null | grep percentage | awk '{print $2}'",
-    "format": "{}",
-    "interval": 60,
-    "tooltip": false,
-    "return-type": ""
-  },
-  "bluetooth": {
-    "format": "󰂯",
-    "format-connected": "󰂱  {device_alias}",
-    "format-disabled": "󰂲",
-    "tooltip-format": "{status}",
-    "tooltip-format-connected": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "blueman-manager",
-    "max-length": 20
+    "on-click": "blueman-manager"
   },
   "network": {
     "format": "{ipaddr}",

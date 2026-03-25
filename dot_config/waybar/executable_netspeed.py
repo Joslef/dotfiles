@@ -25,7 +25,7 @@ if os.path.exists(state_file):
     if elapsed > 0:
         rx_speed = (rx - prev_rx) / elapsed / 1048576
         tx_speed = (tx - prev_tx) / elapsed / 1048576
-        print(json.dumps({"text": f"{rx_speed:06.3f} MB/s 󰇚   {tx_speed:06.3f} MB/s 󰕒 "}))
+        print(json.dumps({"text": f"{rx_speed:06.3f} MB/s 󰇚  {tx_speed:06.3f} MB/s 󰕒"}))
     else:
         print(json.dumps({"text": "..."}))
 else:

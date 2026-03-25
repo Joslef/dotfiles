@@ -27,8 +27,6 @@ window#waybar.hidden {
 #idle_inhibitor,
 #pulseaudio,
 #pulseaudio-slider,
-#bluetooth,
-#custom-headset-battery,
 #custom-battery,
 #network,
 #language {
@@ -200,44 +198,26 @@ window#waybar.hidden {
   min-width: 55px;
   color: #1A1826;
   background: #F5E0DC;
+  padding-left: 4px;
 }
 
 #pulseaudio-slider {
   color: #1A1826;
-  background: #E8A2AF;
+  background: #F5E0DC;
   min-width: 50px;
+  padding-right: 4px;
 }
 
 #pulseaudio-slider slider {}
 
 
-#bluetooth-group {
+#custom-bluetooth {
   background: #89B4FA;
+  color: #161320;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 10px;
   padding-right: 10px;
-}
-
-#bluetooth {
-  background: transparent;
-  min-width: unset;
-  margin: 0;
-  padding: 0;
-}
-
-#custom-headset-battery-icon {
-  background: transparent;
-  margin: 0;
-  padding: 0 2px 0 0;
-  min-width: 20px;
-  margin-top: 1px;
-}
-
-#custom-headset-battery {
-  background: transparent;
-  margin: 0;
-  padding: 0;
 }
 
 #network {
@@ -258,6 +238,8 @@ window#waybar.hidden {
 #custom-battery {
   min-width: 65px;
   background: #A6E3A1;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 #custom-battery.charging {

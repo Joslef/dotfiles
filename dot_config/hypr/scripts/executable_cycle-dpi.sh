@@ -16,5 +16,4 @@ echo "$INDEX" > "$STATE_FILE"
 
 notify-send -a "Mouse DPI" -t 2000 "DPI: $DPI" --icon=input-mouse
 
-sudo /usr/local/bin/set-logid-dpi "$DPI"
-systemctl restart logid
+solaar config "MX Master 3 Wireless Mouse" dpi "$DPI"

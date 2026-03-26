@@ -11,9 +11,17 @@ open = [
     { run = 'xdg-open "$@"', desc = "Open" },
 ]
 
+pdf = [
+    { run = 'zen-twilight "$@"', desc = "Twilight" },
+]
+
 [open]
 # Use prepend_rules to add your rules BEFORE the defaults
 prepend_rules = [
+    # PDFs
+    { mime = "application/pdf", use = "pdf" },
+    { url = "*.pdf", use = "pdf" },
+
     # Images
     { mime = "image/*", use = "image" },
 

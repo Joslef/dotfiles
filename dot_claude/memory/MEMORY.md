@@ -4,7 +4,7 @@
 
 After finishing any task, always run the End-of-Session Memory Loop. Announce it with `** **UPDATING MEMORY LOOP** **`.
 
-1. **Session learnings** — write ALL new insights, corrections, or findings into **this global file** under the appropriate section. Do NOT write to project-specific memory files unless explicitly told to do so.
+1. **Session learnings** — write ALL new insights, corrections, or findings into `~/.claude/memory/MEMORY.md` under the appropriate section. NEVER write to project-specific memory files (`.claude/projects/`) — always use the global file.
 2. **Memory review** — read all sections: shorten verbose entries, remove irrelevant content, deduplicate. Be conservative — memory should grow first, only trim what is clearly redundant or no longer applicable.
 
 ---
@@ -145,3 +145,14 @@ Confirmed across archmaint, gitstatus, pkgsync, dotfiles READMEs:
 - Pause/resume: `SIGSTOP`/`SIGCONT` on mpv PID (no IPC, no reconnect on resume)
 - Animation: `$EPOCHREALTIME` at ~3fps (bash 5+), falls back to `$SECONDS` at 1fps (bash 3.2/macOS)
 - macOS compat: integer-only `read -t` on bash 3.2, detected via `$BASH_VERSION`
+
+---
+
+## 🔌 Claude Code Plugin System
+
+Plugin state lives in three places:
+- `~/.claude/plugins/installed_plugins.json` — installed plugin registry
+- `~/.claude/plugins/cache/<marketplace>/<plugin>/` — downloaded plugin files
+- `~/.claude/plugins/data/<plugin>-<marketplace>/` — plugin runtime data
+
+**swift-lsp auto-resurrection**: CC re-adds `swift-lsp@claude-plugins-official` on every startup because `~/.claude.json` contains a server-fetched feature flag list that includes it. This list is Anthropic-controlled and cannot be permanently removed. **Solution**: just leave it `disabled` in `/plugin` UI — it does nothing when disabled. Don't waste time trying to purge it.

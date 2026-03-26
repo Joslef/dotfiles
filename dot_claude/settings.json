@@ -8,7 +8,6 @@
   },
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": false,

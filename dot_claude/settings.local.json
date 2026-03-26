@@ -25,5 +25,8 @@
       "Skill(update-config)"
     ]
   },
-  "outputStyle": "default"
+  "outputStyle": "default",
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": false
+  }
 }

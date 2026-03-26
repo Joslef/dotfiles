@@ -43,6 +43,9 @@ Sprinkle them throughout without restraint. 🚀✨
 ### ✂️ Conciseness
 Concise responses — skip preamble and summaries. Confirm before making edits when asked to do so.
 
+### ⚡ Quick Questions
+If the session starts with `q:` — ignore all memory for that session. No memory reads, no memory writes, no end-of-session loop.
+
 ### 🐟 Fish Shell
 Never use bash-specific syntax. No heredocs, no `&&`/`||` chaining outside fish syntax, no `[[ ]]`.
 

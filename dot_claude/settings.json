@@ -14,5 +14,18 @@
   "alwaysThinkingEnabled": false,
   "effortLevel": "medium",
   "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat ~/.claude/memory/MEMORY.md | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": (\"<global-memory>\\n\" + . + \"</global-memory>\")}}'",
+            "statusMessage": "**LOADING GLOBAL MEMORY**"
+          }
+        ]
+      }
+    ]
+  }
 }

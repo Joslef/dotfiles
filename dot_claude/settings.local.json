@@ -21,7 +21,8 @@
       "Bash(killall solaar:*)",
       "Bash(systemctl --user restart solaar)",
       "Bash(systemctl --user status solaar)",
-      "Bash(journalctl:*)"
+      "Bash(journalctl:*)",
+      "Skill(update-config)"
     ]
   },
   "outputStyle": "default"

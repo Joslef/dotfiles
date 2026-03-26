@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+nvim /home/joerg/.claude/superpowers-cheatsheet.md

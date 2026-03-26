@@ -1,17 +1,18 @@
-@theme "/usr/share/rofi/themes/material.rasi"
+@theme "~/.config/rofi/catppuccin-mocha.rasi"
 
 configuration {
+    font: "JetBrainsMonoNF-Regular 15";
+
     /* DPI scaling - affects everything */
     dpi: 168;  /* 96 * 1.5 = 144 for 1.5x scale */
-
-    /* Or use window scaling */
-    window {
-        width: 50%;  /* percentage of screen */
-    }
 
     /* vim-style navigation */
     kb-accept-entry: "Return,KP_Enter,Control+m";
     kb-remove-to-eol: "";
     kb-row-down: "Control+j,Down,Control+n";
     kb-row-up: "Control+k,Up,Control+p";
+    kb-remove-char-back: "BackSpace,Shift+BackSpace";
+    kb-mode-complete: "";
+    kb-mode-next: "Control+l,Shift+Right,Control+Tab";
+    kb-mode-previous: "Control+h,Shift+Left,Control+ISO_Left_Tab";
 }

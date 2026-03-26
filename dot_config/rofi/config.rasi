@@ -13,6 +13,8 @@ configuration {
     kb-row-up: "Control+k,Up,Control+p";
     kb-remove-char-back: "BackSpace,Shift+BackSpace";
     kb-mode-complete: "";
-    kb-mode-next: "Control+l,Shift+Right,Control+Tab";
-    kb-mode-previous: "Control+h,Shift+Left,Control+ISO_Left_Tab";
+    kb-mode-next: "Shift+Right,Control+Tab";
+    kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
+    kb-page-next: "Control+l";
+    kb-page-prev: "Control+h";
 }

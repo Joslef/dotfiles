@@ -7,7 +7,7 @@ STATE_FILE="/tmp/mx-dpi-index"
 if [[ -f "$STATE_FILE" ]]; then
     INDEX=$(cat "$STATE_FILE")
 else
-    INDEX=4  # start at 2000
+    INDEX=5  # start at 2250 (before first cycle, exec-once seeds this)
 fi
 
 INDEX=$(( (INDEX + 1) % ${#DPIS[@]} ))

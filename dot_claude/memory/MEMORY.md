@@ -81,7 +81,8 @@ Only files under `~/.config` need chezmoi attention. After any session involving
 
 - Run a sync check: verify all user-tracked `~/.config` files are in sync with chezmoi
 - If a tracked file was changed: **actually run** `chezmoi re-add <path>` — do not just suggest it to the user
-- Never prompt to add untracked files — the user decides what is tracked
+- If a new `~/.config` file was created during the session that affects the look or behavior of the machine (cursor, theme, keybindings, bar config, etc.) — add it to chezmoi with `chezmoi add <path>`. Don't ask, just do it.
+- Never add files that are clearly auto-generated, caches, or runtime state
 
 `~/.claude` is synced via a separate user script — do NOT chezmoi re-add anything under `~/.claude`.
 `~/scripts` is git-managed — do NOT chezmoi anything there either.
@@ -204,6 +205,15 @@ Plugin state lives in three places:
 - **zoom.yazi is broken** — exits with code 127 (PATH issue in yazi sandbox), not worth debugging
 - `init.lua` required for git plugin: `require("git"):setup()`
 - chezmoi tracks plugins dir as a whole git repo — use `chezmoi re-add ~/.config/yazi/plugins` after any plugin changes
+
+---
+
+## 🖱️ Hyprland Cursor
+
+- **Theme**: `Bibata-Modern-Amber` (AUR: `bibata-cursor-git`), size 32
+- **Config**: `hyprland.conf` — `env = XCURSOR_THEME/SIZE` + `env = HYPRCURSOR_THEME/SIZE`
+- **Apply without re-login**: `hyprctl setcursor <ThemeName> <size>`
+- **GTK**: `~/.config/gtk-3.0/settings.ini` — chezmoi-tracked
 
 ---
 

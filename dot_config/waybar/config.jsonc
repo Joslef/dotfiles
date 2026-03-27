@@ -31,6 +31,7 @@
     "custom/bluetooth",
     "custom/netspeed",
     "custom/battery",
+    "custom/vpn",
     "hyprland/language"
   ],
   /* === Modules Left === */
@@ -245,6 +246,12 @@
     "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
+  },
+  "custom/vpn": {
+    "exec": "~/.config/waybar/vpn.sh",
+    "return-type": "json",
+    "interval": 5,
+    "tooltip": true
   },
   "custom/netspeed": {
     "exec": "~/.config/waybar/netspeed.py",

@@ -225,6 +225,23 @@ window#waybar.hidden {
   padding-right: 13px;
 }
 
+#custom-vpn {
+  color: #161320;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 18px;
+}
+
+#custom-vpn.connected {
+  background: #A6E3A1;
+}
+
+#custom-vpn.disconnected {
+  background: #F38BA8;
+}
+
 #custom-netspeed {
   min-width: 155px;
   background: #CBA6F7;

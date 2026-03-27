@@ -1,3 +1,13 @@
+[plugin]
+prepend_fetchers = [
+  { id = "mime", url = "local://*", run = "mime-ext.local", prio = "high" },
+  { id = "mime", url = "remote://*", run = "mime-ext.remote", prio = "high" },
+]
+
+[preview]
+max_width = 2000
+max_height = 2000
+
 [opener]
 edit = [
     { run = 'nvim "$@"', block = true, desc = "Neovim" },

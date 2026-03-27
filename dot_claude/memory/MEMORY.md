@@ -51,6 +51,14 @@ Sprinkle them throughout without restraint. 🚀✨
 
 Concise responses — skip preamble and summaries. Confirm before making edits when asked to do so.
 
+### 🗃️ Shorthand: "chezmoi"
+
+When Joerg writes just **"chezmoi"**, that means: re-add all files changed during the session and add any new `~/.config` files introduced this session. Then verify nothing was missed — cross-check all session-touched files against `chezmoi list` and run `chezmoi re-add` or `chezmoi add` on any that aren't yet tracked. Do it, don't suggest it.
+
+### 🔁 Shorthand: "loop"
+
+When Joerg writes just **"loop"**, that means: run the full End-of-Session Memory Loop — reflect on everything learned this session, write new insights to `~/.claude/memory/MEMORY.md` (the global file), and review existing entries for staleness or duplication. **Never write to project-specific memory files.**
+
 ### 📋 Commands to Copy-Paste
 
 When showing commands the user needs to run themselves, **never prefix them with `!`**. Joerg copies commands directly and the `!` breaks them.
@@ -180,3 +188,32 @@ Plugin state lives in three places:
 - `~/.claude/plugins/data/<plugin>-<marketplace>/` — plugin runtime data
 
 **swift-lsp auto-resurrection**: CC re-adds `swift-lsp@claude-plugins-official` on every startup because `~/.claude.json` contains a server-fetched feature flag list that includes it. This list is Anthropic-controlled and cannot be permanently removed. **Solution**: just leave it `disabled` in `/plugin` UI — it does nothing when disabled. Don't waste time trying to purge it.
+
+---
+
+## 🗂️ Yazi Config
+
+- Plugins in `~/.config/yazi/plugins/` (git repo), managed via `ya pkg` (subcommands: `add`, `install`, `upgrade`, `list`, `delete`)
+- keymap.toml: use `[mgr] prepend_keymap = [...]` — mixed styles (`[[manager.prepend_keymap]]`) break bindings silently
+- Shell commands use `$@` for hovered file (NOT `$1`)
+- Extract: `{ on = "e", run = "shell 'ouch decompress \"$@\" --yes'", desc = "Extract archive" }`
+- Compress: `{ on = "c", run = "plugin ouch", desc = "Compress file/folder" }` — ouch.yazi `entry()` prompts for name/format
+- ouch.yazi: `entry()` = compress, `peek()` = archive preview — NOT an extractor
+- `unrar` required for rar support
+- **Active plugins**: `git`, `jump-to-char` (`f`), `mime-ext` (auto), `ouch` (`e`/`c`), `smart-enter` (`l`)
+- **zoom.yazi is broken** — exits with code 127 (PATH issue in yazi sandbox), not worth debugging
+- `init.lua` required for git plugin: `require("git"):setup()`
+- chezmoi tracks plugins dir as a whole git repo — use `chezmoi re-add ~/.config/yazi/plugins` after any plugin changes
+
+---
+
+## 🛡️ Waybar VPN Widget
+
+- Script: `~/.config/waybar/vpn.sh` — checks `tun0` interface, JSON with class `connected`/`disconnected`
+- Icons: `󰌾` (nf-md-lock) = on, `󱗒` (nf-md-shield_off_outline) = off
+- Tooltip shows public IP via `curl ifconfig.me`
+- CSS: connected = `#A6E3A1` (green), disconnected = `#F38BA8` (red)
+- Position: between `custom/battery` and `hyprland/language`
+- Connect: `sudo openvpn --config ~/.config/.secrets/openvpn.ovpn --daemon`
+- Disconnect: `sudo pkill openvpn`
+- `.ovpn` cert paths must be absolute — relative paths fail when running from other directories

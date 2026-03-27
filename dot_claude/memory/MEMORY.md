@@ -148,6 +148,26 @@ Confirmed across archmaint, gitstatus, pkgsync, dotfiles READMEs:
 
 ---
 
+## 📋 Clipse Clipboard Manager
+
+- **Package**: `clipse-wayland-bin` (AUR) — replaces cliphist
+- **Daemon**: `clipse -listen` — self-daemonizes by spawning two `wl-paste` workers (`--type image/png` and `--type text --wl-store`); `pgrep clipse` finds nothing after launch — that's normal
+- **Hyprland exec-once**: `exec-once = clipse -listen`
+- **Keybinding**: `Super+V` → `kitty --class clipse -e clipse`
+- **Windowrule**: float by class `clipse`, centered, currently 2400×1500
+- **Config**: `~/.config/clipse/config.json` (chezmoi-tracked)
+- **Image display**: `type: kitty` (crisp, requires spacebar to preview), `scaleX/scaleY` ratio 2:1 to compensate terminal cell aspect, `heightCut` trims bottom rows to avoid artifacts
+- **Navigation**: `ctrl+j/k` (up/down), `ctrl+h/l` (prevPage/nextPage)
+- **clipse -listen behavior**: exits immediately after spawning workers — NOT a bug; workers are the `wl-paste` processes
+
+---
+
+## 🖥️ Rofi Config
+
+- **Keybinding conflicts**: Never add bare `Left`/`Right` to `kb-page-prev`/`kb-page-next` — they're already bound by rofi defaults and cause a fatal startup conflict that blocks rofi entirely. Use only `Control+h` / `Control+l` for page navigation.
+
+---
+
 ## 🔌 Claude Code Plugin System
 
 Plugin state lives in three places:

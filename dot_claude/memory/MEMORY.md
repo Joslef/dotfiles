@@ -51,6 +51,10 @@ Sprinkle them throughout without restraint. 🚀✨
 
 Concise responses — skip preamble and summaries. Confirm before making edits when asked to do so.
 
+### 📋 Commands to Copy-Paste
+
+When showing commands the user needs to run themselves, **never prefix them with `!`**. Joerg copies commands directly and the `!` breaks them.
+
 ### 🧠 Memory Load Confirmation
 
 At the start of every session, include `** **GLOBAL MEMORY LOADED** **` in the first response to confirm the memory injection was successful. Skip this on `q:` sessions.

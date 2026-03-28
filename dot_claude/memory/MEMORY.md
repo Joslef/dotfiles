@@ -4,6 +4,11 @@
 
 After finishing any task, always run the End-of-Session Memory Loop. Announce it with `** **UPDATING MEMORY LOOP** **`.
 
+⚠️ **MEMORY RULE CONFIRMED** ⚠️
+The one and only valid save location for memory is `~/.claude/memory/MEMORY.md`. This is absolute and non-negotiable. Never write to `.claude/projects/` or any other location — not as separate files, not as subdirectories, not ever. If it isn't going into `~/.claude/memory/MEMORY.md` directly, it isn't being saved.
+
+After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFIRMED** **`
+
 1. **Session learnings** — write ALL new insights, corrections, or findings into `~/.claude/memory/MEMORY.md` under the appropriate section. NEVER write to project-specific memory files (`.claude/projects/`) — always use the global file.
 2. **Memory review** — read all sections: shorten verbose entries, remove irrelevant content, deduplicate. Be conservative — memory should grow first, only trim what is clearly redundant or no longer applicable.
 
@@ -227,3 +232,20 @@ Plugin state lives in three places:
 - Connect: `sudo openvpn --config ~/.config/.secrets/openvpn.ovpn --daemon`
 - Disconnect: `sudo pkill openvpn`
 - `.ovpn` cert paths must be absolute — relative paths fail when running from other directories
+
+---
+
+## 🎧 Bluetooth Audio (WH-1000XM4)
+
+- **MAC**: `80:99:E7:2E:99:D4` — old/stale device MAC sometimes in state files: `E8:EE:CC:C5:8F:7E` (remove if found)
+- **Volume control**: `~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf` must have `bluez5.enable-absolute-volume = true` — `false` breaks system volume slider
+- **Auto-switch default sink**: WirePlumber persists default sink in `~/.local/state/wireplumber/default-nodes`; `find-selected-default-node.lua` gives saved node a +30000 priority bonus — stale MAC means headset never wins. Fix: correct the file, then `wpctl set-default <id>` to persist
+- **Profile race condition** (upstream bug): log `s-device: Could not find valid non-headset profile, not switching` — fires when A2DP not yet enumerated at connect time; cosmetic once state is correct
+- **After wireplumber restart**: headset may reconnect in HFP — fix with `bluetoothctl disconnect` + `bluetoothctl connect` to renegotiate A2DP
+
+---
+
+## 🔔 Swaync Startup Race
+
+- `swaync.service` has `After=graphical-session.target` + `ConditionEnvironment=WAYLAND_DISPLAY` but still starts before `WAYLAND_DISPLAY` is in the systemd user environment → crash-loops 4–5× at boot, misses early notifications
+- **Fix**: `exec-once = systemctl --user start swaync` in `hyprland.conf` — guarantees Wayland is ready

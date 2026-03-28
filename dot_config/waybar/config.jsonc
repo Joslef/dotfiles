@@ -266,7 +266,7 @@
   },
   "hyprland/language": {
     "format": "{}",
-    "keyboard-name": "logitech-mx-keys",
+    "keyboard-name": "at-translated-set-2-keyboard",
     "on-click": "hyprctl switchxkblayout all next",
     "format-en": "US ",
     "format-de": "DE "

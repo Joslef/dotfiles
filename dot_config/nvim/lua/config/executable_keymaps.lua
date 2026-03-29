@@ -65,6 +65,12 @@ wk.add({
     desc = "Cycle selected agent",
   },
   {
+    "<leader>lx",
+    "<cmd>LazyExtras<cr>",
+    desc = "LazyExtras",
+    icon = "󰏗",
+  },
+  {
     "<leader>h",
     function()
       Snacks.dashboard.open()

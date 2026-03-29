@@ -22,11 +22,13 @@
       "Bash(systemctl --user restart solaar)",
       "Bash(systemctl --user status solaar)",
       "Bash(journalctl:*)",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Bash(grep -E '^bind\\\\s*=\\\\s*\\\\$mainMod[^,]*,' ~/.config/hypr/hyprland.conf)",
+      "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')"
     ]
   },
-  "outputStyle": "default",
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": false
-  }
+  },
+  "outputStyle": "default"
 }

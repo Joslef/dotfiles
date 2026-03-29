@@ -117,6 +117,8 @@ Only files under `~/.config` need chezmoi attention. After any session involving
 - Config: `~/.config/nvim/`, keymaps: `~/.config/nvim/lua/config/keymaps.lua`
 - `ft` is NOT a valid which-key field — use `cond = function() return vim.bo.filetype == "markdown" end`
 - Nerd Font icon copy-paste through Claude terminal loses the character — write via Python: `python3 -c "icon = '\uf48a'; ..."`
+- LazyExtras managed via `lazyvim.json` extras array — do NOT manually import extras in `lazy.lua` (causes "not managed by LazyExtras" warning). Keymap: `<leader>lx` → `:LazyExtras`
+- LazyVim extras (`lang.yaml`, `lang.json`, etc.) bundle LSP + formatter + linter per language; Mason installs the actual binaries into `~/.local/share/nvim/mason/bin/`
 
 ---
 

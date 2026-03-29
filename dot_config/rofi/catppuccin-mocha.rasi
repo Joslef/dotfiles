@@ -1,0 +1,156 @@
+/* Catppuccin Mocha theme for Rofi
+ * Structure based on original material.rasi
+ * Colors from the official Catppuccin Mocha palette
+ * https://github.com/catppuccin/catppuccin
+ */
+
+* {
+    /* Catppuccin Mocha palette */
+    rosewater:  #f5e0dc;
+    flamingo:   #f2cdcd;
+    pink:       #f5c2e7;
+    mauve:      #cba6f7;
+    red:        #f38ba8;
+    maroon:     #eba0ac;
+    peach:      #fab387;
+    yellow:     #f9e2af;
+    green:      #a6e3a1;
+    teal:       #94e2d5;
+    sky:        #89dceb;
+    sapphire:   #74c7ec;
+    blue:       #89b4fa;
+    lavender:   #b4befe;
+    text:       #cdd6f4;
+    subtext1:   #bac2de;
+    subtext0:   #a6adc8;
+    overlay2:   #9399b2;
+    overlay1:   #7f849c;
+    overlay0:   #6c7086;
+    surface2:   #585b70;
+    surface1:   #45475a;
+    surface0:   #313244;
+    base:       #1e1e2e;
+    mantle:     #181825;
+    crust:      #11111b;
+
+    spacing: 0;
+    background-color: transparent;
+}
+
+window {
+    width:              50%;
+    height:             50%;
+    transparency:       "real";
+    background-color:   #1e1e2eCC; /* base + CC (80% opacity) */
+}
+
+mainbox {
+    children:   [inputbar, message, mode-switcher, listview];
+    spacing:    30px;
+    padding:    30px 0;
+    border:     1px;
+    border-color: @mauve;
+}
+
+inputbar {
+    padding:    0 30px;
+    children:   [prompt, textbox-prompt-colon, entry, case-indicator];
+}
+
+prompt {
+    text-color: @mauve;
+}
+
+textbox-prompt-colon {
+    expand:     false;
+    str:        ":";
+    margin:     0 1ch 0 0;
+    text-color: @mauve;
+}
+
+entry {
+    text-color: @text;
+}
+
+case-indicator {
+    text-color: @red;
+}
+
+mode-switcher, message {
+    border:         1px 0;
+    border-color:   @mauve;
+}
+
+button, textbox {
+    background-color:   @surface0;
+    text-color:         @text;
+    padding:            5px;
+}
+
+button selected {
+    background-color:   @mauve;
+}
+
+listview {
+    scrollbar:  true;
+    margin:     0 10px 0 30px;
+}
+
+scrollbar {
+    background-color:   @surface0;
+    handle-color:       @mauve;
+    handle-width:       10px;
+    border:             0 1px;
+    border-color:       @mauve;
+    margin:             0 0 0 20px;
+}
+
+element {
+    padding:    5px;
+    spacing:    5px;
+    highlight:  bold underline;
+    children:   [element-icon, element-text];
+}
+
+element-text, element-icon {
+    background-color:   inherit;
+    text-color:         inherit;
+    foreground-color:   inherit;
+}
+
+element normal {
+    background-color:   transparent;
+}
+
+element selected {
+    background-color:   @mauve;
+    text-color:         @base;
+}
+
+element alternate {
+    /* background-color: @surface0; */
+}
+
+element normal normal, element selected normal, element alternate normal {
+    text-color: @text;
+}
+
+element selected normal {
+    text-color: @base;
+}
+
+element normal urgent, element selected urgent, element alternate urgent {
+    text-color: @red;
+}
+
+element selected urgent {
+    text-color: @base;
+}
+
+element normal active, element selected active, element alternate active {
+    text-color: @green;
+}
+
+element selected active {
+    text-color: @base;
+}

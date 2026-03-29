@@ -10,6 +10,7 @@ return {
       })
       opts.formatters_by_ft = opts.formatters_by_ft or {}
       opts.formatters_by_ft["toml"] = { "taplo" }
+      opts.formatters_by_ft["yaml"] = { "yamlfmt" }
     end,
   },
   {

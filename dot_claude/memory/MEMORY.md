@@ -119,6 +119,12 @@ Only files under `~/.config` need chezmoi attention. After any session involving
 - Nerd Font icon copy-paste through Claude terminal loses the character — write via Python: `python3 -c "icon = '\uf48a'; ..."`
 - LazyExtras managed via `lazyvim.json` extras array — do NOT manually import extras in `lazy.lua` (causes "not managed by LazyExtras" warning). Keymap: `<leader>lx` → `:LazyExtras`
 - LazyVim extras (`lang.yaml`, `lang.json`, etc.) bundle LSP + formatter + linter per language; Mason installs the actual binaries into `~/.local/share/nvim/mason/bin/`
+- YAML formatter: use `yamlfmt` (Go, fast, YAML-aware) over `prettier` (Node.js, generalist) — set in `formatting.lua` as `opts.formatters_by_ft["yaml"] = { "yamlfmt" }`
+- LazyVim `lang.yaml` extra does NOT wire up formatter by default — must explicitly add to `formatting.lua`
+- Both `yamlfmt` and `prettier` refuse to format syntactically invalid YAML (indentation errors = parse errors in YAML) — LSP diagnostics are the real-time safety net
+- CloudFormation `!Ref`, `!Sub`, `!If` etc. are YAML custom tags — not in any JSON schema, must be declared in `customTags` in yamlls settings or LSP will flag them as "Unresolved tag"
+- SchemaStore.nvim: disable built-in schema store (`schemaStore.enable = false`) and use `require("schemastore").yaml.schemas()` — auto-detects schema per filename (CF, K8s, GH Actions, etc.)
+- Full YAML setup lives in `formatting.lua`: yamlls server config (SchemaStore + customTags) + conform formatter (yamlfmt)
 
 ---
 

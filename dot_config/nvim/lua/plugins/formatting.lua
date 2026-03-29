@@ -27,6 +27,36 @@ return {
             },
           },
         },
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                -- disable built-in schema store so SchemaStore.nvim takes over
+                enable = false,
+                url = "",
+              },
+              schemas = require("schemastore").yaml.schemas(),
+              customTags = {
+                "!Ref scalar",
+                "!Sub scalar",
+                "!Sub sequence",
+                "!If sequence",
+                "!Not sequence",
+                "!Equals sequence",
+                "!And sequence",
+                "!Or sequence",
+                "!Select sequence",
+                "!Split sequence",
+                "!Join sequence",
+                "!GetAtt scalar",
+                "!GetAZs scalar",
+                "!ImportValue scalar",
+                "!Condition scalar",
+                "!FindInMap sequence",
+              },
+            },
+          },
+        },
       },
     },
   },

@@ -22,6 +22,8 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 - **Dotfiles**: managed with **chezmoi** (except `~/scripts` — synced via git: Joslef/scripts)
   - `dot_` prefix → `.` prefix; `private_` prefix → restricted permissions (0600/0700)
   - `.chezmoiignore` uses Go templates: `{{ if ne .chezmoi.os "linux" }}` for OS-conditional deployment
+- **Learning**: Preparing for **AWS Cloud Practitioner** exam (as of 2026-03); actively studying AWS services, architecture, and concepts
+- **Interests**: Deeply curious about AWS — enjoys understanding how services interconnect, where the gaps are, and the "why" behind AWS design decisions
 
 ---
 

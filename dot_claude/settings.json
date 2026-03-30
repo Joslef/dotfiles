@@ -2,18 +2,6 @@
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash $HOME/.claude/claude_statusbar"
-  },
-  "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
-  },
-  "alwaysThinkingEnabled": false,
-  "effortLevel": "medium",
-  "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "SessionStart": [
       {
@@ -26,5 +14,16 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash $HOME/.claude/claude_statusbar"
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "effortLevel": "medium",
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }

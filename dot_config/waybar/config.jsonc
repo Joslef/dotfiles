@@ -267,7 +267,7 @@
   },
   "hyprland/language": {
     "format": "{}",
-    "keyboard-name": "at-translated-set-2-keyboard",
+    "keyboard-name": "royuan-akko-multi-modes-keyboard-b",
     "on-click": "hyprctl switchxkblayout all next",
     "format-en": "US ",
     "format-de": "DE "

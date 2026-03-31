@@ -11,9 +11,31 @@ fi
 blue='\033[38;2;0;153;255m'
 orange='\033[38;2;255;176;85m'
 cyan='\033[38;2;46;149;153m'
+red='\033[38;2;220;50;50m'
 white='\033[38;2;220;220;220m'
 dim='\033[2m'
 reset='\033[0m'
+
+# Returns the escape code for cyan/orange/red based on a percentage value (0-100).
+pct_color() {
+    local val="$1"
+    if [ "$val" -ge 91 ] 2>/dev/null; then
+        printf '%b' "$red"
+    elif [ "$val" -ge 51 ] 2>/dev/null; then
+        printf '%b' "$orange"
+    else
+        printf '%b' "$cyan"
+    fi
+}
+
+# Returns the escape code for a thinking effort level string.
+effort_color() {
+    case "$1" in
+        high) printf '%b' "$red" ;;
+        medium) printf '%b' "$orange" ;;
+        *) printf '%b' "$cyan" ;;  # low, off, or empty
+    esac
+}
 
 model_name=$(echo "$input" | jq -r '.model.display_name // "Claude"')
 
@@ -110,12 +132,22 @@ if [ -n "$usage_data" ] && echo "$usage_data" | jq -e . >/dev/null 2>&1; then
     seven_reset_iso=$(echo "$usage_data" | jq -r '.seven_day.resets_at // empty')
     seven_reset=$(format_reset_datetime "$seven_reset_iso")
 
-    line+="${sep}${orange}${five_pct}%${reset}"
+    five_color=$(pct_color "$five_pct")
+    seven_color=$(pct_color "$seven_pct")
+
+    line+="${sep}${five_color}${five_pct}%${reset}"
     [ -n "$five_reset" ] && line+=" ${dim}→${reset} ${cyan}${five_reset}${reset}"
 
-    line+="${sep}${orange}${seven_pct}%${reset}"
+    line+="${sep}${seven_color}${seven_pct}%${reset}"
     [ -n "$seven_reset" ] && line+=" ${dim}→${reset} ${cyan}${seven_reset}${reset}"
 fi
+
+# ===== Thinking mode =====
+effort=$(jq -r '.effortLevel // empty' "${HOME}/.claude/settings.json" 2>/dev/null)
+sep=" ${dim}|${reset} "
+effort_val="${effort:-off}"
+effort_col=$(effort_color "$effort_val")
+line+="${sep}${cyan}thinking: ${effort_col}${effort_val}${reset}"
 
 printf "%b\n" "$line"
 exit 0

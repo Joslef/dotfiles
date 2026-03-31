@@ -255,6 +255,63 @@ Plugin state lives in three places:
 
 ---
 
+## ☁️ AWS Cloud Practitioner Study Notes
+
+### Service Distinctions (common exam traps)
+
+- **CodeDeploy vs CodePipeline**: CodeDeploy *executes* deployments (also works on-premises via agent); CodePipeline *orchestrates* the CI/CD workflow but doesn't deploy anything itself. "On-premises deployment" → CodeDeploy.
+- **CloudFront vs S3 Transfer Acceleration**: CloudFront = CDN, serves content *out* to global users fast. S3TA = speeds up *uploads into* S3. "Global static website performance" → CloudFront.
+- **Kendra vs Comprehend**: Kendra = enterprise search (find relevant documents). Comprehend = NLP text analysis (sentiment, entities, PII). Both are AI services (pre-built, no ML knowledge needed).
+- **Read Replica vs Multi-AZ**: Read Replica = scalability (offload read traffic, async replication, no auto-failover). Multi-AZ = availability (sync replication, auto-failover). "High availability/failover" → Multi-AZ. "Read-heavy/scalability" → Read Replica.
+- **VPC Endpoint vs others for private S3 access**: VPC Endpoint keeps VPC→S3 traffic inside AWS network (no internet). Direct Connect = on-premises→AWS private line. Transit Gateway = connects VPCs at scale. "Privately connect VPC to S3" → VPC Endpoint (Gateway type, free).
+- **VPC Peering vs Transit Gateway**: Peering = direct 1:1, non-transitive, gets messy at scale. TGW = hub-and-spoke, transitive, handles VPNs/Direct Connect too. "Hundreds of VPCs / centralized" → TGW.
+
+### Global vs Regional Services (memorize these)
+
+Global: **IAM, CloudFront, Route 53, WAF** (when with CloudFront), **AWS Organizations**
+Everything else is almost always regional.
+
+### Shared Responsibility Model
+
+- **Shared controls** (both AWS and customer): Patch Management, Configuration Management, Awareness & Training
+- "Configuration Management is customer-only" is WRONG — it's shared
+- **Shield Standard** = AWS's responsibility (automatic, free, no customer action). Shield Advanced = customer's (paid, opted-in).
+- **Separate invoices** = separate AWS accounts (full stop — tags/Organizations/Cost Explorer cannot produce separate invoices)
+
+### Networking
+
+- **Site-to-Site VPN** = on-premises ↔ AWS only. Two components: Customer Gateway (CGW, your side) + Virtual Private Gateway (VGW, AWS side).
+- Region↔Region and AZ↔AZ traffic within AWS uses AWS's private backbone — no VPN needed.
+
+### Billing & CloudWatch
+
+- **CloudWatch billing metrics** always stored in `us-east-1` — hardcoded, regardless of where resources or account are. Must switch to us-east-1 to create billing alarms.
+- Billing metrics = dollar amounts (EstimatedCharges per service/region), updated a few times/day.
+
+### Storage
+
+- **EFS** = shared NFS file system, multi-AZ by default, accessible across VPCs (via peering) and regions (via inter-region peering). Many EC2s mount simultaneously.
+- **EBS** = block storage, single AZ, one EC2 at a time (mostly). "Shared access across instances" → EFS. "Single instance disk" → EBS.
+- **VPC Endpoint types**: Gateway (S3 + DynamoDB only, free) vs Interface (most other services, costs money).
+
+### AWS ML Service Tiers
+
+1. **AI Services** — pre-built APIs, no ML knowledge (Comprehend, Kendra, Rekognition, Transcribe, Translate, Polly)
+2. **ML Services** — build/train your own models (SageMaker)
+3. **ML Frameworks/Infrastructure** — low-level compute (EC2 with GPUs)
+
+### NotebookLM Exam Prep Prompt
+
+Joerg uses wrong-answer screenshots + this prompt in Google NotebookLM to generate targeted practice tests:
+
+> These screenshots are my wrong answers from AWS Cloud Practitioner practice tests. Based on them, generate a new practice test that specifically targets my weak areas.
+>
+> **My mistake patterns:** confusing similar-purpose services, scalability vs availability, global vs regional scope, Shared Responsibility Model edge cases, specific AWS facts, networking distinctions.
+>
+> **Format:** 20 questions, 4 options. Multi-select questions: use multi-select format if supported, otherwise split into two separate single-answer questions. Plausible wrong answers (same type of trap). Answer key with explanation of why correct answer is right AND why the most tempting wrong answer is wrong. CCP exam difficulty.
+
+---
+
 ## 🔔 Swaync Startup Race
 
 - `swaync.service` has `After=graphical-session.target` + `ConditionEnvironment=WAYLAND_DISPLAY` but still starts before `WAYLAND_DISPLAY` is in the systemd user environment → crash-loops 4–5× at boot, misses early notifications

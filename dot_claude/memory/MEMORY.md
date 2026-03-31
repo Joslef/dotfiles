@@ -308,7 +308,7 @@ Joerg uses wrong-answer screenshots + this prompt in Google NotebookLM to genera
 >
 > **My mistake patterns:** confusing similar-purpose services, scalability vs availability, global vs regional scope, Shared Responsibility Model edge cases, specific AWS facts, networking distinctions.
 >
-> **Format:** 20 questions, 4 options. Multi-select questions: use multi-select format if supported, otherwise split into two separate single-answer questions. Plausible wrong answers (same type of trap). Answer key with explanation of why correct answer is right AND why the most tempting wrong answer is wrong. CCP exam difficulty.
+> **Format:** 20–30 questions, 4 options. Multi-select questions: use multi-select format if supported, otherwise split into two separate single-answer questions. Plausible wrong answers (same type of trap). Answer key with explanation of why correct answer is right AND why the most tempting wrong answer is wrong. CCP exam difficulty. Each generation must select a **random subset** of topics — source contains ~100 questions, each test draws a fresh random 20–30 so repeated runs produce different quizzes.
 
 ---
 

@@ -1,3 +1,11 @@
+[mgr]
+sort_by = "mtime"
+sort_reverse = true
+sort_dir_first = true
+linemode = "mtime"
+show_hidden = true
+ratio = [1, 2, 5]
+
 [plugin]
 prepend_fetchers = [
   { id = "mime", url = "local://*", run = "mime-ext.local", prio = "high" },
@@ -7,6 +15,7 @@ prepend_fetchers = [
 [preview]
 max_width = 2000
 max_height = 2000
+wrap = "yes"
 
 [opener]
 edit = [

@@ -37,6 +37,8 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 - **Font**: JetBrainsMono Nerd Font (confirmed in rofi)
 - **Mouse**: Logitech MX Master 3 — solaar/wlrctl removed, no DPI tooling; use Hyprland mousemode submap (`SUPER+M`) for keyboard-driven scrolling via ydotool
 - **Hyprland notes**: `wlrctl` segfaults on this system; `wtype` cannot release physically-held modifiers (Super bleeds into keystrokes when used in `bind exec`); mousemode submap is the reliable approach for mouse emulation
+- **Monitors**: DP-1 = Display Left (right physically, ID 0), HDMI-A-1 = Display Right (LG Ultra HD, ID 1) at x=3840. Both scale=1.0. Use `hyprctl --batch` for multi-monitor changes to avoid Hyprland misalignment warnings
+- **Streaming**: Sunshine (LizardByte) running as systemd user service; capture=wlr (Hyprland), encoder=h264_vaapi (AMD RX 6650 XT); requires `LIBVA_DRIVER_NAME=radeonsi` in service env; config at `~/.config/sunshine/`; UFW ports 47984/47989/47990/48010 tcp + 47998/47999/48000/48002/5353 udp open
 
 ### macOS (legacy)
 
@@ -146,6 +148,15 @@ Patterns discovered while reviewing archmaint and macfresh scripts:
 - **`$EPOCHREALTIME` locale bug**: uses system locale decimal separator (comma on DE/EU). Normalize before arithmetic: `${EPOCHREALTIME/,/.}`.
 
 ---
+
+## 🖥️ switchreso Script
+
+- Location: `~/scripts/switchreso/switchreso`, symlinked to `~/.local/bin/switchreso`
+- Switches monitor resolutions via `hyprctl --batch` (atomic, no misalignment warnings)
+- Presets: 4K (3840×2160@60), 2K (2560×1440@59.95), 1080p (1920×1080@60), Steamdeck (1280×800)
+- DP-1 rates: 59.95 for 2K, 59.81 for Steamdeck; HDMI-A-1: 59.95 for 2K, 59.91 for Steamdeck
+- Restarts waybar after every change (`pkill waybar; sleep 0.5; waybar &>/dev/null & disown`)
+- Right monitor position derived from `${res%%x*}` (pixel width of new res, scale=1 always)
 
 ## 📝 Scripts README Style
 

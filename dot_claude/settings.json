@@ -21,7 +21,16 @@
   },
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "cli-anything@cli-anything": true
+  },
+  "extraKnownMarketplaces": {
+    "cli-anything": {
+      "source": {
+        "source": "github",
+        "repo": "HKUDS/CLI-Anything"
+      }
+    }
   },
   "effortLevel": "medium",
   "voiceEnabled": true,

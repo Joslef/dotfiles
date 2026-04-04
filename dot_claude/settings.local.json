@@ -24,7 +24,8 @@
       "Bash(journalctl:*)",
       "Skill(update-config)",
       "Bash(grep -E '^bind\\\\s*=\\\\s*\\\\$mainMod[^,]*,' ~/.config/hypr/hyprland.conf)",
-      "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')"
+      "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')",
+      "WebFetch(domain:github.com)"
     ]
   },
   "enabledPlugins": {

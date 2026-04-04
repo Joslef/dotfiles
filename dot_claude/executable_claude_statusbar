@@ -149,5 +149,11 @@ effort_val="${effort:-off}"
 effort_col=$(effort_color "$effort_val")
 line+="${sep}${cyan}thinking: ${effort_col}${effort_val}${reset}"
 
+# ===== Memory loaded indicator =====
+session_id=$(echo "$input" | jq -r '.session_id // empty')
+if [ -n "$session_id" ] && [ -f "/tmp/claude/memory-loaded-${session_id}" ]; then
+    line+="${sep}🧠"
+fi
+
 printf "%b\n" "$line"
 exit 0

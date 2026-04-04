@@ -49,11 +49,11 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 
 ---
 
-## 🔤 Aliases
+## 🪄 spells
 
-Single-word shorthands Joerg types to trigger specific behaviors. Execute immediately — don't confirm, don't suggest.
+Single-word inputs Joerg types to invoke specific behaviors. Execute immediately — don't confirm, don't suggest.
 
-| Alias | Action |
+| Spell | Action |
 |-------|--------|
 | `chezmoi` | **Step 1 — sync `.claude`:** Run `chezclaudesync` first (script at `~/scripts/chezclaudesync/chezclaudesync`). This pulls in any session changes to Claude Code config, memory, agents, hooks etc. into chezmoi. **Step 2 — sync `.config`:** Re-add all session-changed `~/.config` files; add any new ones introduced this session. Cross-check against `chezmoi list`, run `chezmoi re-add` / `chezmoi add` on anything not yet tracked. Never touch `~/.claude` directly or `~/scripts`. **Step 3 — commit & push:** In `~/.local/share/chezmoi`, stage everything, then use AskUserQuestion to present exactly 3 commit message options. Messages must reflect the full picture of what changed — could be only `.claude` files, only `.config` files, or both; the message should give a clear overview of the session's changes as a whole. Style: capital verb, imperative, no period, max 70 chars (e.g. "Add waybar VPN widget", "Update claude code memory and hooks", "Change rofi theme and update claude settings"). After the user picks one, commit and push to the GitHub remote. |
 | `loop` | Run the End-of-Session Memory Loop: reflect on session learnings, write new insights to `~/.claude/memory/MEMORY.md`, review all sections for staleness and duplication. Never write to project-specific memory files. |

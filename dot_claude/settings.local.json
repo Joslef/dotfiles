@@ -25,7 +25,8 @@
       "Skill(update-config)",
       "Bash(grep -E '^bind\\\\s*=\\\\s*\\\\$mainMod[^,]*,' ~/.config/hypr/hyprland.conf)",
       "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(gh repo:*)"
     ]
   },
   "enabledPlugins": {

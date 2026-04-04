@@ -76,9 +76,25 @@ When showing commands the user needs to run themselves, **never prefix them with
 
 At the start of every session, include `** **GLOBAL MEMORY LOADED** **` in the first response to confirm the memory injection was successful. Skip this on `q:` sessions.
 
+The statusbar shows a 🧠 icon when the `SessionStart` hook has run and memory was injected for the current session. Flag: `/tmp/claude/memory-loaded-<session_id>` — created by the hook using session_id from its stdin payload, checked in the statusbar via `.session_id` from its input JSON. Cleared on reboot (lives in `/tmp`).
+
+**Statusbar input JSON fields** (confirmed via logging): `session_id`, `transcript_path`, `cwd`, `model` (`id`, `display_name`), `workspace` (`current_dir`, `project_dir`, `added_dirs`), `version`, `output_style`, `cost`, `context_window` (`total_input_tokens`, `total_output_tokens`, `context_window_size`, `current_usage`, `used_percentage`, `remaining_percentage`), `exceeds_200k_tokens`, `rate_limits` (`five_hour`/`seven_day` with `used_percentage` + `resets_at` as epoch), `vim` (`mode`).
+
+**`~/.claude/CLAUDE.md`** exists — enforces memory load confirmation at session start via project instructions (more reliable than memory alone since it's part of the system prompt).
+
+**Hook stdin payload** contains session context including `session_id` — hooks can read it via `$(cat)` before doing other work.
+
 ### ⚡ Quick Questions
 
 If the session starts with `q:` — no memory writes, no end-of-session loop.
+
+### 🔍 Unknown Topics → Research First
+
+If Joerg mentions a tool, service, or concept that is unfamiliar or unclear, don't guess or ask — run a web search first, get the facts, then answer. Never respond with "I'm not sure what that is" without first attempting a search.
+
+### 🤖 Self-Sufficiency on the Machine
+
+Figure things out independently — read files, search the codebase, run commands, check configs, browse the web. Never ask Joerg to look something up or gather info that can be obtained directly. The only thing Joerg should ever need to do is run `sudo` commands when elevated privileges are required.
 
 ### 🐟 Fish Shell
 

@@ -8,7 +8,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat ~/.claude/memory/MEMORY.md | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": (\"<global-memory>\\n\" + . + \"</global-memory>\")}}'",
+            "command": "mkdir -p /tmp/claude; _hook=$(cat); _sid=$(printf '%s' \"$_hook\" | jq -r '.session_id // empty'); [ -n \"$_sid\" ] && touch \"/tmp/claude/memory-loaded-$_sid\"; cat ~/.claude/memory/MEMORY.md | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": (\"<global-memory>\\n\" + . + \"</global-memory>\")}}'",
             "statusMessage": "**LOADING GLOBAL MEMORY**"
           }
         ]

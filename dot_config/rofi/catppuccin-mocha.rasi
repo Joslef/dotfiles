@@ -107,15 +107,20 @@ scrollbar {
 
 element {
     padding:    5px;
-    spacing:    5px;
+    spacing:    20px;
     highlight:  bold underline;
     children:   [element-icon, element-text];
 }
 
-element-text, element-icon {
+element-text {
     background-color:   inherit;
     text-color:         inherit;
     foreground-color:   inherit;
+}
+
+element-icon {
+    background-color:   inherit;
+    size:               48px;
 }
 
 element normal {

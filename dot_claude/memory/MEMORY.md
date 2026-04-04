@@ -128,11 +128,6 @@ Single-word inputs Joerg types to invoke specific behaviors. Execute immediately
 - **Profile race condition** (upstream bug): log `s-device: Could not find valid non-headset profile, not switching` — fires when A2DP not yet enumerated at connect time; cosmetic once state is correct
 - **After wireplumber restart**: headset may reconnect in HFP — fix with `bluetoothctl disconnect` + `bluetoothctl connect` to renegotiate A2DP
 
-#### 3.3.2 🖱️ Mouse — MX Master 3
-
-- Logitech MX Master 3; solaar/wlrctl removed, no DPI tooling available
-- For keyboard-driven mouse scrolling: use Hyprland mousemode submap (`SUPER+M`) via ydotool (see § 4.1.3)
-
 ---
 
 ## 4. 🐧 Linux Desktop

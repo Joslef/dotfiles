@@ -26,7 +26,8 @@
       "Bash(grep -E '^bind\\\\s*=\\\\s*\\\\$mainMod[^,]*,' ~/.config/hypr/hyprland.conf)",
       "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')",
       "WebFetch(domain:github.com)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(snapper --help)"
     ]
   },
   "enabledPlugins": {

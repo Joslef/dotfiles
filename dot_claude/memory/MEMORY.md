@@ -1,6 +1,8 @@
 # 🧠 Global Memory
 
-## 🔄 Memory Update Loop
+## 1. 🧠 Meta — Claude Instructions
+
+### 1.1 🔄 Memory Rules & Loop
 
 After finishing any task, always run the End-of-Session Memory Loop. Announce it with `** **UPDATING MEMORY LOOP** **`.
 
@@ -12,9 +14,67 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 1. **Session learnings** — write ALL new insights, corrections, or findings into `~/.claude/memory/MEMORY.md` under the appropriate section. NEVER write to project-specific memory files (`.claude/projects/`) — always use the global file.
 2. **Memory review** — read all sections: shorten verbose entries, remove irrelevant content, deduplicate. Be conservative — memory should grow first, only trim what is clearly redundant or no longer applicable.
 
+### 1.2 ⚙️ Session Behavior Rules
+
+#### 1.2.1 🎉 Emojis
+
+Use emojis freely and enthusiastically in all responses — the more the merrier! 😄
+Sprinkle them throughout without restraint. 🚀✨
+
+#### 1.2.2 ✂️ Conciseness
+
+Concise responses — skip preamble and summaries. Confirm before making edits when asked to do so.
+
+#### 1.2.3 📋 Copy-Paste Commands
+
+When showing commands the user needs to run themselves, **never prefix them with `!`**. Joerg copies commands directly and the `!` breaks them.
+
+#### 1.2.4 🧠 Memory Load Confirmation
+
+At the start of every session, include `** **GLOBAL MEMORY LOADED** **` in the first response to confirm the memory injection was successful. Skip this on `q:` sessions.
+
+**Statusbar input JSON fields** (confirmed via logging): `session_id`, `transcript_path`, `cwd`, `model` (`id`, `display_name`), `workspace` (`current_dir`, `project_dir`, `added_dirs`), `version`, `output_style`, `cost`, `context_window` (`total_input_tokens`, `total_output_tokens`, `context_window_size`, `current_usage`, `used_percentage`, `remaining_percentage`), `exceeds_200k_tokens`, `rate_limits` (`five_hour`/`seven_day` with `used_percentage` + `resets_at` as epoch), `vim` (`mode`).
+
+**`~/.claude/CLAUDE.md`** exists — enforces memory load confirmation at session start via project instructions (more reliable than memory alone since it's part of the system prompt).
+
+**Hook stdin payload** contains session context including `session_id` — hooks can read it via `$(cat)` before doing other work.
+
+#### 1.2.5 ⚡ Quick Questions
+
+If the session starts with `q:` — no memory writes, no end-of-session loop.
+
+#### 1.2.6 🔍 Unknown Topics → Research First
+
+If Joerg mentions a tool, service, or concept that is unfamiliar or unclear, don't guess or ask — run a web search first, get the facts, then answer. Never respond with "I'm not sure what that is" without first attempting a search.
+
+#### 1.2.7 🤖 Self-Sufficiency
+
+Figure things out independently — read files, search the codebase, run commands, check configs, browse the web. Never ask Joerg to look something up or gather info that can be obtained directly. The only thing Joerg should ever need to do is run `sudo` commands when elevated privileges are required.
+
+#### 1.2.8 🐟 Fish Shell Syntax
+
+Never use bash-specific syntax. No heredocs, no `&&`/`||` chaining outside fish syntax, no `[[ ]]`.
+
+### 1.3 🪄 Spells
+
+Single-word inputs Joerg types to invoke specific behaviors. Execute immediately — don't confirm, don't suggest.
+
+| Spell | Action |
+|-------|--------|
+| `chezmoi` | **Step 1 — sync `.claude`:** Run `chezclaudesync` first (script at `~/scripts/chezclaudesync/chezclaudesync`). This pulls in any session changes to Claude Code config, memory, agents, hooks etc. into chezmoi. **Step 2 — sync `.config`:** Re-add all session-changed `~/.config` files; add any new ones introduced this session. Cross-check against `chezmoi list`, run `chezmoi re-add` / `chezmoi add` on anything not yet tracked. Never touch `~/.claude` directly or `~/scripts`. **Step 3 — commit & push:** In `~/.local/share/chezmoi`, stage everything, then use AskUserQuestion to present exactly 3 commit message options. Messages must reflect the full picture of what changed — could be only `.claude` files, only `.config` files, or both; the message should give a clear overview of the session's changes as a whole. Style: capital verb, imperative, no period, max 70 chars (e.g. "Add waybar VPN widget", "Update claude code memory and hooks", "Change rofi theme and update claude settings"). After the user picks one, commit and push to the GitHub remote. |
+| `loop` | Run the End-of-Session Memory Loop: reflect on session learnings, write new insights to `~/.claude/memory/MEMORY.md`, review all sections for staleness and duplication. Never write to project-specific memory files. |
+
+**Always-on chezmoi rules** (apply every session, not just when the `chezmoi` spell is invoked):
+
+- Only `~/.config` needs chezmoi attention; `~/.claude` goes through `chezclaudesync`; `~/scripts` is git-managed — never chezmoi either
+- After any session that touched `~/.config` files: proactively run a sync check — don't wait for the `chezmoi` spell to be invoked
+- **Actually run** `chezmoi re-add <path>` / `chezmoi add <path>` — do not just suggest the command to Joerg
+- New files affecting look/behavior (cursor, theme, keybindings, bar config, etc.): add without asking — just do it
+- Never add auto-generated files, caches, or runtime state
+
 ---
 
-## 👤 User Profile
+## 2. 👤 User Profile
 
 - **Name**: Joerg
 - **Primary machine**: CachyOS Linux (daily driver)
@@ -27,105 +87,130 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 
 ---
 
-## 🖥️ Environment
+## 3. 🖥️ Hardware & Environment
 
-### Linux
+### 3.1 🐧 Linux (CachyOS)
+
+#### 3.1.1 ⚙️ System
 
 - **Shell**: fish — never use bash-specific syntax (no heredocs, no `&&`/`||` chaining outside fish syntax, no `[[ ]]`)
 - **OS**: CachyOS (Arch-based), AUR helper: paru
 - **Desktop**: Hyprland + SDDM
 - **Font**: JetBrainsMono Nerd Font (confirmed in rofi)
-- **Mouse**: Logitech MX Master 3 — solaar/wlrctl removed, no DPI tooling; use Hyprland mousemode submap (`SUPER+M`) for keyboard-driven scrolling via ydotool
-- **Hyprland notes**: `wlrctl` segfaults on this system; `wtype` cannot release physically-held modifiers (Super bleeds into keystrokes when used in `bind exec`); mousemode submap is the reliable approach for mouse emulation
-- **Monitors**: DP-1 = Display Left (right physically, ID 0), HDMI-A-1 = Display Right (LG Ultra HD, ID 1) at x=3840. Both scale=1.0. Use `hyprctl --batch` for multi-monitor changes to avoid Hyprland misalignment warnings
-- **Streaming**: Sunshine (LizardByte) running as systemd user service; capture=wlr (Hyprland), encoder=h264_vaapi (AMD RX 6650 XT); requires `LIBVA_DRIVER_NAME=radeonsi` in service env; config at `~/.config/sunshine/`; UFW ports 47984/47989/47990/48010 tcp + 47998/47999/48000/48002/5353 udp open
 
-### macOS (legacy)
+#### 3.1.2 🖥️ Monitors
+
+- **DP-1** = Display Left (right physically, ID 0); **HDMI-A-1** = Display Right (LG Ultra HD, ID 1) at x=3840
+- Both scale=1.0
+- Use `hyprctl --batch` for multi-monitor changes to avoid Hyprland misalignment warnings
+
+#### 3.1.3 📡 Streaming (Sunshine)
+
+- Sunshine (LizardByte) running as systemd user service; capture=wlr (Hyprland), encoder=h264_vaapi (AMD RX 6650 XT)
+- Requires `LIBVA_DRIVER_NAME=radeonsi` in service env
+- Config at `~/.config/sunshine/`
+- UFW ports: 47984/47989/47990/48010 tcp + 47998/47999/48000/48002/5353 udp open
+
+### 3.2 🍎 macOS (legacy)
 
 - **Shell**: fish (macOS-only, excluded on Linux via chezmoi)
 - **WM**: AeroSpace
 - **Bar**: Sketchybar (Lua-based, Homebrew HEAD)
 - **Monitors**: LG Ultra HD (secondary) + LG HDR 4K (main) + optional Sidecar (iPad)
 
----
+### 3.3 🔌 Peripherals
 
-## 🪄 spells
+#### 3.3.1 🎧 Bluetooth Audio — WH-1000XM4
 
-Single-word inputs Joerg types to invoke specific behaviors. Execute immediately — don't confirm, don't suggest.
+- **MAC**: `80:99:E7:2E:99:D4` — old/stale device MAC sometimes in state files: `E8:EE:CC:C5:8F:7E` (remove if found)
+- **Volume control**: `~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf` must have `bluez5.enable-absolute-volume = true` — `false` breaks system volume slider
+- **Auto-switch default sink**: WirePlumber persists default sink in `~/.local/state/wireplumber/default-nodes`; `find-selected-default-node.lua` gives saved node a +30000 priority bonus — stale MAC means headset never wins. Fix: correct the file, then `wpctl set-default <id>` to persist
+- **Profile race condition** (upstream bug): log `s-device: Could not find valid non-headset profile, not switching` — fires when A2DP not yet enumerated at connect time; cosmetic once state is correct
+- **After wireplumber restart**: headset may reconnect in HFP — fix with `bluetoothctl disconnect` + `bluetoothctl connect` to renegotiate A2DP
 
-| Spell | Action |
-|-------|--------|
-| `chezmoi` | **Step 1 — sync `.claude`:** Run `chezclaudesync` first (script at `~/scripts/chezclaudesync/chezclaudesync`). This pulls in any session changes to Claude Code config, memory, agents, hooks etc. into chezmoi. **Step 2 — sync `.config`:** Re-add all session-changed `~/.config` files; add any new ones introduced this session. Cross-check against `chezmoi list`, run `chezmoi re-add` / `chezmoi add` on anything not yet tracked. Never touch `~/.claude` directly or `~/scripts`. **Step 3 — commit & push:** In `~/.local/share/chezmoi`, stage everything, then use AskUserQuestion to present exactly 3 commit message options. Messages must reflect the full picture of what changed — could be only `.claude` files, only `.config` files, or both; the message should give a clear overview of the session's changes as a whole. Style: capital verb, imperative, no period, max 70 chars (e.g. "Add waybar VPN widget", "Update claude code memory and hooks", "Change rofi theme and update claude settings"). After the user picks one, commit and push to the GitHub remote. |
-| `loop` | Run the End-of-Session Memory Loop: reflect on session learnings, write new insights to `~/.claude/memory/MEMORY.md`, review all sections for staleness and duplication. Never write to project-specific memory files. |
+#### 3.3.2 🖱️ Mouse — MX Master 3
 
----
-
-## ⚙️ Behavior Rules
-
-### 🎉 Emojis
-
-Use emojis freely and enthusiastically in all responses — the more the merrier! 😄
-Sprinkle them throughout without restraint. 🚀✨
-
-### ✂️ Conciseness
-
-Concise responses — skip preamble and summaries. Confirm before making edits when asked to do so.
-
-### 📋 Commands to Copy-Paste
-
-When showing commands the user needs to run themselves, **never prefix them with `!`**. Joerg copies commands directly and the `!` breaks them.
-
-### 🧠 Memory Load Confirmation
-
-At the start of every session, include `** **GLOBAL MEMORY LOADED** **` in the first response to confirm the memory injection was successful. Skip this on `q:` sessions.
-
-The statusbar shows a 🧠 icon when the `SessionStart` hook has run and memory was injected for the current session. Flag: `/tmp/claude/memory-loaded-<session_id>` — created by the hook using session_id from its stdin payload, checked in the statusbar via `.session_id` from its input JSON. Cleared on reboot (lives in `/tmp`).
-
-**Statusbar input JSON fields** (confirmed via logging): `session_id`, `transcript_path`, `cwd`, `model` (`id`, `display_name`), `workspace` (`current_dir`, `project_dir`, `added_dirs`), `version`, `output_style`, `cost`, `context_window` (`total_input_tokens`, `total_output_tokens`, `context_window_size`, `current_usage`, `used_percentage`, `remaining_percentage`), `exceeds_200k_tokens`, `rate_limits` (`five_hour`/`seven_day` with `used_percentage` + `resets_at` as epoch), `vim` (`mode`).
-
-**`~/.claude/CLAUDE.md`** exists — enforces memory load confirmation at session start via project instructions (more reliable than memory alone since it's part of the system prompt).
-
-**Hook stdin payload** contains session context including `session_id` — hooks can read it via `$(cat)` before doing other work.
-
-### ⚡ Quick Questions
-
-If the session starts with `q:` — no memory writes, no end-of-session loop.
-
-### 🔍 Unknown Topics → Research First
-
-If Joerg mentions a tool, service, or concept that is unfamiliar or unclear, don't guess or ask — run a web search first, get the facts, then answer. Never respond with "I'm not sure what that is" without first attempting a search.
-
-### 🤖 Self-Sufficiency on the Machine
-
-Figure things out independently — read files, search the codebase, run commands, check configs, browse the web. Never ask Joerg to look something up or gather info that can be obtained directly. The only thing Joerg should ever need to do is run `sudo` commands when elevated privileges are required.
-
-### 🐟 Fish Shell
-
-Never use bash-specific syntax. No heredocs, no `&&`/`||` chaining outside fish syntax, no `[[ ]]`.
-
-### 📁 Chezmoi Sync
-
-Only files under `~/.config` need chezmoi attention. After any session involving `~/.config` changes:
-
-- Run a sync check: verify all user-tracked `~/.config` files are in sync with chezmoi
-- If a tracked file was changed: **actually run** `chezmoi re-add <path>` — do not just suggest it to the user
-- If a new `~/.config` file was created during the session that affects the look or behavior of the machine (cursor, theme, keybindings, bar config, etc.) — add it to chezmoi with `chezmoi add <path>`. Don't ask, just do it.
-- Never add files that are clearly auto-generated, caches, or runtime state
-
-`~/.claude` is synced via a separate user script — do NOT chezmoi re-add anything under `~/.claude`.
-`~/scripts` is git-managed — do NOT chezmoi anything there either.
+- Logitech MX Master 3; solaar/wlrctl removed, no DPI tooling available
+- For keyboard-driven mouse scrolling: use Hyprland mousemode submap (`SUPER+M`) via ydotool (see § 4.1.3)
 
 ---
 
-## 🍎 macOS Config
+## 4. 🐧 Linux Desktop
 
-### AeroSpace
+### 4.1 🏞️ Hyprland
+
+#### 4.1.1 ⚙️ General & Quirks
+
+- `wlrctl` segfaults on this system
+- `wtype` cannot release physically-held modifiers (Super bleeds into keystrokes when used in `bind exec`)
+- Use `hyprctl --batch` for multi-monitor changes to avoid misalignment warnings
+
+#### 4.1.2 🖱️ Cursor
+
+- **Theme**: `Bibata-Modern-Amber` (AUR: `bibata-cursor-git`), size 32
+- **Config**: `hyprland.conf` — `env = XCURSOR_THEME/SIZE` + `env = HYPRCURSOR_THEME/SIZE`
+- **Apply without re-login**: `hyprctl setcursor <ThemeName> <size>`
+- **GTK**: `~/.config/gtk-3.0/settings.ini` — chezmoi-tracked
+
+#### 4.1.3 🖱️ Mouse Emulation
+
+- Mousemode submap (`SUPER+M`) is the reliable approach for keyboard-driven mouse scrolling via ydotool
+- `wlrctl` segfaults; `wtype` can't release held Super — mousemode is the only working option
+
+### 4.2 📊 Waybar
+
+#### 4.2.1 🛡️ VPN Widget
+
+- Script: `~/.config/waybar/vpn.sh` — checks `tun0` interface, JSON with class `connected`/`disconnected`
+- Icons: `󰌾` (nf-md-lock) = on, `󱗒` (nf-md-shield_off_outline) = off
+- Tooltip shows public IP via `curl ifconfig.me`
+- CSS: connected = `#A6E3A1` (green), disconnected = `#F38BA8` (red)
+- Position: between `custom/battery` and `hyprland/language`
+- Connect: `sudo openvpn --config ~/.config/.secrets/openvpn.ovpn --daemon`
+- Disconnect: `sudo pkill openvpn`
+- `.ovpn` cert paths must be absolute — relative paths fail when running from other directories
+
+### 4.3 🔍 Rofi
+
+- **Keybinding conflicts**: Never add bare `Left`/`Right` to `kb-page-prev`/`kb-page-next` — they're already bound by rofi defaults and cause a fatal startup conflict that blocks rofi entirely. Use only `Control+h` / `Control+l` for page navigation.
+
+### 4.4 📋 Clipse (Clipboard Manager)
+
+- **Package**: `clipse-wayland-bin` (AUR) — replaces cliphist
+- **Daemon**: `clipse -listen` — self-daemonizes by spawning two `wl-paste` workers (`--type image/png` and `--type text --wl-store`); `pgrep clipse` finds nothing after launch — that's normal
+- **Hyprland exec-once**: `exec-once = clipse -listen`
+- **Keybinding**: `Super+V` → `kitty --class clipse -e clipse`
+- **Windowrule**: float by class `clipse`, centered, currently 2400×1500
+- **Config**: `~/.config/clipse/config.json` (chezmoi-tracked)
+- **Image display**: `type: kitty` (crisp, requires spacebar to preview), `scaleX/scaleY` ratio 2:1 to compensate terminal cell aspect, `heightCut` trims bottom rows to avoid artifacts
+- **Navigation**: `ctrl+j/k` (up/down), `ctrl+h/l` (prevPage/nextPage)
+- **clipse -listen behavior**: exits immediately after spawning workers — NOT a bug; workers are the `wl-paste` processes
+
+### 4.5 🔔 Swaync
+
+- `swaync.service` has `After=graphical-session.target` + `ConditionEnvironment=WAYLAND_DISPLAY` but still starts before `WAYLAND_DISPLAY` is in the systemd user environment → crash-loops 4–5× at boot, misses early notifications
+- **Fix**: `exec-once = systemctl --user start swaync` in `hyprland.conf` — guarantees Wayland is ready
+
+### 4.6 🖥️ switchreso
+
+- Location: `~/scripts/switchreso/switchreso`, symlinked to `~/.local/bin/switchreso`
+- Switches monitor resolutions via `hyprctl --batch` (atomic, no misalignment warnings)
+- Presets: 4K (3840×2160@60), 2K (2560×1440@59.95), 1080p (1920×1080@60), Steamdeck (1280×800)
+- DP-1 rates: 59.95 for 2K, 59.81 for Steamdeck; HDMI-A-1: 59.95 for 2K, 59.91 for Steamdeck
+- Restarts waybar after every change (`pkill waybar; sleep 0.5; waybar &>/dev/null & disown`)
+- Right monitor position derived from `${res%%x*}` (pixel width of new res, scale=1 always)
+
+---
+
+## 5. 🍎 macOS Desktop
+
+### 5.1 ✈️ AeroSpace
 
 - Config: `~/.config/aerospace/aerospace.toml`, helpers in `~/.config/aerospace/`
 - Known limitation: floating window positioning unreliable on secondary monitors — [issue #1519](https://github.com/nikitabobko/AeroSpace/issues/1519)
 - Ghostty new windows: use AppleScript Cmd+N approach, NOT direct binary launch (causes multiple dock icons)
 
-### Sketchybar
+### 5.2 📊 Sketchybar
 
 - Installed via Homebrew HEAD (`felixkratz/formulae/sketchybar`)
 - Config: `~/.config/sketchybar/` (Lua-based, `sketchybarrc` → `init.lua`)
@@ -135,7 +220,11 @@ Only files under `~/.config` need chezmoi attention. After any session involving
 - `updates = "when_shown"` means routine events don't fire when `drawing = false` — use `updates = "on"` for widgets that start hidden
 - After brew version changes, always check TCC permissions — they're path-specific
 
-### Neovim
+---
+
+## 6. 🛠️ Applications
+
+### 6.1 📝 Neovim
 
 - Config: `~/.config/nvim/`, keymaps: `~/.config/nvim/lua/config/keymaps.lua`
 - `ft` is NOT a valid which-key field — use `cond = function() return vim.bo.filetype == "markdown" end`
@@ -149,9 +238,33 @@ Only files under `~/.config` need chezmoi attention. After any session involving
 - SchemaStore.nvim: disable built-in schema store (`schemaStore.enable = false`) and use `require("schemastore").yaml.schemas()` — auto-detects schema per filename (CF, K8s, GH Actions, etc.)
 - Full YAML setup lives in `formatting.lua`: yamlls server config (SchemaStore + customTags) + conform formatter (yamlfmt)
 
+### 6.2 🗂️ Yazi
+
+- Plugins in `~/.config/yazi/plugins/` (git repo), managed via `ya pkg` (subcommands: `add`, `install`, `upgrade`, `list`, `delete`)
+- keymap.toml: use `[mgr] prepend_keymap = [...]` — mixed styles (`[[manager.prepend_keymap]]`) break bindings silently
+- Shell commands use `$@` for hovered file (NOT `$1`)
+- Extract: `{ on = "e", run = "shell 'ouch decompress \"$@\" --yes'", desc = "Extract archive" }`
+- Compress: `{ on = "c", run = "plugin ouch", desc = "Compress file/folder" }` — ouch.yazi `entry()` prompts for name/format
+- ouch.yazi: `entry()` = compress, `peek()` = archive preview — NOT an extractor
+- `unrar` required for rar support
+- **Active plugins**: `git`, `jump-to-char` (`f`), `mime-ext` (auto), `ouch` (`e`/`c`), `smart-enter` (`l`)
+- **zoom.yazi is broken** — exits with code 127 (PATH issue in yazi sandbox), not worth debugging
+- `init.lua` required for git plugin: `require("git"):setup()`
+- chezmoi tracks plugins dir as a whole git repo — use `chezmoi re-add ~/.config/yazi/plugins` after any plugin changes
+
+### 6.3 🎵 audioshell
+
+- Lua script injected into mpv via `--script=` to observe `media-title` / `artist` properties
+- Metadata written to `/tmp/audioshell_meta_$$`, read on each event loop iteration
+- Pause/resume: `SIGSTOP`/`SIGCONT` on mpv PID (no IPC, no reconnect on resume)
+- Animation: `$EPOCHREALTIME` at ~3fps (bash 5+), falls back to `$SECONDS` at 1fps (bash 3.2/macOS)
+- macOS compat: integer-only `read -t` on bash 3.2, detected via `$BASH_VERSION`
+
 ---
 
-## 🐚 Shell Script Anti-Patterns
+## 7. 🐚 Shell & Scripting
+
+### 7.1 ⚠️ Shell Script Anti-Patterns
 
 Patterns discovered while reviewing archmaint and macfresh scripts:
 
@@ -166,18 +279,7 @@ Patterns discovered while reviewing archmaint and macfresh scripts:
 - **Unquoted globs in `rm -rf`**: e.g. `rm -rf ~/Library/Caches/*` — quote or use find to avoid glob expansion issues.
 - **`$EPOCHREALTIME` locale bug**: uses system locale decimal separator (comma on DE/EU). Normalize before arithmetic: `${EPOCHREALTIME/,/.}`.
 
----
-
-## 🖥️ switchreso Script
-
-- Location: `~/scripts/switchreso/switchreso`, symlinked to `~/.local/bin/switchreso`
-- Switches monitor resolutions via `hyprctl --batch` (atomic, no misalignment warnings)
-- Presets: 4K (3840×2160@60), 2K (2560×1440@59.95), 1080p (1920×1080@60), Steamdeck (1280×800)
-- DP-1 rates: 59.95 for 2K, 59.81 for Steamdeck; HDMI-A-1: 59.95 for 2K, 59.91 for Steamdeck
-- Restarts waybar after every change (`pkill waybar; sleep 0.5; waybar &>/dev/null & disown`)
-- Right monitor position derived from `${res%%x*}` (pixel width of new res, scale=1 always)
-
-## 📝 Scripts README Style
+### 7.2 📝 Scripts README Style
 
 Confirmed across archmaint, gitstatus, pkgsync, dotfiles READMEs:
 
@@ -194,39 +296,28 @@ Confirmed across archmaint, gitstatus, pkgsync, dotfiles READMEs:
 - **READMEs live alongside the script** in each tool's subdirectory under `~/scripts/` — no separate `/docs`
 - **Service/tool tables**: columns are `Service | Description | Link`; bold tool name inside Description: `**Name** — em-dash description`
 
----
+### 7.3 🗂️ Scripts Catalog (`~/scripts`)
 
-## 🎵 audioshell Architecture
+Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked to `~/.local/bin/`. Each script lives in its own subdirectory alongside a README.
 
-- Lua script injected into mpv via `--script=` to observe `media-title` / `artist` properties
-- Metadata written to `/tmp/audioshell_meta_$$`, read on each event loop iteration
-- Pause/resume: `SIGSTOP`/`SIGCONT` on mpv PID (no IPC, no reconnect on resume)
-- Animation: `$EPOCHREALTIME` at ~3fps (bash 5+), falls back to `$SECONDS` at 1fps (bash 3.2/macOS)
-- macOS compat: integer-only `read -t` on bash 3.2, detected via `$BASH_VERSION`
-
----
-
-## 📋 Clipse Clipboard Manager
-
-- **Package**: `clipse-wayland-bin` (AUR) — replaces cliphist
-- **Daemon**: `clipse -listen` — self-daemonizes by spawning two `wl-paste` workers (`--type image/png` and `--type text --wl-store`); `pgrep clipse` finds nothing after launch — that's normal
-- **Hyprland exec-once**: `exec-once = clipse -listen`
-- **Keybinding**: `Super+V` → `kitty --class clipse -e clipse`
-- **Windowrule**: float by class `clipse`, centered, currently 2400×1500
-- **Config**: `~/.config/clipse/config.json` (chezmoi-tracked)
-- **Image display**: `type: kitty` (crisp, requires spacebar to preview), `scaleX/scaleY` ratio 2:1 to compensate terminal cell aspect, `heightCut` trims bottom rows to avoid artifacts
-- **Navigation**: `ctrl+j/k` (up/down), `ctrl+h/l` (prevPage/nextPage)
-- **clipse -listen behavior**: exits immediately after spawning workers — NOT a bug; workers are the `wl-paste` processes
+| Script | Platform | Purpose |
+|--------|----------|---------|
+| `archmaint` | Linux | Arch maintenance: system update, orphan removal, cache cleanup, pacman DB check |
+| `audioshell` | Linux/macOS | Terminal music player UI wrapper for mpv with metadata display (see § 6.3) |
+| `brewsync` | macOS | Sync Homebrew + MAS package lists to GitHub; scheduled via launchd; supports restore |
+| `changemachine` | Linux | Toggle Hyprland config between machine profiles (`lggram`/`gcube`) via tagged config lines |
+| `chezclaudesync` | Linux | Snapshot `~/.claude` (settings, hooks, agents, memory) into chezmoi — secrets-safe |
+| `createloginscreen` | Linux | One-shot SDDM setup: Catppuccin Mocha Pink theme, autologin, display config; run as root |
+| `gitstatus` | Linux/macOS | Recursive git repo scanner: fetches remotes, flags dirty/behind/unpushed repos |
+| `macfresh` | macOS | macOS maintenance: brew update, cask/MAS upgrades, system cleanup |
+| `pkgsync` | Linux | Sync Arch package lists to GitHub; scheduled via systemd timer; supports restore |
+| `switchreso` | Linux | Switch monitor resolution presets via `hyprctl --batch` (see § 4.6) |
 
 ---
 
-## 🖥️ Rofi Config
+## 8. 🔌 Claude Code
 
-- **Keybinding conflicts**: Never add bare `Left`/`Right` to `kb-page-prev`/`kb-page-next` — they're already bound by rofi defaults and cause a fatal startup conflict that blocks rofi entirely. Use only `Control+h` / `Control+l` for page navigation.
-
----
-
-## 🔌 Claude Code Plugin System
+### 8.1 🧩 Plugin System
 
 Plugin state lives in three places:
 - `~/.claude/plugins/installed_plugins.json` — installed plugin registry
@@ -234,105 +325,3 @@ Plugin state lives in three places:
 - `~/.claude/plugins/data/<plugin>-<marketplace>/` — plugin runtime data
 
 **swift-lsp auto-resurrection**: CC re-adds `swift-lsp@claude-plugins-official` on every startup because `~/.claude.json` contains a server-fetched feature flag list that includes it. This list is Anthropic-controlled and cannot be permanently removed. **Solution**: just leave it `disabled` in `/plugin` UI — it does nothing when disabled. Don't waste time trying to purge it.
-
----
-
-## 🗂️ Yazi Config
-
-- Plugins in `~/.config/yazi/plugins/` (git repo), managed via `ya pkg` (subcommands: `add`, `install`, `upgrade`, `list`, `delete`)
-- keymap.toml: use `[mgr] prepend_keymap = [...]` — mixed styles (`[[manager.prepend_keymap]]`) break bindings silently
-- Shell commands use `$@` for hovered file (NOT `$1`)
-- Extract: `{ on = "e", run = "shell 'ouch decompress \"$@\" --yes'", desc = "Extract archive" }`
-- Compress: `{ on = "c", run = "plugin ouch", desc = "Compress file/folder" }` — ouch.yazi `entry()` prompts for name/format
-- ouch.yazi: `entry()` = compress, `peek()` = archive preview — NOT an extractor
-- `unrar` required for rar support
-- **Active plugins**: `git`, `jump-to-char` (`f`), `mime-ext` (auto), `ouch` (`e`/`c`), `smart-enter` (`l`)
-- **zoom.yazi is broken** — exits with code 127 (PATH issue in yazi sandbox), not worth debugging
-- `init.lua` required for git plugin: `require("git"):setup()`
-- chezmoi tracks plugins dir as a whole git repo — use `chezmoi re-add ~/.config/yazi/plugins` after any plugin changes
-
----
-
-## 🖱️ Hyprland Cursor
-
-- **Theme**: `Bibata-Modern-Amber` (AUR: `bibata-cursor-git`), size 32
-- **Config**: `hyprland.conf` — `env = XCURSOR_THEME/SIZE` + `env = HYPRCURSOR_THEME/SIZE`
-- **Apply without re-login**: `hyprctl setcursor <ThemeName> <size>`
-- **GTK**: `~/.config/gtk-3.0/settings.ini` — chezmoi-tracked
-
----
-
-## 🛡️ Waybar VPN Widget
-
-- Script: `~/.config/waybar/vpn.sh` — checks `tun0` interface, JSON with class `connected`/`disconnected`
-- Icons: `󰌾` (nf-md-lock) = on, `󱗒` (nf-md-shield_off_outline) = off
-- Tooltip shows public IP via `curl ifconfig.me`
-- CSS: connected = `#A6E3A1` (green), disconnected = `#F38BA8` (red)
-- Position: between `custom/battery` and `hyprland/language`
-- Connect: `sudo openvpn --config ~/.config/.secrets/openvpn.ovpn --daemon`
-- Disconnect: `sudo pkill openvpn`
-- `.ovpn` cert paths must be absolute — relative paths fail when running from other directories
-
----
-
-## 🎧 Bluetooth Audio (WH-1000XM4)
-
-- **MAC**: `80:99:E7:2E:99:D4` — old/stale device MAC sometimes in state files: `E8:EE:CC:C5:8F:7E` (remove if found)
-- **Volume control**: `~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf` must have `bluez5.enable-absolute-volume = true` — `false` breaks system volume slider
-- **Auto-switch default sink**: WirePlumber persists default sink in `~/.local/state/wireplumber/default-nodes`; `find-selected-default-node.lua` gives saved node a +30000 priority bonus — stale MAC means headset never wins. Fix: correct the file, then `wpctl set-default <id>` to persist
-- **Profile race condition** (upstream bug): log `s-device: Could not find valid non-headset profile, not switching` — fires when A2DP not yet enumerated at connect time; cosmetic once state is correct
-- **After wireplumber restart**: headset may reconnect in HFP — fix with `bluetoothctl disconnect` + `bluetoothctl connect` to renegotiate A2DP
-
----
-
-## ☁️ AWS Cloud Practitioner Study Notes
-
-### Service Distinctions (common exam traps)
-
-- **CodeDeploy vs CodePipeline**: CodeDeploy *executes* deployments (also works on-premises via agent); CodePipeline *orchestrates* the CI/CD workflow but doesn't deploy anything itself. "On-premises deployment" → CodeDeploy.
-- **CloudFront vs S3 Transfer Acceleration**: CloudFront = CDN, serves content *out* to global users fast. S3TA = speeds up *uploads into* S3. "Global static website performance" → CloudFront.
-- **Kendra vs Comprehend**: Kendra = enterprise search (find relevant documents). Comprehend = NLP text analysis (sentiment, entities, PII). Both are AI services (pre-built, no ML knowledge needed).
-- **Read Replica vs Multi-AZ**: Read Replica = scalability (offload read traffic, async replication, no auto-failover). Multi-AZ = availability (sync replication, auto-failover). "High availability/failover" → Multi-AZ. "Read-heavy/scalability" → Read Replica.
-- **VPC Endpoint vs others for private S3 access**: VPC Endpoint keeps VPC→S3 traffic inside AWS network (no internet). Direct Connect = on-premises→AWS private line. Transit Gateway = connects VPCs at scale. "Privately connect VPC to S3" → VPC Endpoint (Gateway type, free).
-- **VPC Peering vs Transit Gateway**: Peering = direct 1:1, non-transitive, gets messy at scale. TGW = hub-and-spoke, transitive, handles VPNs/Direct Connect too. "Hundreds of VPCs / centralized" → TGW.
-
-### Global vs Regional Services (memorize these)
-
-Global: **IAM, CloudFront, Route 53, WAF** (when with CloudFront), **AWS Organizations**
-Everything else is almost always regional.
-
-### Shared Responsibility Model
-
-- **Shared controls** (both AWS and customer): Patch Management, Configuration Management, Awareness & Training
-- "Configuration Management is customer-only" is WRONG — it's shared
-- **Shield Standard** = AWS's responsibility (automatic, free, no customer action). Shield Advanced = customer's (paid, opted-in).
-- **Separate invoices** = separate AWS accounts (full stop — tags/Organizations/Cost Explorer cannot produce separate invoices)
-
-### Networking
-
-- **Site-to-Site VPN** = on-premises ↔ AWS only. Two components: Customer Gateway (CGW, your side) + Virtual Private Gateway (VGW, AWS side).
-- Region↔Region and AZ↔AZ traffic within AWS uses AWS's private backbone — no VPN needed.
-
-### Billing & CloudWatch
-
-- **CloudWatch billing metrics** always stored in `us-east-1` — hardcoded, regardless of where resources or account are. Must switch to us-east-1 to create billing alarms.
-- Billing metrics = dollar amounts (EstimatedCharges per service/region), updated a few times/day.
-
-### Storage
-
-- **EFS** = shared NFS file system, multi-AZ by default, accessible across VPCs (via peering) and regions (via inter-region peering). Many EC2s mount simultaneously.
-- **EBS** = block storage, single AZ, one EC2 at a time (mostly). "Shared access across instances" → EFS. "Single instance disk" → EBS.
-- **VPC Endpoint types**: Gateway (S3 + DynamoDB only, free) vs Interface (most other services, costs money).
-
-### AWS ML Service Tiers
-
-1. **AI Services** — pre-built APIs, no ML knowledge (Comprehend, Kendra, Rekognition, Transcribe, Translate, Polly)
-2. **ML Services** — build/train your own models (SageMaker)
-3. **ML Frameworks/Infrastructure** — low-level compute (EC2 with GPUs)
-
----
-
-## 🔔 Swaync Startup Race
-
-- `swaync.service` has `After=graphical-session.target` + `ConditionEnvironment=WAYLAND_DISPLAY` but still starts before `WAYLAND_DISPLAY` is in the systemd user environment → crash-loops 4–5× at boot, misses early notifications
-- **Fix**: `exec-once = systemctl --user start swaync` in `hyprland.conf` — guarantees Wayland is ready

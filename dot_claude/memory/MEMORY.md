@@ -22,7 +22,7 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 - **Dotfiles**: managed with **chezmoi** (except `~/scripts` — synced via git: Joslef/scripts)
   - `dot_` prefix → `.` prefix; `private_` prefix → restricted permissions (0600/0700)
   - `.chezmoiignore` uses Go templates: `{{ if ne .chezmoi.os "linux" }}` for OS-conditional deployment
-- **Learning**: Preparing for **AWS Cloud Practitioner** exam (as of 2026-03); actively studying AWS services, architecture, and concepts
+- **Learning**: Passed **AWS Cloud Practitioner** exam (2026-04); actively exploring AWS services and architecture
 - **Interests**: Deeply curious about AWS — enjoys understanding how services interconnect, where the gaps are, and the "why" behind AWS design decisions
 
 ---
@@ -49,6 +49,17 @@ After reading and understanding this rule, confirm with: `** **MEMORY RULE CONFI
 
 ---
 
+## 🔤 Aliases
+
+Single-word shorthands Joerg types to trigger specific behaviors. Execute immediately — don't confirm, don't suggest.
+
+| Alias | Action |
+|-------|--------|
+| `chezmoi` | **Step 1 — sync `.claude`:** Run `chezclaudesync` first (script at `~/scripts/chezclaudesync/chezclaudesync`). This pulls in any session changes to Claude Code config, memory, agents, hooks etc. into chezmoi. **Step 2 — sync `.config`:** Re-add all session-changed `~/.config` files; add any new ones introduced this session. Cross-check against `chezmoi list`, run `chezmoi re-add` / `chezmoi add` on anything not yet tracked. Never touch `~/.claude` directly or `~/scripts`. **Step 3 — commit & push:** In `~/.local/share/chezmoi`, stage everything, then use AskUserQuestion to present exactly 3 commit message options. Messages must reflect the full picture of what changed — could be only `.claude` files, only `.config` files, or both; the message should give a clear overview of the session's changes as a whole. Style: capital verb, imperative, no period, max 70 chars (e.g. "Add waybar VPN widget", "Update claude code memory and hooks", "Change rofi theme and update claude settings"). After the user picks one, commit and push to the GitHub remote. |
+| `loop` | Run the End-of-Session Memory Loop: reflect on session learnings, write new insights to `~/.claude/memory/MEMORY.md`, review all sections for staleness and duplication. Never write to project-specific memory files. |
+
+---
+
 ## ⚙️ Behavior Rules
 
 ### 🎉 Emojis
@@ -59,14 +70,6 @@ Sprinkle them throughout without restraint. 🚀✨
 ### ✂️ Conciseness
 
 Concise responses — skip preamble and summaries. Confirm before making edits when asked to do so.
-
-### 🗃️ Shorthand: "chezmoi"
-
-When Joerg writes just **"chezmoi"**, that means: re-add all files changed during the session and add any new `~/.config` files introduced this session. Then verify nothing was missed — cross-check all session-touched files against `chezmoi list` and run `chezmoi re-add` or `chezmoi add` on any that aren't yet tracked. Do it, don't suggest it.
-
-### 🔁 Shorthand: "loop"
-
-When Joerg writes just **"loop"**, that means: run the full End-of-Session Memory Loop — reflect on everything learned this session, write new insights to `~/.claude/memory/MEMORY.md` (the global file), and review existing entries for staleness or duplication. **Never write to project-specific memory files.**
 
 ### 📋 Commands to Copy-Paste
 
@@ -326,16 +329,6 @@ Everything else is almost always regional.
 1. **AI Services** — pre-built APIs, no ML knowledge (Comprehend, Kendra, Rekognition, Transcribe, Translate, Polly)
 2. **ML Services** — build/train your own models (SageMaker)
 3. **ML Frameworks/Infrastructure** — low-level compute (EC2 with GPUs)
-
-### NotebookLM Exam Prep Prompt
-
-Joerg uses wrong-answer screenshots + this prompt in Google NotebookLM to generate targeted practice tests:
-
-> These screenshots are my wrong answers from AWS Cloud Practitioner practice tests. Based on them, generate a new practice test that specifically targets my weak areas.
->
-> **My mistake patterns:** confusing similar-purpose services, scalability vs availability, global vs regional scope, Shared Responsibility Model edge cases, specific AWS facts, networking distinctions.
->
-> **Format:** 20–30 questions, 4 options. Multi-select questions: use multi-select format if supported, otherwise split into two separate single-answer questions. Plausible wrong answers (same type of trap). Answer key with explanation of why correct answer is right AND why the most tempting wrong answer is wrong. CCP exam difficulty. Each generation must select a **random subset** of topics — source contains ~100 questions, each test draws a fresh random 20–30 so repeated runs produce different quizzes.
 
 ---
 

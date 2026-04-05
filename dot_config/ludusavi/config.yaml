@@ -50,8 +50,21 @@ backup:
         level: 10
   onlyConstructive: false
 restore:
-  path: /home/joerg/ludusavi-backup
-  ignoredGames: []
+  path: /mnt/vault/Gaming/backup/Ludusavi
+  ignoredGames:
+    - Deadzone Rogue
+    - Death Howl
+    - Dice A Million
+    - Dwarves Glory Death and Loot
+    - God of War Ragnarök
+    - Hades 2
+    - Horizon Forbidden West
+    - Monument Valley 3
+    - Planet of Lana 2
+    - Raccoin
+    - RoboQuest
+    - Scritchy Scratchy
+    - Slay the Spire 2
   toggledPaths: {}
   toggledRegistry: {}
   sort:
@@ -159,6 +172,13 @@ customGames:
     integration: override
     files:
       - /home/joerg/.local/share/Steam/steamapps/compatdata/dwarves/pfx/drive_c/users/steamuser/AppData/LocalLow/ichbinhamma/dwarves
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Diablo II Resurrected
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/diabloiiresurrected/pfx/drive_c/users/steamuser/Saved Games/Diablo II Resurrected
     registry: []
     installDir: []
     winePrefix: []

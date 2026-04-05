@@ -155,3 +155,10 @@ customGames:
     registry: []
     installDir: []
     winePrefix: []
+  - name: Dwarves Glory Death and Loot
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/dwarves/pfx/drive_c/users/steamuser/AppData/LocalLow/ichbinhamma/dwarves
+    registry: []
+    installDir: []
+    winePrefix: []

@@ -247,7 +247,13 @@ Single-word inputs Joerg types to invoke specific behaviors. Execute immediately
 - `init.lua` required for git plugin: `require("git"):setup()`
 - chezmoi tracks plugins dir as a whole git repo — use `chezmoi re-add ~/.config/yazi/plugins` after any plugin changes
 
-### 6.3 🎵 audioshell
+### 6.3 🎮 Ludusavi
+
+- Game save backup tool; config at `~/.config/ludusavi/config.yaml` (chezmoi-tracked)
+- Non-Steam Proton games need manual Custom Game entries with exact save paths + `STEAM_COMPAT_DATA_PATH` launch option per game; named prefix strategy documented in the README at the backup target
+- Auto-backup via hourly cronie cron job; waybar icon `󰆓` (nf-md-floppy)
+
+### 6.5 🎵 audioshell
 
 - Lua script injected into mpv via `--script=` to observe `media-title` / `artist` properties
 - Metadata written to `/tmp/audioshell_meta_$$`, read on each event loop iteration
@@ -298,7 +304,7 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 | Script | Platform | Purpose |
 |--------|----------|---------|
 | `archmaint` | Linux | Arch maintenance: system update, orphan removal, cache cleanup, pacman DB check |
-| `audioshell` | Linux/macOS | Terminal music player UI wrapper for mpv with metadata display (see § 6.3) |
+| `audioshell` | Linux/macOS | Terminal music player UI wrapper for mpv with metadata display (see § 6.5) |
 | `brewsync` | macOS | Sync Homebrew + MAS package lists to GitHub; scheduled via launchd; supports restore |
 | `changemachine` | Linux | Toggle Hyprland config between machine profiles (`lggram`/`gcube`) via tagged config lines |
 | `chezclaudesync` | Linux | Snapshot `~/.claude` (settings, hooks, agents, memory) into chezmoi — secrets-safe |

@@ -1,0 +1,210 @@
+/* Catppuccin Mocha theme for Rofi */
+
+* {
+  bg0:      #1e1e2e;
+  bg1:      #313244;
+  bg2:      #45475a;
+  bg3:      #585b70;
+  fg0:      #cdd6f4;
+  fg1:      #bac2de;
+  red:      #f38ba8;
+  green:    #a6e3a1;
+  yellow:   #f9e2af;
+  blue:     #89b4fa;
+  purple:   #cba6f7;
+  aqua:     #94e2d5;
+
+  background-color:  transparent;
+  foreground-color:  @fg0;
+  border-color:      @bg3;
+  separatorcolor:    @bg3;
+  scrollbar-handle:  @bg2;
+
+  /* Rofi colors */
+  normal-background:    @bg0;
+  normal-foreground:    @fg0;
+  normal-border:        @bg0;
+
+  alternate-background: @bg0;
+  alternate-foreground: @fg0;
+  alternate-border:     @bg0;
+
+  selected-background:  @blue;
+  selected-foreground:  @bg0;
+  selected-border:      @blue;
+
+  urgent-background:    @red;
+  urgent-foreground:    @bg0;
+  urgent-border:        @red;
+
+  active-background:    @green;
+  active-foreground:    @bg0;
+  active-border:        @green;
+}
+
+window {
+  background-color: @bg0;
+  border:           2px;
+  border-color:     @bg3;
+  padding:          10px;
+  margin:           0px;
+  width:            50%;
+}
+
+mainbox {
+  background-color: @bg0;
+  border:           0px;
+  padding:          0px;
+}
+
+inputbar {
+  background-color: @bg1;
+  border:           0px 0px 1px 0px;
+  border-color:     @bg3;
+  padding:          10px;
+  margin:           0px 0px 10px 0px;
+}
+
+prompt {
+  background-color: @bg1;
+  foreground-color: @blue;
+  padding:          5px 10px 5px 0px;
+  font:             "JetBrainsMono Nerd Font 20";
+}
+
+textbox-prompt-colon {
+  expand:     false;
+  str:        ":";
+  background-color: @bg1;
+  foreground-color: @blue;
+}
+
+entry {
+  background-color: @bg1;
+  foreground-color: @fg0;
+  placeholder-color: @bg3;
+  padding:          5px 10px;
+  font:             "JetBrainsMono Nerd Font 20";
+}
+
+listview {
+  background-color: @bg0;
+  padding:          10px;
+  columns:          1;
+  lines:            12;
+  spacing:          5px;
+  cycle:            true;
+  dynamic:          true;
+  scrollbar:        true;
+}
+
+scrollbar {
+  background-color: @bg1;
+  handle-color:     @bg2;
+  handle-width:     8px;
+  padding:          0px;
+}
+
+element {
+  background-color: @bg0;
+  foreground-color: @fg0;
+  padding:          5px 10px;
+  border-radius:    4px;
+}
+
+element normal {
+  background-color: @bg0;
+  foreground-color: @fg0;
+}
+
+element normal normal {
+  background-color: @bg0;
+  foreground-color: @fg0;
+}
+
+element normal urgent {
+  background-color: @bg0;
+  foreground-color: @red;
+}
+
+element normal active {
+  background-color: @bg0;
+  foreground-color: @green;
+}
+
+element selected {
+  background-color: @blue;
+  foreground-color: @bg0;
+}
+
+element selected normal {
+  background-color: @blue;
+  foreground-color: @bg0;
+}
+
+element selected urgent {
+  background-color: @red;
+  foreground-color: @bg0;
+}
+
+element selected active {
+  background-color: @green;
+  foreground-color: @bg0;
+}
+
+element alternate {
+  background-color: @bg0;
+  foreground-color: @fg0;
+}
+
+element alternate normal {
+  background-color: @bg0;
+  foreground-color: @fg0;
+}
+
+element alternate urgent {
+  background-color: @bg0;
+  foreground-color: @red;
+}
+
+element alternate active {
+  background-color: @bg0;
+  foreground-color: @green;
+}
+
+mode-switcher {
+  background-color: @bg1;
+  border:           0px 0px 1px 0px;
+  border-color:     @bg3;
+  padding:          10px;
+  spacing:          10px;
+}
+
+button {
+  background-color: @bg1;
+  border:           1px;
+  border-color:     @bg3;
+  padding:          5px 10px;
+  border-radius:    4px;
+  foreground-color: @fg0;
+}
+
+button selected {
+  background-color: @blue;
+  foreground-color: @bg0;
+  border-color:     @blue;
+}
+
+message {
+  background-color: @bg0;
+  border:           1px;
+  border-color:     @bg3;
+  padding:          10px;
+  margin:           10px 0px 0px 0px;
+}
+
+textbox {
+  background-color: @bg0;
+  foreground-color: @fg0;
+  padding:          5px 10px;
+}

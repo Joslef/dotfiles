@@ -1,0 +1,17 @@
+@theme "/home/joerg/.config/rofi/catppuccin-mocha.rasi"
+
+configuration {
+    /* DPI scaling - affects everything */
+    dpi: 168;  /* 96 * 1.5 = 144 for 1.5x scale */
+
+    /* Or use window scaling */
+    window {
+        width: 50%;  /* percentage of screen */
+    }
+
+    /* vim-style navigation */
+    kb-accept-entry: "Return,KP_Enter,Control+m";
+    kb-remove-to-eol: "";
+    kb-row-down: "Control+j,Down,Control+n";
+    kb-row-up: "Control+k,Up,Control+p";
+}

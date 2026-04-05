@@ -27,7 +27,8 @@
       "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')",
       "WebFetch(domain:github.com)",
       "Bash(gh repo:*)",
-      "Bash(snapper --help)"
+      "Bash(snapper --help)",
+      "Bash(crontab -l)"
     ]
   },
   "enabledPlugins": {

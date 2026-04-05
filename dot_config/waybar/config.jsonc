@@ -189,7 +189,9 @@
       "solaar": "󰍽",
       "org.gnome.DiskUtility": "󰋊",
       "audacity": "",
-      "Audacity": ""
+      "Audacity": "",
+      "ludusavi": "󰆓",
+      "com.mtkennerly.ludusavi": "󰆓"
     },
     "persistent-workspaces": {
       "*": 2

@@ -1,0 +1,157 @@
+---
+runtime:
+  threads: ~
+release:
+  check: true
+manifest:
+  enable: true
+language: en-US
+theme: dark
+roots:
+  - store: steam
+    path: /home/joerg/.local/share/Steam
+  - store: steam
+    path: /mnt/data/SteamLibrary
+  - store: other
+    path: /mnt/data/Games
+redirects: []
+backup:
+  path: /mnt/vault/Gaming/backup/Ludusavi
+  ignoredGames: []
+  filter:
+    excludeStoreScreenshots: false
+    cloud:
+      exclude: true
+      epic: false
+      gog: false
+      origin: false
+      steam: true
+      uplay: false
+    ignoredPaths: []
+    ignoredRegistry: []
+  toggledPaths: {}
+  toggledRegistry: {}
+  sort:
+    key: status
+    reversed: false
+  retention:
+    full: 5
+    differential: 0
+  format:
+    chosen: simple
+    zip:
+      compression: deflate
+    compression:
+      deflate:
+        level: 6
+      bzip2:
+        level: 6
+      zstd:
+        level: 10
+  onlyConstructive: false
+restore:
+  path: /home/joerg/ludusavi-backup
+  ignoredGames: []
+  toggledPaths: {}
+  toggledRegistry: {}
+  sort:
+    key: status
+    reversed: false
+  reverseRedirects: false
+scan:
+  showDeselectedGames: true
+  showUnchangedGames: true
+  showUnscannedGames: true
+cloud:
+  remote: ~
+  path: ludusavi-backup
+  synchronize: true
+apps:
+  rclone:
+    path: /usr/bin/rclone
+    arguments: "--fast-list --ignore-checksum"
+customGames:
+  - name: God of War Ragnarök
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/godofwarragnarok/pfx/drive_c/users/steamuser/Saved Games
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Deadzone Rogue
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/deadzonerogue/pfx/drive_c/users/steamuser/AppData/Local/Valhalla/Saved/SaveGames
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Dice A Million
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/diceamillion/pfx/drive_c/users/steamuser/AppData/Local/dice_a_million
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Horizon Forbidden West
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/horizonforbiddenwest/pfx/drive_c/users/steamuser/AppData/Roaming/Guerrilla Games/Horizon Forbidden West Complete Edition
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Monument Valley 3
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/monumentvalley3/pfx/drive_c/users/steamuser/AppData/LocalLow/ustwo games/Monument Valley 3
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Planet of Lana 2
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/planetoflana2/pfx/drive_c/users/steamuser/AppData/LocalLow/Wishfully/Planet of Lana 2
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Raccoin
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/raccoin/pfx/drive_c/users/steamuser/AppData/LocalLow/DoraccoonGames/RACCOIN
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: RoboQuest
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/roboquest/pfx/drive_c/users/steamuser/AppData/Local/RoboQuest/Saved/SaveGames
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Scritchy Scratchy
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/scritchyscratchy/pfx/drive_c/users/steamuser/AppData/LocalLow/Lunch Money Games/Scritchy Scratchy
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Slay the Spire 2
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/slaythespire2/pfx/drive_c/users/steamuser/AppData/Roaming/SlayTheSpire2
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Death Howl
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/deathhowl/pfx/drive_c/users/steamuser/AppData/LocalLow/The Outer Zone/Death Howl
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Hades 2
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/hades2/pfx/drive_c/users/steamuser/Saved Games/Hades II
+    registry: []
+    installDir: []
+    winePrefix: []

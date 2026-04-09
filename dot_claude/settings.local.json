@@ -28,7 +28,9 @@
       "WebFetch(domain:github.com)",
       "Bash(gh repo:*)",
       "Bash(snapper --help)",
-      "Bash(crontab -l)"
+      "Bash(crontab -l)",
+      "Bash(mkdir -p ~/ES-DE/gamelists/pico8)",
+      "Bash(mkdir -p ~/ES-DE/downloaded_media/pico8/screenshots)"
     ]
   },
   "enabledPlugins": {

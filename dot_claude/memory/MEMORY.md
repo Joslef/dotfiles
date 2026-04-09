@@ -29,6 +29,8 @@ Concise responses — skip preamble and summaries. Confirm before making edits w
 
 When showing commands the user needs to run themselves, **never prefix them with `!`**. Joerg copies commands directly and the `!` breaks them.
 
+Long commands (pacman, paru, etc.) must be presented as a **single line** — no multiline `\` continuations. Joerg copies the whole block and multi-line breaks it.
+
 #### 1.2.4 🧠 Memory Load Confirmation
 
 At the start of every session, include `** **GLOBAL MEMORY LOADED** **` in the first response to confirm the memory injection was successful. Skip this on `q:` sessions.

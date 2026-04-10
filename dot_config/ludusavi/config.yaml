@@ -61,6 +61,7 @@ restore:
     - Grind Survivors
     - Hades 2
     - Horizon Forbidden West
+    - Minishoot Adventures
     - Monument Valley 3
     - Planet of Lana 2
     - Raccoin
@@ -203,6 +204,13 @@ customGames:
     integration: override
     files:
       - /home/joerg/.local/share/Steam/steamapps/compatdata/minishootadventures/pfx/drive_c/users/steamuser/AppData/LocalLow/SoulGame/Minishoot
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Darwin's Paradox
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/darwinsparadox/pfx/drive_c/users/steamuser/AppData/Local/DarwinParadox/Saved/SaveGames
     registry: []
     installDir: []
     winePrefix: []

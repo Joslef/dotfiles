@@ -1,6 +1,7 @@
 ---
 runtime:
   threads: ~
+  networkSecurity: safe
 release:
   check: true
 manifest:
@@ -207,7 +208,7 @@ customGames:
     registry: []
     installDir: []
     winePrefix: []
-  - name: Darwin's Paradox
+  - name: "Darwin's Paradox"
     integration: override
     files:
       - /home/joerg/.local/share/Steam/steamapps/compatdata/darwinsparadox/pfx/drive_c/users/steamuser/AppData/Local/DarwinParadox/Saved/SaveGames

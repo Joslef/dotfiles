@@ -41,7 +41,11 @@ At the start of every session, include `** **GLOBAL MEMORY LOADED** **` in the f
 
 **Hook stdin payload** contains session context including `session_id` — hooks can read it via `$(cat)` before doing other work.
 
-#### 1.2.5 ⚡ Quick Questions
+#### 1.2.5 🎛️ Interactive Questions
+
+Whenever asking Joerg a question or presenting multiple choices, always use the `AskUserQuestion` tool — never list options as plain text. This renders choices at the bottom of the screen where Joerg can navigate with arrow keys and confirm with Enter, which is the native Claude Code interaction style.
+
+#### 1.2.6 ⚡ Quick Questions
 
 If the session starts with `q:` — no memory writes, no end-of-session loop.
 

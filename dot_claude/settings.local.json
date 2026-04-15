@@ -31,7 +31,17 @@
       "Bash(crontab -l)",
       "Bash(mkdir -p ~/ES-DE/gamelists/pico8)",
       "Bash(mkdir -p ~/ES-DE/downloaded_media/pico8/screenshots)",
-      "Bash(hyprctl version:*)"
+      "Bash(hyprctl version:*)",
+      "Read(//etc/**)",
+      "Read(//etc/snapper/**)",
+      "Read(//etc/snapper/configs/**)",
+      "Read(//.snapshots/**)",
+      "Read(//sysroot/**)",
+      "WebFetch(domain:wiki.cachyos.org)",
+      "WebFetch(domain:discuss.cachyos.org)",
+      "WebFetch(domain:forum.endeavouros.com)",
+      "WebFetch(domain:wiki.archlinux.org)",
+      "WebFetch(domain:srmsc.org)"
     ]
   },
   "enabledPlugins": {

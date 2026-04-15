@@ -332,7 +332,52 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 
 ---
 
-## 8. 🔌 Claude Code
+## 8. 🔄 Btrfs Snapshot Rollback (CachyOS + Limine)
+
+When the system breaks: boot into a working snapshot from Limine (snapshot number and description visible in the boot menu).
+
+**Roll back (replace `<NUMBER>` with the snapshot number from Limine):**
+```bash
+sudo mount -t btrfs -o subvolid=5 /dev/sda2 /mnt
+sudo mv /mnt/@ /mnt/@_broken
+sudo btrfs subvolume snapshot /mnt/@_broken/.snapshots/<NUMBER>/snapshot /mnt/@
+sudo umount /mnt
+reboot
+```
+
+After confirming it works (run separately — fish doesn't support `&&`):
+```bash
+sudo mount -t btrfs -o subvolid=5 /dev/sda2 /mnt
+sudo btrfs subvolume delete /mnt/@_broken
+sudo umount /mnt
+```
+
+⚠️ `snapper list`, `limine-snapper-sync --restore`, and `btrfs-assistant` all fail when booted into a snapshot — manual swap is the only reliable method.
+
+### 8.2 ⚠️ After Rollback: Fix /.snapshots or Lose All Snapshots
+
+After the manual swap, the new `@` has `/.snapshots` as an empty regular directory — not a btrfs subvolume. Snapper requires it to be a subvolume, so `snapper list` only shows entry `0`. All old snapshots are still safe inside `@_broken/.snapshots`.
+
+**Fix — add to `/etc/fstab`:**
+```
+UUID=eed39125-62c9-42c5-8bb4-7f8b3ae28e49 /.snapshots btrfs subvol=@_broken/.snapshots,defaults,noatime,compress=zstd 0 0
+```
+Then: `sudo mount /.snapshots` — snapper works again with all old snapshots intact.
+
+⚠️ Without this: snapper is broken. Creating a fresh `sudo btrfs subvolume create /mnt/@/.snapshots` would make snapper work again but start from snapshot 1 — all 800+ old snapshots orphaned (still on disk under `@_broken` but invisible to snapper).
+
+### 8.3 🔧 Fix limine-snapper-sync Config Mismatch
+
+After rollback, `limine-snapper-sync` will pop up: `ROOT_SNAPSHOTS_PATH=/@/.snapshots doesn't match the expected path /@_broken/.snapshots from /proc/mounts`. Fix:
+
+```bash
+sudo nano /etc/limine-snapper-sync.conf
+# Change ROOT_SNAPSHOTS_PATH=/@/.snapshots → ROOT_SNAPSHOTS_PATH=/@_broken/.snapshots
+```
+
+---
+
+## 9. 🔌 Claude Code
 
 ### 8.1 🧩 Plugin System
 

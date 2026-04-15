@@ -354,6 +354,8 @@ sudo umount /mnt
 
 ⚠️ `snapper list`, `limine-snapper-sync --restore`, and `btrfs-assistant` all fail when booted into a snapshot — manual swap is the only reliable method.
 
+⚠️ After rollback steps, always `cd ~` before `sudo umount /mnt` — if the terminal is inside `/mnt`, unmount fails with "target is busy".
+
 ### 8.2 ⚠️ After Rollback: Fix /.snapshots or Lose All Snapshots
 
 After the manual swap, the new `@` has `/.snapshots` as an empty regular directory — not a btrfs subvolume. Snapper requires it to be a subvolume, so `snapper list` only shows entry `0`. All old snapshots are still safe inside `@_broken/.snapshots`.

@@ -31,7 +31,7 @@
       "Bash(crontab -l)",
       "Bash(mkdir -p ~/ES-DE/gamelists/pico8)",
       "Bash(mkdir -p ~/ES-DE/downloaded_media/pico8/screenshots)",
-      "Bash(hyprctl version:*j)"
+      "Bash(hyprctl version:*)"
     ]
   },
   "enabledPlugins": {

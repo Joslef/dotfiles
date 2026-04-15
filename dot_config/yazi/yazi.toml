@@ -32,6 +32,7 @@ open = [
 
 pdf = [
     { run = 'zen-twilight "$@"', desc = "Twilight" },
+    { run = 'evince "$@"', desc = "Evince" },
 ]
 
 [open]

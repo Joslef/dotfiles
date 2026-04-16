@@ -5,11 +5,11 @@
 .config/rofi
 .config/nwg-displays
 .config/cachyos
+.config/fish
 {{ end }}
 
 # macOS only
 {{ if ne .chezmoi.os "darwin" }}
-.config/fish
 .config/aerospace
 .config/borders
 .config/brewsync

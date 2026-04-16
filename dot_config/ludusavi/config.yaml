@@ -36,7 +36,7 @@ backup:
     key: status
     reversed: false
   retention:
-    full: 8
+    full: 10
     differential: 0
   format:
     chosen: simple

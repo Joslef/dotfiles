@@ -136,6 +136,10 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 
 ### 3.3 🔌 Peripherals
 
+#### 3.3.0 🎮 Xbox Controllers
+
+- `xpadneo-dkms` (AUR) is the go-to — stock BlueZ fumbles Xbox BT pairing, xpadneo handles it flawlessly across all controllers
+
 #### 3.3.1 🎧 Bluetooth Audio — WH-1000XM4
 
 - **MAC**: `80:99:E7:2E:99:D4` — old/stale device MAC sometimes in state files: `E8:EE:CC:C5:8F:7E` (remove if found)

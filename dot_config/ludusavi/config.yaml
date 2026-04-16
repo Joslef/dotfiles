@@ -155,7 +155,7 @@ customGames:
   - name: Slay the Spire 2
     integration: override
     files:
-      - /home/joerg/.local/share/Steam/steamapps/compatdata/slaythespire2/pfx/drive_c/users/steamuser/AppData/Roaming/SlayTheSpire2
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/slaythespire2/pfx/drive_c/users/steamuser/AppData/Roaming/SlayTheSpire2/steam
     registry: []
     installDir: []
     winePrefix: []

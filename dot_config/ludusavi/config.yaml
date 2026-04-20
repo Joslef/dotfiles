@@ -215,3 +215,10 @@ customGames:
     registry: []
     installDir: []
     winePrefix: []
+  - name: Replaced
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/replaced/pfx/drive_c/users/steamuser/AppData/LocalLow/SadCatStudios/Replaced
+    registry: []
+    installDir: []
+    winePrefix: []

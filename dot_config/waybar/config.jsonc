@@ -193,7 +193,9 @@
       "ludusavi": "󰆓",
       "com.mtkennerly.ludusavi": "󰆓",
       "es-de": "󱎓",
-      "ES-DE": "󱎓"
+      "ES-DE": "󱎓",
+      "digikam": "󰄀",
+      "org.kde.digikam": "󰄀"
     },
     "persistent-workspaces": {
       "*": 2

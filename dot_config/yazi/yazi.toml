@@ -11,6 +11,10 @@ prepend_fetchers = [
   { id = "mime", url = "local://*", run = "mime-ext.local", prio = "high" },
   { id = "mime", url = "remote://*", run = "mime-ext.remote", prio = "high" },
 ]
+prepend_previewers = [
+  { mime = "image/heic", run = "magick" },
+  { mime = "image/heif", run = "magick" },
+]
 
 [preview]
 max_width = 2000

@@ -167,6 +167,7 @@ alias seventies="mpv http://api.somafm.com/seventies.pls"
 alias synphaer="mpv http://api.somafm.com/synphaera.pls"
 
 # custom alias
+alias iphoneunmount='sudo systemctl stop iphone-mount.service'
 alias vim="nvim"
 alias v="nvim"
 alias y="yazi"

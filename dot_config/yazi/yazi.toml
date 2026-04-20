@@ -26,6 +26,11 @@ edit = [
     { run = 'nvim "$@"', block = true, desc = "Neovim" },
 ]
 
+extract = [
+    { run = 'ouch decompress "$@"', desc = "Extract with ouch" },
+    { run = 'unzip "$1" -d "${1%.zip}"', desc = "Extract with unzip" },
+]
+
 image = [
     { run = 'imv "$@"', desc = "imv" },
 ]

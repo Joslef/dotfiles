@@ -195,7 +195,10 @@
       "es-de": "󱎓",
       "ES-DE": "󱎓",
       "digikam": "󰄀",
-      "org.kde.digikam": "󰄀"
+      "org.kde.digikam": "󰄀",
+      "feishin": "󰎇",
+      "Feishin": "󰎇",
+      "org.jeffvli.feishin": "󰎇"
     },
     "persistent-workspaces": {
       "*": 2
@@ -214,7 +217,10 @@
     "on-click-middle": "close",
     "ignore-list": [
       "rofi"
-    ]
+    ],
+    "app_ids-mapping": {
+      "feishin": "amarok"
+    }
   },
   "idle_inhibitor": {
     "format": "{icon}",

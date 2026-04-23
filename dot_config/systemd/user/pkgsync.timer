@@ -1,0 +1,9 @@
+[Unit]
+Description=PkgSync - Package list sync timer
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

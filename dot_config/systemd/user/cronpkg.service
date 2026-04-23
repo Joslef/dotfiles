@@ -1,0 +1,6 @@
+[Unit]
+Description=CronPkg - Sync package lists to GitHub
+
+[Service]
+Type=oneshot
+ExecStart=/home/joerg/Documents/pkglist/cronpkg --run

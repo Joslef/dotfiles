@@ -1,0 +1,10 @@
+[Unit]
+Description=Surge download server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/surge server start
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

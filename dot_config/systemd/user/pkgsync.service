@@ -1,0 +1,6 @@
+[Unit]
+Description=PkgSync - Sync package lists to GitHub
+
+[Service]
+Type=oneshot
+ExecStart=/home/joerg/.local/bin/pkgsync --run

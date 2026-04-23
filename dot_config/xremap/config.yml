@@ -1,0 +1,12 @@
+keymap:
+  - name: DigiKam vim navigation
+    application:
+      only: [digikam]
+    remap:
+      h: left
+      j: down
+      k: up
+      l: right
+      d: delete
+      g: ctrl-Home
+      shift-g: ctrl-End

@@ -1,0 +1,8 @@
+#!/bin/bash
+if systemctl --user is-active --quiet xremap; then
+    systemctl --user stop xremap
+    notify-send -i input-keyboard "xremap" "OFF 🔴"
+else
+    systemctl --user start xremap
+    notify-send -i input-keyboard "xremap" "ON 🟢"
+fi

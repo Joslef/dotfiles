@@ -338,6 +338,36 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 
 ---
 
+## 8. 💾 Backups (gcube / CachyOS)
+
+### 8.0 🗂️ Backup Strategy Overview
+
+| Layer | Tool | Covers | Target |
+|---|---|---|---|
+| Live rollback | Btrfs/snapper (root) | System `/` | Local (sda2) |
+| Home backup | restic | `/home/joerg` (excl. Steam/Cache/Downloads/Trash) | `/mnt/vault/Backup/restic/gcube` |
+| Dotfiles | chezmoi → GitHub | `~/.config`, `~/.claude` | Offsite |
+| Package list | pkgsync | Installed packages | Offsite |
+| Game saves | ludusavi | Steam save data | `/mnt/vault/Gaming/backup/Ludusavi/` |
+| ES-DE | rsync cron | `~/ES-DE/` | `/mnt/vault/Gaming/backup/ES-DE/` |
+| navidrome | rsync cron | `/var/lib/navidrome/` | `/mnt/vault/Musik/!_backup/navidrome/` |
+| GDrive sync | rclone bisync | `~/mnt/gdrive` | Google Drive |
+
+- **`/mnt/vault`** = NAS at `//192.168.188.2/vault` (3.8TB)
+- Snapper `home` config exists but has no snapshots — `/home` NOT covered by snapper
+
+### 8.1 📦 restic Setup (gcube)
+
+- **Repo**: `/mnt/vault/Backup/restic/gcube` (repo ID: `83794eaf44`)
+- **Password file**: `~/.config/.secrets/restic-gcube.pass`
+- **Cron**: daily 10pm backup, Sunday 11pm prune (7 daily / 4 weekly / 6 monthly)
+- **Log**: `~/.local/share/restic-backup.log`
+- **Excludes**: `~/.cache`, `~/.local/share/Steam`, `~/Downloads`, `~/.local/share/Trash`, `~/ES-DE` (already rsync'd to NAS)
+- Set env vars to avoid repeating flags: `set -x RESTIC_REPOSITORY /mnt/vault/Backup/restic/gcube` + `set -x RESTIC_PASSWORD_FILE ~/.config/.secrets/restic-gcube.pass`
+- Check snapshots: `restic -r /mnt/vault/Backup/restic/gcube --password-file ~/.config/.secrets/restic-gcube.pass snapshots`
+
+---
+
 ## 8. 🔄 Btrfs Snapshot Rollback (CachyOS + Limine)
 
 When the system breaks: boot into a working snapshot from Limine (snapshot number and description visible in the boot menu).

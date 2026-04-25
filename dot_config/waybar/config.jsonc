@@ -198,7 +198,8 @@
       "org.kde.digikam": "󰄀",
       "feishin": "󰎇",
       "Feishin": "󰎇",
-      "org.jeffvli.feishin": "󰎇"
+      "org.jeffvli.feishin": "󰎇",
+      "io.ente.auth": "󰇥"
     },
     "persistent-workspaces": {
       "*": 2

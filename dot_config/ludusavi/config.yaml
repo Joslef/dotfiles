@@ -222,3 +222,10 @@ customGames:
     registry: []
     installDir: []
     winePrefix: []
+  - name: Vampire Crawlers
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/vampirecrawlers/pfx/drive_c/users/steamuser/AppData/LocalLow/Nosebleed Interactive/Vampire Crawlers
+    registry: []
+    installDir: []
+    winePrefix: []

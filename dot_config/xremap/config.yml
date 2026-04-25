@@ -1,5 +1,5 @@
 keymap:
-  - name: DigiKam vim navigation
+  - name: DigiKam
     application:
       only: [digikam]
     remap:
@@ -10,3 +10,11 @@ keymap:
       d: delete
       g: ctrl-Home
       shift-g: ctrl-End
+      0: ctrl-0
+      1: ctrl-1
+      2: ctrl-2
+      3: ctrl-3
+      4: ctrl-4
+      5: ctrl-5
+      space: F3
+      ctrl-0: ctrl-dot

@@ -33,6 +33,12 @@
     }
   },
   "effortLevel": "medium",
+  "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
+  "verbose": true,
+  "preferredNotifChannel": "kitty",
+  "autoCompactEnabled": false,
+  "remoteControlAtStartup": true,
   "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "agentPushNotifEnabled": true
 }

@@ -1,4 +1,4 @@
 #!/bin/bash
-WALL=$(find /mnt/vault/Bilder/Wallpaper -type f \( -name "*.jpg" -o -name "*.png" \) | shuf -n1)
+WALL=$(find /mnt/vault/Bilder/Wallpaper/cachyos/ -type f \( -name "*.jpg" -o -name "*.png" \) | shuf -n1)
 hyprctl hyprpaper preload "$WALL"
 hyprctl hyprpaper wallpaper ",$WALL"

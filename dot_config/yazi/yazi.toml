@@ -29,6 +29,7 @@ edit = [
 extract = [
     { run = 'ouch decompress "$@"', desc = "Extract with ouch" },
     { run = 'unzip "$1" -d "${1%.zip}"', desc = "Extract with unzip" },
+    { run = 'unrar x "$1"', desc = "Extract with unrar" },
 ]
 
 image = [

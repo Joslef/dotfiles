@@ -31,6 +31,7 @@
     "custom/bluetooth",
     "custom/netspeed",
     "custom/battery",
+    "custom/mouse-battery",
     "custom/vpn",
     "hyprland/language"
   ],
@@ -279,6 +280,11 @@
     "exec": "~/.config/waybar/battery.sh",
     "return-type": "json",
     "interval": 30
+  },
+  "custom/mouse-battery": {
+    "exec": "~/.config/waybar/mouse-battery.sh",
+    "return-type": "json",
+    "interval": 60
   },
   "hyprland/language": {
     "format": "{}",

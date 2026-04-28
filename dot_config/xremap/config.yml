@@ -18,3 +18,4 @@ keymap:
       5: ctrl-5
       space: F3
       ctrl-0: ctrl-dot
+      shift-space: F4

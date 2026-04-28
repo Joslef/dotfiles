@@ -119,13 +119,14 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 
 - Sunshine (LizardByte) running as systemd user service; capture=wlr (Hyprland), encoder=vaapi (AMD RX 6650 XT)
 - Config at `~/.config/sunshine/sunshine.conf`: `adapter_name=/dev/dri/renderD128`, `capture=wlr`, `encoder=vaapi`, `output_name=2`
-- `output_name=2` = third monitor (index 2 = HEADLESS virtual monitor) — numeric index is robust regardless of HEADLESS name
+- `output_name=2` = third monitor (index 2 = HEADLESS virtual monitor) — **must be numeric index**, name-based matching fails for headless outputs (empty description causes Sunshine to fall back to monitor 0)
 - UFW ports: 47984/47989/47990/48010 tcp + 47998/47999/48000/48002/5353 udp open
-- **iPad as 3rd screen (Moonlight)**: virtual HEADLESS monitor created via `exec-once = hyprctl output create headless` in hyprland.conf
-  - Monitor rules in hyprland.conf: `HEADLESS-1/2/3` all set to `2732x2048@60, 7680x0, 1` (fallbacks because Hyprland increments the HEADLESS counter across create/remove cycles in a session; on a fresh boot it's always HEADLESS-1)
+- **iPad as 3rd screen (Moonlight)**: virtual HEADLESS monitor created dynamically, NOT at boot
+  - `changemachine` (ipad profile): removes all existing HEADLESS-N outputs → reloads Hyprland → creates headless → forces resolution via `hyprctl keyword monitor HEADLESS-N,2732x2048@60,7680x0,1` → sets `output_name=2` in sunshine.conf → restarts Sunshine
+  - Headless is always index 2 (DP-1=0, HDMI-A-1=1) because it's created after the two physical monitors
+  - Hyprland HEADLESS counter increments across create/remove cycles in a session — HEADLESS-1/2/3 rules in hyprland.conf act as fallbacks for clean boots only; `hyprctl keyword monitor` is the reliable runtime fix
   - iPad native resolution: **2732×2048**
   - **H264 codec required** — H265 causes a green vertical stripe on the right side of the iPad Moonlight stream
-  - Use `output_name=2` (not name-based) so it works regardless of HEADLESS-1/2/3 naming
   - Clients configured in Sunshine: Xbox Series S, Steam Deck, iPadPro, lg gram
 
 ### 3.2 🍎 macOS (legacy)

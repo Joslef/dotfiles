@@ -18,6 +18,7 @@ window#waybar.hidden {
 #custom-archicon,
 #clock,
 #cpu,
+#custom-gpu,
 #memory,
 #disk,
 #temperature,
@@ -76,6 +77,11 @@ window#waybar.hidden {
 
 #cpu {
   background: #96CDFB;
+  min-width: 45px;
+}
+
+#custom-gpu {
+  background: #7DBDF5;
   min-width: 45px;
 }
 

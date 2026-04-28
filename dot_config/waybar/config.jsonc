@@ -11,6 +11,7 @@
     "custom/archicon",
     "clock",
     "cpu",
+    "custom/gpu",
     "memory",
     "disk",
     "disk#hdd2",
@@ -26,12 +27,10 @@
     "hyprland/window",
     "wlr/taskbar",
     "idle_inhibitor",
-    "pulseaudio/slider",
     "pulseaudio",
     "custom/bluetooth",
     "custom/netspeed",
     "custom/battery",
-    "custom/mouse-battery",
     "custom/vpn",
     "hyprland/language"
   ],
@@ -53,6 +52,12 @@
     "format": "{usage}% ",
     "tooltip": true,
     "tooltip-format": "CPU usage: {usage}%\nCores: {cores}"
+  },
+  "custom/gpu": {
+    "exec": "cat /sys/class/drm/card1/device/gpu_busy_percent",
+    "format": "{}% 󰾲",
+    "interval": 1,
+    "tooltip": false
   },
   "memory": {
     "format": "{}% 󰍛",
@@ -233,12 +238,6 @@
     "tooltip-format-activated": "Idle inhibitor active — screen will not deactivate",
     "tooltip-format-deactivated": "Idle inhibitor inactive — screen will deactivate"
   },
-  "pulseaudio/slider": {
-    "format": "{volume}%",
-    "format-muted": "󰝟 MUTE",
-    "step": 5,
-    "tooltip": false
-  },
   "pulseaudio": {
     "format": "{volume}% {icon}",
     "format-muted": "{volume}% 󰝟",
@@ -280,11 +279,6 @@
     "exec": "~/.config/waybar/battery.sh",
     "return-type": "json",
     "interval": 30
-  },
-  "custom/mouse-battery": {
-    "exec": "~/.config/waybar/mouse-battery.sh",
-    "return-type": "json",
-    "interval": 60
   },
   "hyprland/language": {
     "format": "{}",

@@ -161,6 +161,7 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 - `wlrctl` segfaults on this system
 - `wtype` cannot release physically-held modifiers (Super bleeds into keystrokes when used in `bind exec`)
 - Use `hyprctl --batch` for multi-monitor changes to avoid misalignment warnings
+- **3-finger swipe direction**: controlled via `gestures { workspace_swipe_invert = false }` block — `gesture = 3, horizontal, workspace, -1` and split left/right entries do NOT work; the `gestures {}` block is the correct approach
 
 #### 4.1.2 🖱️ Cursor
 

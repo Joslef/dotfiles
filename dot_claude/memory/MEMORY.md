@@ -72,7 +72,7 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 |-------|--------|
 | `chezmoi` | **Step 1 — diff first:** Run `chezmoi diff` to get a clear picture of what has drifted between the live `~/.config` files and the chezmoi source. Any file showing up as changed or missing in the diff is a candidate for the next step — don't skip this, it's the ground truth. **Step 2 — sync `.config` from diff:** For every file that appeared in the diff, run `chezmoi re-add <path>` to pull in the live version. Never touch `~/.claude` directly or `~/scripts`. **Step 3 — add new session files:** The diff only surfaces files chezmoi already knows about — new files created this session are completely invisible to it. Cross-reference what was touched/created during the session against `chezmoi managed` output and run `chezmoi add <path>` for anything not yet tracked. When in doubt, check rather than skip. **Step 4 — sync `.claude`:** Run `chezclaudesync` (script at `~/scripts/chezclaudesync/chezclaudesync`) **after** all memory/config changes are done. This ensures any memory writes made during the spell are captured. **Step 5 — commit & push:** In `~/.local/share/chezmoi`, stage everything, then use AskUserQuestion to present exactly 3 commit message options. Messages must reflect the full picture of what changed — could be only `.claude` files, only `.config` files, or both; the message should give a clear overview of the session's changes as a whole. Style: capital verb, imperative, no period, max 70 chars (e.g. "Add waybar VPN widget", "Update claude code memory and hooks", "Change rofi theme and update claude settings"). Keep messages generic — do not name specific games, files, or apps; describe the type of change instead (e.g. "Add new game to ludusavi" not "Add Diablo II to ludusavi"). After the user picks one, commit and push to the GitHub remote. |
 | `loop` | Run the End-of-Session Memory Loop: reflect on session learnings, write new insights to `~/.claude/memory/MEMORY.md`, review all sections for staleness and duplication. Never write to project-specific memory files. |
-| `photoimport` | Run `~/scripts/photoimport/photoimport` — imports photos from the default vault import folder (`/mnt/vault/Bilder/Fotos/import`) into the `yyyy/mm/dd` library structure under `/mnt/vault/Bilder/Fotos`. Runs with `--run` (no prompt). If Joerg says dry-run, add `--dry-run`. Custom source/dest: pass as positional args after the script name. |
+| `photoimport` | Run `~/scripts/photoimport/photoimport` — imports photos from the default vault import folder (`/mnt/vault/Bilder/fotoimport`) into the `yyyy/mm/dd` library structure under `/mnt/vault/Bilder/Fotos`. Skips duplicates (by filename and MD5 hash); summary always shows how many duplicates were not imported. Runs with `--run` (no prompt). If Joerg says dry-run, add `--dry-run`. Custom source/dest: pass as positional args after the script name. |
 | `ludusavi` | **Add a newly added Steam/non-Steam game to ludusavi.** Steps: **1. Find the random app ID** — run `ls -lt ~/.local/share/Steam/steamapps/compatdata/ \| head -10` and identify the most recently created numeric folder (Joerg deletes all old numeric folders, so the current one is the new game). Ignore folder `0` — it's always an empty Steam placeholder. **2. Verify the game** — inspect files inside the prefix to confirm the game name and locate its save path (typically under `pfx/drive_c/users/steamuser/AppData/LocalLow/<dev>/<game>/`, `AppData/Local/`, `AppData/Roaming/`, or `Saved Games/`). **3. Copy prefix to named folder** — `cp -r ~/.local/share/Steam/steamapps/compatdata/<number> ~/.local/share/Steam/steamapps/compatdata/<gamename>` (use a short lowercase name matching the README convention). **4. Add/fix custom game entry** — check if an entry for this game already exists in `customGames:` in `~/.config/ludusavi/config.yaml` (a previous session may have added it with the wrong numeric path). If it exists with a numeric path, update it to the named folder. If absent, append a new entry following the existing pattern (integration: override, exact save path under the named folder, empty registry/installDir/winePrefix). **5. Create backup folder** — `mkdir -p "/mnt/vault/Gaming/backup/Ludusavi/<Game Name>"`. If an old folder already exists (e.g. `Game_ Name` with underscores from auto-detection), copy its contents into the new folder and fix the `mapping.yaml` inside: update `name:` to match the custom game name exactly, and replace all old `compatdata/<number>/` path prefixes with `compatdata/<gamename>/` — otherwise the GUI will show it as "new/unsynced". **6. Update README** — add/confirm the launch option line in `/mnt/vault/Gaming/backup/Ludusavi/README.md` as `STEAM_COMPAT_DATA_PATH=/home/joerg/.local/share/Steam/steamapps/compatdata/<gamename> %command%` (no random number comment). **7. Sync chezmoi** — always run `chezmoi re-add ~/.config/ludusavi/config.yaml` after editing the config so the change is captured in chezmoi and won't be lost or overwritten the next time a full chezmoi sync runs. **8. Remind Joerg** — set the launch option in Steam manually (he needs to do this himself in the Steam UI). |
 
 **Always-on chezmoi rules** (apply every session, not just when the `chezmoi` spell is invoked):
@@ -334,7 +334,7 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 | `createloginscreen` | Linux | One-shot SDDM setup: Catppuccin Mocha Pink theme, autologin, display config; run as root |
 | `gitstatus` | Linux/macOS | Recursive git repo scanner: fetches remotes, flags dirty/behind/unpushed repos |
 | `macfresh` | macOS | macOS maintenance: brew update, cask/MAS upgrades, system cleanup |
-| `photoimport` | Linux | Sort photos from flat import folder into `yyyy/mm/dd` hierarchy using EXIF dates; spell invokes with `--run` |
+| `photoimport` | Linux | Sort photos from `/mnt/vault/Bilder/fotoimport` into `yyyy/mm/dd` hierarchy using EXIF dates; skips duplicates by MD5 hash; spell invokes with `--run` |
 | `pkgsync` | Linux | Sync Arch package lists to GitHub; scheduled via systemd timer; supports restore |
 | `switchreso` | Linux | Switch monitor resolution presets via `hyprctl --batch` (see § 4.6) |
 
@@ -352,7 +352,6 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 | Package list | pkgsync | Installed packages | Offsite |
 | Game saves | ludusavi | Steam save data | `/mnt/vault/Gaming/backup/Ludusavi/` |
 | ES-DE | rsync cron | `~/ES-DE/` | `/mnt/vault/Gaming/backup/ES-DE/` |
-| navidrome | rsync cron | `/var/lib/navidrome/` | `/mnt/vault/Musik/!_backup/navidrome/` |
 | GDrive sync | rclone bisync | `~/mnt/gdrive` | Google Drive |
 
 - **`/mnt/vault`** = NAS at `//192.168.188.2/vault` (3.8TB)
@@ -362,7 +361,8 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 
 - **Repo**: `/mnt/vault/Backup/restic/gcube` (repo ID: `83794eaf44`)
 - **Password file**: `~/.config/.secrets/restic-gcube.pass`
-- **Cron**: daily 10pm backup, Sunday 11pm prune (7 daily / 4 weekly / 6 monthly)
+- **Cron**: hourly backup (`0 * * * *`), Sunday 11pm prune (keep 24 hourly / 14 daily / 4 weekly / 6 monthly)
+- **Snapshot behavior**: always creates a new snapshot on every run regardless of changes — deduplicates blocks so unchanged files cost near-zero extra storage
 - **Log**: `~/.local/share/restic-backup.log`
 - **Excludes**: `~/.cache`, `~/.local/share/Steam`, `~/Downloads`, `~/.local/share/Trash`, `~/ES-DE` (already rsync'd to NAS)
 - Set env vars to avoid repeating flags: `set -x RESTIC_REPOSITORY /mnt/vault/Backup/restic/gcube` + `set -x RESTIC_PASSWORD_FILE ~/.config/.secrets/restic-gcube.pass`
@@ -372,48 +372,26 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 
 ## 8. 🔄 Btrfs Snapshot Rollback (CachyOS + Limine)
 
-When the system breaks: boot into a working snapshot from Limine (snapshot number and description visible in the boot menu).
+Check available snapshots: `sudo snapper list`
 
-**Roll back (replace `<NUMBER>` with the snapshot number from Limine):**
+When the system breaks: boot into a working snapshot from Limine (snapshot number and description visible in the boot menu), then run:
+
 ```bash
-sudo mount -t btrfs -o subvolid=5 /dev/sda2 /mnt
-sudo mv /mnt/@ /mnt/@_broken
-sudo btrfs subvolume snapshot /mnt/@_broken/.snapshots/<NUMBER>/snapshot /mnt/@
-sudo umount /mnt
+sudo snapper-rollback <NUMBER>
 reboot
 ```
 
-After confirming it works (run separately — fish doesn't support `&&`):
-```bash
-sudo mount -t btrfs -o subvolid=5 /dev/sda2 /mnt
-sudo btrfs subvolume delete /mnt/@_broken
-sudo umount /mnt
-```
+That's it. `snapper-rollback` (AUR: `snapper-rollback`) does a clean subvolume swap — no `/.snapshots` fix needed, no `limine-snapper-sync` config mismatch, no manual btrfs juggling.
 
-⚠️ `snapper list`, `limine-snapper-sync --restore`, and `btrfs-assistant` all fail when booted into a snapshot — manual swap is the only reliable method.
+⚠️ `snapper list`, `limine-snapper-sync --restore`, and `btrfs-assistant` all fail when booted into a snapshot — `snapper-rollback` is the only reliable method.
 
-⚠️ After rollback steps, always `cd ~` before `sudo umount /mnt` — if the terminal is inside `/mnt`, unmount fails with "target is busy".
+### 8.2 🗑️ Manual Method (deprecated — kept for reference)
 
-### 8.2 ⚠️ After Rollback: Fix /.snapshots or Lose All Snapshots
+The old manual approach used `mv @ @_broken` which caused two nasty post-rollback side effects:
+- `/.snapshots` became an empty regular directory (not a subvolume) → snapper broken
+- `limine-snapper-sync` config mismatch on `ROOT_SNAPSHOTS_PATH`
 
-After the manual swap, the new `@` has `/.snapshots` as an empty regular directory — not a btrfs subvolume. Snapper requires it to be a subvolume, so `snapper list` only shows entry `0`. All old snapshots are still safe inside `@_broken/.snapshots`.
-
-**Fix — add to `/etc/fstab`:**
-```
-UUID=eed39125-62c9-42c5-8bb4-7f8b3ae28e49 /.snapshots btrfs subvol=@_broken/.snapshots,defaults,noatime,compress=zstd 0 0
-```
-Then: `sudo mount /.snapshots` — snapper works again with all old snapshots intact.
-
-⚠️ Without this: snapper is broken. Creating a fresh `sudo btrfs subvolume create /mnt/@/.snapshots` would make snapper work again but start from snapshot 1 — all 800+ old snapshots orphaned (still on disk under `@_broken` but invisible to snapper).
-
-### 8.3 🔧 Fix limine-snapper-sync Config Mismatch
-
-After rollback, `limine-snapper-sync` will pop up: `ROOT_SNAPSHOTS_PATH=/@/.snapshots doesn't match the expected path /@_broken/.snapshots from /proc/mounts`. Fix:
-
-```bash
-sudo nano /etc/limine-snapper-sync.conf
-# Change ROOT_SNAPSHOTS_PATH=/@/.snapshots → ROOT_SNAPSHOTS_PATH=/@_broken/.snapshots
-```
+`snapper-rollback` avoids both by doing the swap cleanly. Don't use the manual method.
 
 ---
 

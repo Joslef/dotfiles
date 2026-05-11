@@ -53,6 +53,7 @@ backup:
 restore:
   path: /mnt/vault/Gaming/backup/Ludusavi
   ignoredGames:
+    - "Darwin's Paradox"
     - Deadzone Rogue
     - Death Howl
     - Diablo II Resurrected
@@ -226,6 +227,20 @@ customGames:
     integration: override
     files:
       - /home/joerg/.local/share/Steam/steamapps/compatdata/vampirecrawlers/pfx/drive_c/users/steamuser/AppData/LocalLow/Nosebleed Interactive/Vampire Crawlers
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Mouse p.i. for hire
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/mousepihire/pfx/drive_c/users/steamuser/AppData/LocalLow/Fumi Games/MOUSE
+    registry: []
+    installDir: []
+    winePrefix: []
+  - name: Gambonanza
+    integration: override
+    files:
+      - /home/joerg/.local/share/Steam/steamapps/compatdata/gambonanza/pfx/drive_c/users/steamuser/AppData/LocalLow/Blukulélé/Gambonanza
     registry: []
     installDir: []
     winePrefix: []

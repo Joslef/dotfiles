@@ -13,8 +13,7 @@ DEFAULT_INACTIVE=0.75
 case "$ACTION" in
     reset)
         rm -f "$STATE_FILE"
-        hyprctl keyword decoration:active_opacity "$DEFAULT_ACTIVE"
-        hyprctl keyword decoration:inactive_opacity "$DEFAULT_INACTIVE"
+        hyprctl eval "hl.config({ decoration = { active_opacity = $DEFAULT_ACTIVE, inactive_opacity = $DEFAULT_INACTIVE } })"
         exit 0
         ;;
     up|down)
@@ -42,5 +41,4 @@ else
 fi
 
 echo "$NEW" > "$STATE_FILE"
-hyprctl keyword decoration:active_opacity "$NEW"
-hyprctl keyword decoration:inactive_opacity "$NEW"
+hyprctl eval "hl.config({ decoration = { active_opacity = $NEW, inactive_opacity = $NEW } })"

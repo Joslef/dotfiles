@@ -114,9 +114,9 @@ hl.config({
     },
 
     master = {
-        new_status        = "master",
-        orientation       = "left",
-        mfact             = 0.5,
+        new_status  = "slave",
+        orientation = "left",
+        mfact       = 0.5,
     },
 
     misc = {
@@ -290,7 +290,8 @@ hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/random-wall"))
 
 -- Opacity control
 hl.bind(mainMod .. " + minus", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh down"))
--- hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up"))   -- gcube
+hl.bind(mainMod .. " + plus",  hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up"))    -- lggram DE keyboard
+-- hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up")) -- gcube US keyboard
 hl.bind(mainMod .. " + 0",     hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh reset"))
 
 -- Volume / brightness (locked + repeating)

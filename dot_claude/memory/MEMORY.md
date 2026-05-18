@@ -111,8 +111,8 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 
 #### 3.1.2 🖥️ Monitors
 
-- **DP-1** = Display Left (right physically, ID 0); **HDMI-A-1** = Display Right (LG Ultra HD, ID 1) at x=3840
-- Both scale=1.0
+- **gcube**: DP-1 (left, ID 0) + HDMI-A-1 (right, ID 1, x=3840), both scale=1.0, US keyboard
+- **lggram**: eDP-1 (LG Display 0x05F8, 2560x1600, 370x230mm) — panel only supports 59.99Hz (spec as @60); scale must be forced to 1.0 via `hyprctl keyword monitor` after every reload (`hl.monitor scale` field is ignored by Hyprland, auto-calculates 1.60 from DPI). Keyboard: de
 - Use `hyprctl --batch` for multi-monitor changes to avoid Hyprland misalignment warnings
 
 #### 3.1.3 📡 Streaming (Sunshine + Moonlight iPad)
@@ -124,7 +124,7 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 - **iPad as 3rd screen (Moonlight)**: virtual HEADLESS monitor created dynamically, NOT at boot
   - `changemachine` (ipad profile): removes all existing HEADLESS-N outputs → reloads Hyprland → creates headless → forces resolution via `hyprctl keyword monitor HEADLESS-N,2732x2048@60,7680x0,1` → sets `output_name=2` in sunshine.conf → restarts Sunshine
   - Headless is always index 2 (DP-1=0, HDMI-A-1=1) because it's created after the two physical monitors
-  - Hyprland HEADLESS counter increments across create/remove cycles in a session — HEADLESS-1/2/3 rules in hyprland.conf act as fallbacks for clean boots only; `hyprctl keyword monitor` is the reliable runtime fix
+  - Hyprland HEADLESS counter increments across create/remove cycles in a session — `hyprctl keyword monitor` is the reliable runtime fix (hyprland.conf is deleted; hyprland.lua has HEADLESS lines as commented fallbacks)
   - iPad native resolution: **2732×2048**
   - **H264 codec required** — H265 causes a green vertical stripe on the right side of the iPad Moonlight stream
   - Clients configured in Sunshine: Xbox Series S, Steam Deck, iPadPro, lg gram
@@ -162,11 +162,13 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 - `wtype` cannot release physically-held modifiers (Super bleeds into keystrokes when used in `bind exec`)
 - Use `hyprctl --batch` for multi-monitor changes to avoid misalignment warnings
 - **3-finger swipe direction**: controlled via `gestures { workspace_swipe_invert = false }` block — `gesture = 3, horizontal, workspace, -1` and split left/right entries do NOT work; the `gestures {}` block is the correct approach
+- **Config**: fully in `hyprland.lua` — `hyprland.conf` was deleted (migrated). When both files existed, Hyprland loaded them simultaneously causing conflicts (kb_layout, scale overrides)
+- **Lua API quirk**: `hl.monitor { scale = N }` is silently ignored — always apply scale via `hyprctl keyword monitor` after reload
 
 #### 4.1.2 🖱️ Cursor
 
 - **Theme**: `Bibata-Modern-Amber` (AUR: `bibata-cursor-git`), size 32
-- **Config**: `hyprland.conf` — `env = XCURSOR_THEME/SIZE` + `env = HYPRCURSOR_THEME/SIZE`
+- **Config**: `hyprland.lua` — `hl.env("XCURSOR_THEME/SIZE")` + `hl.env("HYPRCURSOR_THEME/SIZE")`
 - **Apply without re-login**: `hyprctl setcursor <ThemeName> <size>`
 - **GTK**: `~/.config/gtk-3.0/settings.ini` — chezmoi-tracked
 
@@ -330,7 +332,7 @@ Synced via git (repo: `Joslef/scripts`) — NOT chezmoi. All scripts symlinked t
 | `archmaint` | Linux | Arch maintenance: system update, orphan removal, cache cleanup, pacman DB check |
 | `audioshell` | Linux/macOS | Terminal music player UI wrapper for mpv with metadata display (see § 6.5) |
 | `brewsync` | macOS | Sync Homebrew + MAS package lists to GitHub; scheduled via launchd; supports restore |
-| `changemachine` | Linux | Toggle Hyprland config between machine profiles (`lggram`/`gcube`) via tagged config lines |
+| `changemachine` | Linux | Toggle Hyprland config between machine profiles (`lggram`/`gcube`/`ipad`) by toggling comment tags in `hyprland.lua`. After reload, applies per-profile overrides via `hyprctl keyword`: lggram forces eDP-1 scale=1.0 + kb=de; gcube/ipad sets kb=us |
 | `chezclaudesync` | Linux | Snapshot `~/.claude` (settings, hooks, agents, memory) into chezmoi — secrets-safe |
 | `createloginscreen` | Linux | One-shot SDDM setup: Catppuccin Mocha Pink theme, autologin, display config; run as root |
 | `gitstatus` | Linux/macOS | Recursive git repo scanner: fetches remotes, flags dirty/behind/unpushed repos |

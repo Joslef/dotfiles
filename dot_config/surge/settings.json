@@ -1,10 +1,11 @@
 {
   "general": {
-    "default_download_dir": "/home/joerg/Downloads",
+    "default_download_dir": "/mnt/scratch/Downloads",
     "warn_on_duplicate": false,
     "download_complete_notification": true,
     "allow_remote_open_actions": false,
     "auto_resume": false,
+    "auto_start": false,
     "skip_update_check": true,
     "clipboard_monitor": true,
     "theme": 2,

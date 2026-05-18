@@ -42,7 +42,9 @@ open = [
 
 pdf = [
     { run = 'zen-twilight "$@"', desc = "Twilight" },
+    { run = 'thorium-browser "$@"', desc = "Thorium" },
     { run = 'evince "$@"', desc = "Evince" },
+    { run = 'chromium "$@"', desc = "Chromium" },
 ]
 
 [open]

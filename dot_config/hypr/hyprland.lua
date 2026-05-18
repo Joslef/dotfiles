@@ -7,12 +7,12 @@
 ---- MONITORS ------
 --------------------
 
-hl.monitor({ output = "DP-1",     mode = "3840x2160", position = "0x0",    scale = 1 }) -- gcube
-hl.monitor({ output = "HDMI-A-1", mode = "3840x2160", position = "3840x0", scale = 1 }) -- gcube
+-- hl.monitor({ output = "DP-1",     mode = "3840x2160", position = "0x0",    scale = 1 }) -- gcube
+-- hl.monitor({ output = "HDMI-A-1", mode = "3840x2160", position = "3840x0", scale = 1 }) -- gcube
 -- hl.monitor({ output = "HEADLESS-1", mode = "2732x2048@60", position = "7680x0", scale = 1 }) -- ipad
 -- hl.monitor({ output = "HEADLESS-2", mode = "2732x2048@60", position = "7680x0", scale = 1 }) -- ipad fallback
--- hl.monitor({ output = "eDP-1",  mode = "2560x1600",  position = "0x0",    scale = 1 }) -- lggram
--- hl.monitor({ output = "DP-1",   mode = "3840x2160",  position = "2560x0", scale = 1 }) -- lggram
+hl.monitor({ output = "eDP-1",  mode = "2560x1600@60",  position = "0x0",    scale = 1 }) -- lggram
+hl.monitor({ output = "DP-1",   mode = "3840x2160",  position = "2560x0", scale = 1 }) -- lggram
 
 
 ---------------------
@@ -125,7 +125,8 @@ hl.config({
     },
 
     input = {
-        kb_layout  = "us,de", -- gcube
+        -- kb_layout = "us", -- gcube
+        kb_layout = "de", -- lggram
         kb_variant = "",
         kb_model   = "",
         kb_options = "caps:escape",
@@ -289,7 +290,7 @@ hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/random-wall"))
 
 -- Opacity control
 hl.bind(mainMod .. " + minus", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh down"))
-hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up"))   -- gcube
+-- hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up"))   -- gcube
 hl.bind(mainMod .. " + 0",     hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh reset"))
 
 -- Volume / brightness (locked + repeating)

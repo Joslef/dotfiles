@@ -104,7 +104,11 @@ Scope {
                     if (event.key === Qt.Key_Return || event.key === Qt.Key_Space) {
                         if (GlobalStates.selectedWindowAddress !== "") {
                             GlobalStates.overviewOpen = false;
-                            Hyprland.dispatch(`focuswindow address:${GlobalStates.selectedWindowAddress}`);
+                            if (Hyprland.usingLua) {
+                                Hyprland.dispatch(`hl.dsp.focus({ window = 'address:${GlobalStates.selectedWindowAddress}' })`);
+                            } else {
+                                Hyprland.dispatch(`focuswindow address:${GlobalStates.selectedWindowAddress}`);
+                            }
                         } else {
                             GlobalStates.overviewOpen = false;
                         }
@@ -180,7 +184,11 @@ Scope {
                     }
 
                     if (targetId !== null) {
-                        Hyprland.dispatch("workspace " + targetId);
+                        if (Hyprland.usingLua) {
+                            Hyprland.dispatch(`hl.dsp.focus({workspace = '${targetId}'})`);
+                        } else {
+                            Hyprland.dispatch("workspace " + targetId);
+                        }
                         event.accepted = true;
                     }
                 }

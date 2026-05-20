@@ -164,6 +164,19 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 - **3-finger swipe direction**: controlled via `gestures { workspace_swipe_invert = false }` block — `gesture = 3, horizontal, workspace, -1` and split left/right entries do NOT work; the `gestures {}` block is the correct approach
 - **Config**: fully in `hyprland.lua` — `hyprland.conf` was deleted (migrated). When both files existed, Hyprland loaded them simultaneously causing conflicts (kb_layout, scale overrides)
 - **Lua API quirk**: `hl.monitor { scale = N }` is silently ignored — always apply scale via `hyprctl keyword monitor` after reload
+- **Dispatch Lua mode**: Hyprland (0.55+) uses Lua for ALL dispatch — old syntax `focuswindow address:X`, `workspace N`, etc. all fail. Lua equivalents: `hl.dsp.focus({ window = 'address:X' })`, `hl.dsp.focus({workspace = 'N'})`, `hl.dsp.window.close('address:X')`, `hl.dsp.window.move({workspace = 'N', follow = false, window = 'address:X'})`. Use `Hyprland.usingLua` in QML to branch. Test via: `hyprctl dispatch "hl.dsp.focus({ window = 'address:X' })"` → returns `ok` on success.
+- **wlr/taskbar `on-click: activate` broken**: `zwlr_foreign_toplevel_handle_v1::activate` is permanently broken in Hyprland (since ~0.35, unresolved). Fix: use `"on-click": "minimize-raise"` in waybar config — raises unfocused, minimizes focused.
+- **waybar `hyprland/workspaces` click broken on Hyprland 0.55+**: hardcodes old `dispatch workspace N` IPC syntax — `on-click` config is ignored for workspace buttons entirely. Fix merged into Waybar master (commit e17c0d9, 2026-04-29) but not yet in stable 0.15.0. **Waiting for Waybar 0.16.0 stable** — do not install `waybar-git` (build times too long). When 0.16.0 ships, workspace clicking will work again automatically.
+
+#### 4.1.4 🪟 Quickshell Overview (Super+Tab)
+
+- **Config**: `~/.config/quickshell/overview/` (AUR: `quickshell-overview-git`, system files at `/etc/xdg/quickshell/overview/` are newer than user's copy)
+- **Keybinding**: `Super+TAB` → `qs ipc -c overview call overview toggle`
+- **Restart**: `qs ipc -c overview msg quit; qs -c overview -d`
+- **Log**: `/run/user/1000/quickshell/by-id/<id>/log.log`
+- **Qt mismatch risk**: if quickshell is built against an older Qt than the system has, rebuild with `paru -S quickshell`
+- **Navigation**: Tab/Shift+Tab cycles windows (highlights with `selectedWindowAddress`), Space/Enter focuses selected, hjkl/arrows navigate workspaces, number keys jump to workspace
+- All dispatch fixes in `Overview.qml` and `OverviewWidget.qml` use `Hyprland.usingLua` guard (see § 4.1.1 Dispatch Lua mode)
 
 #### 4.1.2 🖱️ Cursor
 

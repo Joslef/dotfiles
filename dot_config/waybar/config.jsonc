@@ -220,7 +220,7 @@
     "all-outputs": true,
     "active-first": false,
     "tooltip-format": "{name}",
-    "on-click": "activate",
+    "on-click": "minimize-raise",
     "on-click-middle": "close",
     "ignore-list": [
       "rofi"

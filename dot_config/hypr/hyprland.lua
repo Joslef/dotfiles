@@ -7,12 +7,12 @@
 ---- MONITORS ------
 --------------------
 
--- hl.monitor({ output = "DP-1",     mode = "3840x2160", position = "0x0",    scale = 1 }) -- gcube
--- hl.monitor({ output = "HDMI-A-1", mode = "3840x2160", position = "3840x0", scale = 1 }) -- gcube
+hl.monitor({ output = "DP-1",     mode = "3840x2160", position = "0x0",    scale = 1 }) -- gcube
+hl.monitor({ output = "HDMI-A-1", mode = "3840x2160", position = "3840x0", scale = 1 }) -- gcube
 -- hl.monitor({ output = "HEADLESS-1", mode = "2732x2048@60", position = "7680x0", scale = 1 }) -- ipad
 -- hl.monitor({ output = "HEADLESS-2", mode = "2732x2048@60", position = "7680x0", scale = 1 }) -- ipad fallback
-hl.monitor({ output = "eDP-1",  mode = "2560x1600@60",  position = "0x0",    scale = 1 }) -- lggram
-hl.monitor({ output = "DP-1",   mode = "3840x2160",  position = "2560x0", scale = 1 }) -- lggram
+-- hl.monitor({ output = "eDP-1",  mode = "2560x1600@60",  position = "0x0",    scale = 1 }) -- lggram
+-- hl.monitor({ output = "DP-1",   mode = "3840x2160",  position = "2560x0", scale = 1 }) -- lggram
 
 
 ---------------------
@@ -125,8 +125,8 @@ hl.config({
     },
 
     input = {
-        -- kb_layout = "us", -- gcube
-        kb_layout = "de", -- lggram
+        kb_layout = "us", -- gcube
+        -- kb_layout = "de", -- lggram
         kb_variant = "",
         kb_model   = "",
         kb_options = "caps:escape",
@@ -134,10 +134,15 @@ hl.config({
 
         follow_mouse = 1,
         sensitivity  = 1,
+        off_window_axis_events = 2,
 
         touchpad = {
             natural_scroll = false,
         },
+    },
+
+    binds = {
+        scroll_event_delay = 0,
     },
 
     gestures = {
@@ -285,13 +290,17 @@ hl.bind(mainMod .. " + SHIFT + BACKSPACE",  hl.dsp.window.move({ workspace = "sp
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
+-- Switch workspaces with mouse wheel
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+
 -- Wallpaper
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/random-wall"))
 
 -- Opacity control
 hl.bind(mainMod .. " + minus", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh down"))
-hl.bind(mainMod .. " + plus",  hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up"))    -- lggram DE keyboard
--- hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up")) -- gcube US keyboard
+-- hl.bind(mainMod .. " + plus",  hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up"))    -- lggram DE keyboard
+hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh up")) -- gcube US keyboard
 hl.bind(mainMod .. " + 0",     hl.dsp.exec_cmd("~/.config/hypr/opacity-control.sh reset"))
 
 -- Volume / brightness (locked + repeating)

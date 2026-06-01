@@ -1,6 +1,49 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions"
+    "allow": [
+      "Bash(passwd:*)",
+      "Bash(ls:*)",
+      "Bash(file-history count:*)",
+      "Bash(which ccusage:*)",
+      "Bash(head:*)",
+      "Bash(find:*)",
+      "Bash(playerctl:*)",
+      "Bash(waybar:*)",
+      "WebSearch",
+      "WebFetch(domain:man.archlinux.org)",
+      "Bash(node:*)",
+      "Bash(python3:*)",
+      "Bash(pacman:*)",
+      "Bash(chmod +x:*)",
+      "Bash(hyprctl reload:*)",
+      "Bash(brew install:*)",
+      "Bash(systemctl --user daemon-reload)",
+      "Bash(killall solaar:*)",
+      "Bash(systemctl --user restart solaar)",
+      "Bash(systemctl --user status solaar)",
+      "Bash(journalctl:*)",
+      "Skill(update-config)",
+      "Bash(grep -E '^bind\\\\s*=\\\\s*\\\\$mainMod[^,]*,' ~/.config/hypr/hyprland.conf)",
+      "Bash(grep -oP '\\\\$mainMod[^,]*, \\\\K[^,]+')",
+      "WebFetch(domain:github.com)",
+      "Bash(gh repo:*)",
+      "Bash(snapper --help)",
+      "Bash(crontab -l)",
+      "Bash(mkdir -p ~/ES-DE/gamelists/pico8)",
+      "Bash(mkdir -p ~/ES-DE/downloaded_media/pico8/screenshots)",
+      "Bash(hyprctl version:*)",
+      "Read(//etc/**)",
+      "Read(//etc/snapper/**)",
+      "Read(//etc/snapper/configs/**)",
+      "Read(//.snapshots/**)",
+      "Read(//sysroot/**)",
+      "WebFetch(domain:wiki.cachyos.org)",
+      "WebFetch(domain:discuss.cachyos.org)",
+      "WebFetch(domain:forum.endeavouros.com)",
+      "WebFetch(domain:wiki.archlinux.org)",
+      "WebFetch(domain:srmsc.org)"
+    ],
+    "defaultMode": "auto"
   },
   "hooks": {
     "SessionStart": [
@@ -39,6 +82,7 @@
   "preferredNotifChannel": "kitty",
   "autoCompactEnabled": false,
   "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
   "voiceEnabled": true,
-  "agentPushNotifEnabled": true
+  "skipAutoPermissionPrompt": true
 }

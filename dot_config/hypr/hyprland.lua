@@ -9,8 +9,8 @@
 
 hl.monitor({ output = "DP-1",     mode = "3840x2160", position = "0x0",    scale = 1 }) -- gcube
 hl.monitor({ output = "HDMI-A-1", mode = "3840x2160", position = "3840x0", scale = 1 }) -- gcube
--- hl.monitor({ output = "HEADLESS-1", mode = "2732x2048@60", position = "7680x0", scale = 1 }) -- ipad
--- hl.monitor({ output = "HEADLESS-2", mode = "2732x2048@60", position = "7680x0", scale = 1 }) -- ipad fallback
+local _ipad_active = true -- ipad
+-- (headless created dynamically by changemachine; no static config to avoid wrong defaults)
 -- hl.monitor({ output = "eDP-1",  mode = "2560x1600@60",  position = "0x0",    scale = 1 }) -- lggram
 -- hl.monitor({ output = "DP-1",   mode = "3840x2160",  position = "2560x0", scale = 1 }) -- lggram
 
@@ -333,11 +333,11 @@ hl.bind(mainMod .. " + down",        hl.dsp.exec_cmd("~/.config/hypr/volume-snap
 hl.bind(mainMod .. " + SHIFT + up",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 1%+"),   { repeating = true })
 hl.bind(mainMod .. " + SHIFT + down",hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"),         { repeating = true })
 
--- Scroll with Super + PageUp/PageDown (ydotool)
-hl.bind(mainMod .. " + Page_Up",          hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y 5"),   { repeating = true })
-hl.bind(mainMod .. " + Page_Down",        hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y -5"),  { repeating = true })
-hl.bind(mainMod .. " + SHIFT + Page_Up",  hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y 15"),  { repeating = true })
-hl.bind(mainMod .. " + SHIFT + Page_Down",hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y -15"), { repeating = true })
+-- Scroll with Super + PageUp/PageDown (kitty remote control)
+hl.bind(mainMod .. " + Page_Up",          hl.dsp.exec_cmd("kitty @ --to unix:/tmp/kitty-remote scroll-window --match recent:0 3p-"), { repeating = true })
+hl.bind(mainMod .. " + Page_Down",        hl.dsp.exec_cmd("kitty @ --to unix:/tmp/kitty-remote scroll-window --match recent:0 3p"),  { repeating = true })
+hl.bind(mainMod .. " + SHIFT + Page_Up",  hl.dsp.exec_cmd("kitty @ --to unix:/tmp/kitty-remote scroll-window --match recent:0 1l-"), { repeating = true })
+hl.bind(mainMod .. " + SHIFT + Page_Down",hl.dsp.exec_cmd("kitty @ --to unix:/tmp/kitty-remote scroll-window --match recent:0 1l"),  { repeating = true })
 
 
 --------------------
@@ -432,3 +432,4 @@ hl.window_rule({
     move  = "20 monitor_h-120",
     float = true,
 })
+

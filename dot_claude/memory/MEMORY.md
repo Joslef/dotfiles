@@ -118,13 +118,16 @@ Output the casting announcement: `** ✨🔮 CASTING SPELL <SPELLNAME> 🔮✨ *
 #### 3.1.3 📡 Streaming (Sunshine + Moonlight iPad)
 
 - Sunshine (LizardByte) running as systemd user service; capture=wlr (Hyprland), encoder=vaapi (AMD RX 6650 XT)
-- Config at `~/.config/sunshine/sunshine.conf`: `adapter_name=/dev/dri/renderD128`, `capture=wlr`, `encoder=vaapi`, `output_name=2`
-- `output_name=2` = third monitor (index 2 = HEADLESS virtual monitor) — **must be numeric index**, name-based matching fails for headless outputs (empty description causes Sunshine to fall back to monitor 0)
+- Config at `~/.config/sunshine/sunshine.conf`: `adapter_name=/dev/dri/renderD128`, `capture=wlr`, `encoder=vaapi`
+- **`output_name` must be the actual wl_output NAME** (e.g. `output_name = HEADLESS-7`), NOT a numeric index — Sunshine matches by name in phase 2 init; numeric "2" causes Sunshine to silently fall back to DP-1 because headless has no description. `changemachine` updates this dynamically via `sed`
 - UFW ports: 47984/47989/47990/48010 tcp + 47998/47999/48000/48002/5353 udp open
 - **iPad as 3rd screen (Moonlight)**: virtual HEADLESS monitor created dynamically, NOT at boot
-  - `changemachine` (ipad profile): removes all existing HEADLESS-N outputs → reloads Hyprland → creates headless → forces resolution via `hyprctl keyword monitor HEADLESS-N,2732x2048@60,7680x0,1` → sets `output_name=2` in sunshine.conf → restarts Sunshine
-  - Headless is always index 2 (DP-1=0, HDMI-A-1=1) because it's created after the two physical monitors
-  - Hyprland HEADLESS counter increments across create/remove cycles in a session — `hyprctl keyword monitor` is the reliable runtime fix (hyprland.conf is deleted; hyprland.lua has HEADLESS lines as commented fallbacks)
+  - `changemachine` (ipad profile): reuses existing HEADLESS-N if present (only creates if absent) → configures resolution via `hyprctl eval 'hl.monitor({output="HEADLESS-N", mode="2732x2048@60", position="7680x0", scale=1})'` → updates sunshine.conf `output_name` to `HEADLESS-N` → restarts Sunshine
+  - **`hyprctl keyword monitor` does NOT work with Lua (non-legacy parsers)** — always use `hyprctl eval` for runtime monitor config
+  - **NEVER write `hl.monitor({output="HEADLESS-N"})` to hyprland.lua** — `hyprctl reload` destroys IPC-created headless outputs and the lua entry recreates them with counter N+1, causing endless drift
+  - **NEVER call `hyprctl reload` after headless setup** — same counter drift reason above
+  - Headless is always index 2 (DP-1=0, HDMI-A-1=1), but use name not index for Sunshine
+  - Use `hyprctl monitors all` (not `hyprctl monitors`) to detect headless name after creation
   - iPad native resolution: **2732×2048**
   - **H264 codec required** — H265 causes a green vertical stripe on the right side of the iPad Moonlight stream
   - Clients configured in Sunshine: Xbox Series S, Steam Deck, iPadPro, lg gram

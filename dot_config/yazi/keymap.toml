@@ -8,4 +8,5 @@ prepend_keymap = [
   { on = "l", run = "plugin smart-enter", desc = "Enter directory or open file" },
   { on = "s", run = "plugin jump-to-char", desc = "Jump to char" },
   { on = "<C-c>", run = "shell 'wl-copy \"$1\"'", desc = "Copy file path to clipboard" },
+  { on = "y", run = ["shell --orphan 'python3 -c \"import sys, urllib.parse; uris = [\\\"file://\\\" + urllib.parse.quote(p) for p in sys.argv[1:]]; print(\\\"\\\\n\\\".join(uris))\" \"$@\" | wl-copy -t text/uri-list'", "yank"], desc = "Yank + copy to system clipboard" },
 ]

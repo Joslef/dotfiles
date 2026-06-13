@@ -17,3 +17,6 @@
 .config/sketchybar
 .config/spotify-player
 {{ end }}
+
+# RSS Guard - cookies managed by app, not chezmoi
+.config/rssguard5/config/config.ini
